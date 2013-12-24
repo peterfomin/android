@@ -1,0 +1,107 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <Button
+        android:id="@+id/buttonGetData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="Get Data" />
+
+    <EditText
+        android:id="@+id/editTextSearchString"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/buttonGetData"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/buttonGetData"
+        android:layout_toLeftOf="@+id/buttonGetData"
+        android:ems="10"
+        android:text="CA/San_Francisco" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textViewLocationLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editTextSearchString"
+        android:layout_below="@+id/editTextSearchString"
+        android:layout_marginTop="44dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/textViewLocationLabel"
+        />
+
+    <TextView
+        android:id="@+id/textViewLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/textViewLocationLabel"
+        android:layout_alignTop="@+id/textViewLocationLabel"
+        android:text="loc"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TextView
+        android:id="@+id/textViewTemperatureLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textViewTemperatureLabel"
+        android:layout_alignLeft="@+id/textViewLocationLabel"
+        android:layout_below="@+id/textViewLocationLabel"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/textViewTemperatureLabel"
+        android:layout_alignTop="@+id/textViewTemperatureLabel"
+        android:text="temp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewWeatherLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textViewWeatherLabel"
+        android:layout_alignLeft="@+id/textViewTemperatureLabel"
+        android:layout_below="@+id/textViewTemperatureLabel"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewWeather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/textViewWeatherLabel"
+        android:layout_alignTop="@+id/textViewWeatherLabel"
+        android:text="weather"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewWindLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textViewWindLabel"
+        android:layout_alignLeft="@+id/textViewWeatherLabel"
+        android:layout_below="@+id/textViewWeatherLabel"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewWind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/textViewWindLabel"
+        android:layout_alignTop="@+id/textViewWindLabel"
+        android:text="wind"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>
