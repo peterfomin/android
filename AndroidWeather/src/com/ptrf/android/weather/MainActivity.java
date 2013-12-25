@@ -1,10 +1,9 @@
 package com.ptrf.android.weather;
 
-import com.ptrf.android.weather.service.CurrentConditionsTask;
-import com.ptrf.android.weather.service.WeatherServiceTask;
-
 import android.app.Activity;
+import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,17 +12,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ptrf.android.weather.location.LocationService;
+import com.ptrf.android.weather.service.CurrentConditionsTask;
+import com.ptrf.android.weather.service.WeatherServiceTask;
+
 /**
  * Main activity.
  */
 public class MainActivity extends Activity {
-
+	private static final String TAG = MainActivity.class.getName();
+	
 	private Button buttonGetData = null;
 	private EditText editTextSearchString = null;
 	private TextView location = null;
 	private TextView temperature = null;
 	private TextView weather = null;
 	private TextView wind = null;
+
+	private LocationService locationService = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,7 @@ public class MainActivity extends Activity {
 		//Setup the Button's OnClickListener
 		buttonGetData.setOnClickListener(new DataButtonListener());
 
+		locationService = new LocationService(getApplicationContext());
 	}
 
 	@Override
@@ -82,6 +89,9 @@ public class MainActivity extends Activity {
 				weather.setText(result.getWeather());
 				wind.setText(result.getWind());	
 			}
+			
+			Location location = locationService.getCurrentLocation();
+			Log.d(TAG, "location="+ location);
 		}
 
 	}
