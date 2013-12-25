@@ -38,37 +38,7 @@ public class MainActivity extends Activity {
 		wind = (TextView) findViewById(R.id.textViewWind);
 
 		//Setup the Button's OnClickListener
-		buttonGetData.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				
-				//Get the weather data
-				WeatherServiceTask task = new CurrentConditionsTask();
-				String url = "http://api.wunderground.com/api/%s/conditions/q/%s.json";
-				String key = "878810199c30c035";
-
-				buttonGetData.setEnabled(false);
-				//Executes the task with the specified parameters
-				task.execute(url, key, editTextSearchString.getText().toString());
-				
-				WeatherData result = null;
-				try {
-					//Waits if necessary for the computation to complete, and then retrieves its result.
-					result = task.get();
-				} catch (Exception e) {
-					Toast.makeText(MainActivity.this, "Error occured: "+ e.getMessage(), Toast.LENGTH_LONG).show();
-				} finally {
-					buttonGetData.setEnabled(true);
-				}
-				
-				if (result != null) {
-					location.setText(result.getLocation());
-					temperature.setText(result.getTemperature());
-					weather.setText(result.getWeather());
-					wind.setText(result.getWind());	
-				}
-			}
-		});
+		buttonGetData.setOnClickListener(new DataButtonListener());
 
 	}
 
@@ -77,6 +47,43 @@ public class MainActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+
+	/**
+	 * Listener for get data button.
+	 *
+	 */
+	private class DataButtonListener implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			//Get the weather data
+			WeatherServiceTask task = new CurrentConditionsTask();
+			String url = "http://api.wunderground.com/api/%s/conditions/q/%s.json";
+			String key = "878810199c30c035";
+
+			buttonGetData.setEnabled(false);
+			//Executes the task with the specified parameters
+			task.execute(url, key, editTextSearchString.getText().toString());
+			
+			WeatherData result = null;
+			try {
+				//Waits if necessary for the computation to complete, and then retrieves its result.
+				result = task.get();
+			} catch (Exception e) {
+				Toast.makeText(MainActivity.this, "Error occured: "+ e.getMessage(), Toast.LENGTH_LONG).show();
+			} finally {
+				buttonGetData.setEnabled(true);
+			}
+			
+			if (result != null) {
+				location.setText(result.getLocation());
+				temperature.setText(result.getTemperature());
+				weather.setText(result.getWeather());
+				wind.setText(result.getWind());	
+			}
+		}
+
 	}
 
 }
