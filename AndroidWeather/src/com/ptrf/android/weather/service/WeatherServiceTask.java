@@ -22,10 +22,11 @@ import android.util.Log;
  * 
  */
 public abstract class WeatherServiceTask extends AsyncTask<String, Void, WeatherData> {
+	private static final String TAG = WeatherServiceTask.class.getName();
 
 	@Override
 	protected WeatherData doInBackground(String... args) {
-
+		
 		String requestUrl = createRequestUrl(args);
 
 		WeatherData result = null;
@@ -41,9 +42,9 @@ public abstract class WeatherServiceTask extends AsyncTask<String, Void, Weather
 			HttpClient httpclient = new DefaultHttpClient(httpParameters);
 			HttpGet httpget = new HttpGet(requestUrl);
 
-			Log.d(this.toString(), "Executing rest service call using url="+ requestUrl);
+			Log.d(TAG, "Executing rest service call using url="+ requestUrl);
 			HttpResponse response = httpclient.execute(httpget);
-			Log.d(this.toString(), "response status="+ response.getStatusLine().toString());
+			Log.d(TAG, "response status="+ response.getStatusLine().toString());
 
 			HttpEntity entity = response.getEntity();
 
@@ -55,7 +56,7 @@ public abstract class WeatherServiceTask extends AsyncTask<String, Void, Weather
 			result = createWeatherData(json);
 
 		} catch (Exception e) {
-			Log.e(this.toString(), "Error:", e);
+			Log.e(TAG, "Error:", e);
 		}
 
 		return result;
