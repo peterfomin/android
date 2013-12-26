@@ -7,5 +7,8 @@
     <string name="textViewTemperatureLabel">Temperature:</string>
     <string name="textViewWeatherLabel">Weather:</string>
     <string name="textViewWindLabel">Wind:</string>
+    <string name="useCurrentLocationLabel">Use Current Location</string>
+    <string name="editTextSearchStringHint">Minneapolis MN</string>
+    <string name="buttonGetDataLabel">Refresh</string>
 
 </resources>

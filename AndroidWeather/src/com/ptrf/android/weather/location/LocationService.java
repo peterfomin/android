@@ -14,21 +14,38 @@ import android.util.Log;
 public class LocationService implements LocationListener {
 	private static final String TAG = LocationService.class.getName();
 	
-	//private Context context;
     private LocationManager locationManager;
     
 	public LocationService(Context context) {
-		//this.context = context;
 	    locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-	    long minTime = 1000;
+	}
+	
+	/**
+	 * Adds itself as a location update listener into location manager.
+	 */
+	public void startLocationUpdates() {
+	    
+		long minTime = 1000;
 		float minDistance = 10;
 		
+		Log.d(TAG, String.format("Registering %s as location provider listener", this));
+		
 		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+			Log.d(TAG, String.format("Registering %s as %s location provider listener", this, LocationManager.GPS_PROVIDER));
 			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, minTime, minDistance, this);
 		}
 		if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+			Log.d(TAG, String.format("Registering %s as %s location provider listener", this, LocationManager.NETWORK_PROVIDER));
 			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, minTime, minDistance, this);
 		}
+	}
+	
+	/**
+	 * Removes itself as a location update listener.
+	 */
+	public void stopLocationUpdates() {
+		Log.d(TAG, String.format("Removing %s as location provider listener", this));
+		locationManager.removeUpdates(this);
 	}
 	
 	/**

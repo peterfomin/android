@@ -8,28 +8,37 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <Button
-        android:id="@+id/buttonGetData"
+    <CheckBox android:id="@+id/checkboxUseCurrentLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="Get Data" />
-
+        android:text="@string/useCurrentLocationLabel"
+        android:checked="true"
+        />
+    
     <EditText
         android:id="@+id/editTextSearchString"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/buttonGetData"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/buttonGetData"
-        android:layout_toLeftOf="@+id/buttonGetData"
+        android:layout_alignLeft="@+id/checkboxUseCurrentLocation"
+        android:layout_below="@+id/checkboxUseCurrentLocation"
         android:ems="10"
-        android:text="CA/San_Francisco" >
+        android:hint="@string/editTextSearchStringHint"
+        android:visibility="invisible"
+        android:maxLines="1">
 
         <requestFocus />
     </EditText>
-
+            
+    <Button
+        android:id="@+id/buttonGetData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/editTextSearchString"
+        android:layout_alignBottom="@+id/editTextSearchString"
+        android:text="@string/buttonGetDataLabel" />
+    
     <TextView
         android:id="@+id/textViewLocationLabel"
         android:layout_width="wrap_content"
@@ -47,7 +56,6 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/textViewLocationLabel"
         android:layout_alignTop="@+id/textViewLocationLabel"
-        android:text="loc"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     
     <TextView
@@ -65,7 +73,6 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/textViewTemperatureLabel"
         android:layout_alignTop="@+id/textViewTemperatureLabel"
-        android:text="temp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -83,7 +90,6 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/textViewWeatherLabel"
         android:layout_alignTop="@+id/textViewWeatherLabel"
-        android:text="weather"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -101,7 +107,6 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/textViewWindLabel"
         android:layout_alignTop="@+id/textViewWindLabel"
-        android:text="wind"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

@@ -24,12 +24,15 @@ import android.util.Log;
 public abstract class WeatherServiceTask extends AsyncTask<String, Void, WeatherData> {
 	private static final String TAG = WeatherServiceTask.class.getName();
 
+	private Throwable exception = null;
+	
 	@Override
 	protected WeatherData doInBackground(String... args) {
 		
 		String requestUrl = createRequestUrl(args);
 
 		WeatherData result = null;
+		setException(null);
 		try {
 
 			// Create the HTTP request
@@ -49,17 +52,47 @@ public abstract class WeatherServiceTask extends AsyncTask<String, Void, Weather
 			HttpEntity entity = response.getEntity();
 
 			String content = EntityUtils.toString(entity);
-
+			Log.v(TAG, "response content="+ content);
+			
 			// Create a JSON object from the request response
 			JSONObject json = new JSONObject(content);
-
+			
+			//error handling
+			checkError(json);
+			
 			result = createWeatherData(json);
 
 		} catch (Exception e) {
-			Log.e(TAG, "Error:", e);
+			setException(e);
 		}
 
 		return result;
+	}
+	
+	/**
+	 * Checks for error json element and throws exception if found.
+	 * @param json
+	 * @throws Exception
+	 */
+	private void checkError(JSONObject json) throws Exception {
+		
+		JSONObject response = json.getJSONObject("response");
+		if (! response.isNull("error")) {
+			JSONObject error = response.getJSONObject("error");
+			throw new Exception(error.getString("description"));
+		}
+		if (! response.isNull("results")) {
+			//JSONObject error = response.getJSONObject("results");
+			throw new Exception("Location specified is not unique. Please refine your location.");
+		}
+	}
+
+	public Throwable getException() {
+		return exception;
+	}
+	
+	private void setException(Throwable exception) {
+		this.exception = exception;
 	}
 
 	/**
