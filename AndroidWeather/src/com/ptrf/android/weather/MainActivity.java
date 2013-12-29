@@ -3,8 +3,11 @@ package com.ptrf.android.weather;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,8 +28,10 @@ import com.ptrf.android.weather.service.WeatherServiceTask;
 /**
  * Main activity.
  */
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnSharedPreferenceChangeListener {
 	private static final String TAG = MainActivity.class.getName();
+
+	private static final String SHOW_LOCATION_COORDINATES = "showLocationCoordinates";
 	
 	private CheckBox checkboxUseCurrentLocation;
 	private Button buttonGetData = null;
@@ -61,10 +66,16 @@ public class MainActivity extends Activity {
 		//Setup the Button's OnClickListener
 		buttonGetData.setOnClickListener(new DataButtonListener());
 
+		//register listener for settings changes
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		preferences.registerOnSharedPreferenceChangeListener(this);
+		//trigger onchange event to display the screen controls properly according to the current settings
+		onSharedPreferenceChanged(preferences, SHOW_LOCATION_COORDINATES);
+		
 		//Setup the Checkbox's OnClickListener
 		UseCurrentLocationChangeListener useCurrentLocationChangeListener = new UseCurrentLocationChangeListener();
 		checkboxUseCurrentLocation.setOnCheckedChangeListener(useCurrentLocationChangeListener);
-		//trigger onchange event
+		//trigger onchange event to display the screen controls properly according to the current settings
 		useCurrentLocationChangeListener.onCheckedChanged(checkboxUseCurrentLocation, checkboxUseCurrentLocation.isChecked());
 	}
 
@@ -80,15 +91,39 @@ public class MainActivity extends Activity {
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		
+
 		switch (item.getItemId()) {
-		case R.id.action_settings:
+		case R.id.settings:
 			startActivity(new Intent(this, SettingsActivity.class));
 			break;
 		}
 
 		return true;
 	}
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    	
+    	Log.v(TAG, "changed setting key="+ key +" values="+ sharedPreferences.getAll());
+    	
+        if (SHOW_LOCATION_COORDINATES.equals(key)) {
+            boolean showLocationCoordinates = sharedPreferences.getBoolean(key, false);
+            Log.d(TAG, "changed setting key="+ key +" value="+ showLocationCoordinates);
+            if (showLocationCoordinates) {
+				textViewLatitude.setVisibility(View.VISIBLE);
+				textViewLongitude.setVisibility(View.VISIBLE);
+				findViewById(R.id.textViewLatitudeLabel).setVisibility(View.VISIBLE);
+				findViewById(R.id.textViewLongitudeLabel).setVisibility(View.VISIBLE);
+			} else {
+				textViewLatitude.setVisibility(View.INVISIBLE);
+				textViewLongitude.setVisibility(View.INVISIBLE);
+				findViewById(R.id.textViewLatitudeLabel).setVisibility(View.INVISIBLE);
+				findViewById(R.id.textViewLongitudeLabel).setVisibility(View.INVISIBLE);
+//				textViewLatitude.setText("");
+//				textViewLongitude.setText("");
+			}
+        }
+    }
 	
 	/**
 	 * Listener for get data button.
