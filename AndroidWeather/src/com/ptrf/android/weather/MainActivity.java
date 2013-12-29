@@ -33,6 +33,8 @@ public class MainActivity extends Activity {
 	private TextView temperature = null;
 	private TextView weather = null;
 	private TextView wind = null;
+	private TextView textViewLatitude = null;
+	private TextView textViewLongitude = null;
 
 	private LocationService locationService = null;
 
@@ -48,6 +50,8 @@ public class MainActivity extends Activity {
 		temperature = (TextView) findViewById(R.id.textViewTemperature);
 		weather = (TextView) findViewById(R.id.textViewWeather);
 		wind = (TextView) findViewById(R.id.textViewWind);
+		textViewLatitude = (TextView) findViewById(R.id.textViewLatitude);
+		textViewLongitude = (TextView) findViewById(R.id.textViewLongitude);
 
 		//initialize location service
 		locationService = new LocationService(getApplicationContext());
@@ -125,7 +129,9 @@ public class MainActivity extends Activity {
 				location.setText(result.getLocation());
 				temperature.setText(result.getTemperature());
 				weather.setText(result.getWeather());
-				wind.setText(result.getWind());	
+				wind.setText(result.getWind());
+				textViewLatitude.setText(result.getLatitude());
+				textViewLongitude.setText(result.getLongitude());
 			}
 
 		}

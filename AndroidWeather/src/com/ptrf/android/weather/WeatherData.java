@@ -10,6 +10,8 @@ public class WeatherData {
 	private String temperature;
 	private String weather;
 	private String wind;
+	private String latitude;
+	private String longitude;
 	
 	public String getLocation() {
 		return location;
@@ -43,11 +45,27 @@ public class WeatherData {
 		this.wind = wind;
 	}
 
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
 	@Override
 	public String toString() {
 		return String
-				.format("%s [location=%s, temperature=%s, weather=%s, wind=%s]",
-						super.toString(), location, temperature, weather, wind);
+				.format("WeatherData [location=%s, temperature=%s, weather=%s, wind=%s, latitude=%s, longitude=%s]",
+						location, temperature, weather, wind, latitude, longitude);
 	}
 
 }

@@ -33,6 +33,8 @@ public class CurrentConditionsTask extends WeatherServiceTask {
 		result.setTemperature(currentObservation.getString("temperature_string"));
 		result.setWeather(currentObservation.getString("weather"));
 		result.setWind(currentObservation.getString("wind_string"));
+		result.setLatitude(displayLocation.getString("latitude"));
+		result.setLongitude(displayLocation.getString("longitude"));
 		
 		return result;
 	}

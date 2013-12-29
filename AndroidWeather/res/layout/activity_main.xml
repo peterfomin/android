@@ -109,4 +109,39 @@
         android:layout_alignTop="@+id/textViewWindLabel"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
+    <TextView
+        android:id="@+id/textViewLatitudeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textViewLatitudeLabel"
+        android:layout_alignLeft="@+id/textViewWindLabel"
+        android:layout_below="@+id/textViewWindLabel"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewLatitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/textViewLatitudeLabel"
+        android:layout_alignTop="@+id/textViewLatitudeLabel"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewLongitudeLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/textViewLongitudeLabel"
+        android:layout_alignLeft="@+id/textViewLatitudeLabel"
+        android:layout_below="@+id/textViewLatitudeLabel"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewLongitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/textViewLongitudeLabel"
+        android:layout_alignTop="@+id/textViewLongitudeLabel"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
 </RelativeLayout>
