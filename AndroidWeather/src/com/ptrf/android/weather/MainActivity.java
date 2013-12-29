@@ -2,19 +2,21 @@ package com.ptrf.android.weather;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 import com.ptrf.android.weather.location.LocationService;
 import com.ptrf.android.weather.service.CurrentConditionsTask;
@@ -73,6 +75,21 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	/**
+	 * Process menu options selection.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+		switch (item.getItemId()) {
+		case R.id.action_settings:
+			startActivity(new Intent(this, SettingsActivity.class));
+			break;
+		}
+
+		return true;
+	}
+	
 	/**
 	 * Listener for get data button.
 	 *

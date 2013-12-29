@@ -2,12 +2,13 @@
 <resources>
 
     <string name="app_name">Weather</string>
-    <string name="action_settings">Settings</string>
+    <string name="settings">Settings</string>
     <string name="textViewLocationLabel">Location:</string>
     <string name="textViewTemperatureLabel">Temperature:</string>
     <string name="textViewWeatherLabel">Weather:</string>
     <string name="textViewWindLabel">Wind:</string>
     <string name="useCurrentLocationLabel">Use Current Location</string>
+    <string name="useCurrentLocationSummary">Use your current location that is obtained using your device location functionality</string>
     <string name="editTextSearchStringHint">Minneapolis MN</string>
     <string name="buttonGetDataLabel">Refresh</string>
     <string name="textViewLatitudeLabel">Latitude:</string>
