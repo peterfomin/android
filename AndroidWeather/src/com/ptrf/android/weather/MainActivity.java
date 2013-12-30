@@ -96,6 +96,9 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		case R.id.settings:
 			startActivity(new Intent(this, SettingsActivity.class));
 			break;
+		case R.id.keys:
+			startActivity(new Intent(this, ManageKeysActivity.class));
+			break;
 		}
 
 		return true;

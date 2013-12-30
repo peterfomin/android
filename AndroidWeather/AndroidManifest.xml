@@ -31,6 +31,10 @@
             android:name="com.ptrf.android.weather.SettingsActivity"
             android:label="@string/settings" />
         
+        <activity
+            android:name="com.ptrf.android.weather.ManageKeysActivity"
+            android:label="@string/manageKeys" />
+        
     </application>
 
 </manifest>

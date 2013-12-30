@@ -15,5 +15,8 @@
     <string name="textViewLongitudeLabel">Longitude:</string>
     <string name="showLocationCoordinatesLabel">Show location coordinates</string>
     <string name="showLocationCoordinatesSummary">Show location coordinates as part of the weather data</string>
+    <string name="manageKeys">Manage keys</string>
+    <string name="editTextKeyHint">New service key</string>
+    <string name="add">Add</string>
 
 </resources>
