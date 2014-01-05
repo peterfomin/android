@@ -3,7 +3,9 @@ package com.ptrf.android.weather;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,12 +31,16 @@ public class FavoritesActivity extends ListActivity {
 		setListAdapter(createArrayAdapter());
 	}
 
+    /**
+     * Creates new adapter using favorites data.
+     * @return
+     */
     private ArrayAdapter<String> createArrayAdapter() {
     	List<String> items = new ArrayList<String>();
     	items.addAll(FavoritesUtility.getFavoriteLocations(this));
     	adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
     	Log.d(TAG, "Created new adapter="+ adapter );
-		return adapter ;
+		return adapter;
     }
     
     /**
@@ -48,4 +54,23 @@ public class FavoritesActivity extends ListActivity {
 	    startActivity(intent);
 	}
 
+	/**
+	 * Removes all favorites.
+	 * @param button
+	 */
+	public void removeAll(View button) {
+		AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        adb.setTitle("Remove?");
+        adb.setMessage("Are you sure you want to remove all favorites?");
+        adb.setNegativeButton("Cancel", null);
+        adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+                public void onClick(DialogInterface dialog, int choice) {
+                	//remove all items
+                	adapter.clear();
+                	FavoritesUtility.removeAllFavoriteLocations(FavoritesActivity.this);
+                    adapter.notifyDataSetChanged();
+                }
+        });
+        adb.show();
+	}
 }

@@ -1,5 +1,7 @@
 package com.ptrf.android.weather;
 
+import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -16,11 +18,11 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.ptrf.android.weather.location.LocationService;
 import com.ptrf.android.weather.service.CurrentConditionsTask;
@@ -38,7 +40,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	
 	private CheckBox checkboxUseCurrentLocation;
 	private Button buttonGetData = null;
-	private ImageButton buttonAddToFavorites = null;
+	private ToggleButton buttonAddToFavorites = null;
 	private EditText editTextSearchString = null;
 	private TextView location = null;
 	private TextView temperature = null;
@@ -49,14 +51,19 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 
 	private LocationService locationService = null;
 
+	private List<String> favoriteLocations;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		//initialize favorite locations
+		favoriteLocations = FavoritesUtility.getFavoriteLocations(this);
+		
 		checkboxUseCurrentLocation = (CheckBox) findViewById(R.id.checkboxUseCurrentLocation);
 		buttonGetData = (Button) findViewById(R.id.buttonGetData);
-		buttonAddToFavorites = (ImageButton) findViewById(R.id.buttonAddToFavorites);
+		buttonAddToFavorites = (ToggleButton) findViewById(R.id.buttonAddToFavorites);
 		editTextSearchString = (EditText) findViewById(R.id.editTextSearchString);
 		location = (TextView) findViewById(R.id.textViewLocation);
 		temperature = (TextView) findViewById(R.id.textViewTemperature);
@@ -67,9 +74,9 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 
 		//prefill favorite location if it's passed
 		Intent intent = getIntent();
-		String location = intent.getStringExtra(FAVORITE_LOCATION_PARAMETER);
-		if (location != null) {
-			editTextSearchString.setText(location);
+		String favoriteLocation = intent.getStringExtra(FAVORITE_LOCATION_PARAMETER);
+		if (favoriteLocation != null) {
+			editTextSearchString.setText(favoriteLocation);
 			checkboxUseCurrentLocation.setChecked(false);
 		}
 		
@@ -80,6 +87,16 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		DataButtonListener dataButtonListener = new DataButtonListener();
 		buttonGetData.setOnClickListener(dataButtonListener);
 
+		//set initial state of the favorite button
+		String currentLocationValue = location.getText().toString();
+		if (currentLocationValue == null || currentLocationValue.trim().equals("")) {
+			//hide favorite button
+			buttonAddToFavorites.setVisibility(View.INVISIBLE);
+		} else {
+			//unhide favorite button
+			buttonAddToFavorites.setVisibility(View.VISIBLE);
+		}
+		
 		//Setup the Favorites Button's OnClickListener
 		buttonAddToFavorites.setOnClickListener(new FavoritesButtonListener());
 		
@@ -95,12 +112,26 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		//trigger onchange event to display the screen controls properly according to the current settings
 		useCurrentLocationChangeListener.onCheckedChanged(checkboxUseCurrentLocation, checkboxUseCurrentLocation.isChecked());
 		
-		if (location != null) {
+		if (favoriteLocation != null) {
 			//if we had a favorite location then force refresh
 			dataButtonListener.onClick(buttonGetData);
 		}
 	}
 
+	/**
+	 * Returns true if location passed is in the list of favorite locations.
+	 * @param location
+	 * @return
+	 */
+	private boolean isInFavorites(String location) {
+		for (String favorite : favoriteLocations) {
+			if (favorite.equals(location)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -195,6 +226,8 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 				if (task.getException() != null) {
 					throw new RuntimeException(task.getException().getMessage(), task.getException());
 				}
+				//show favorite button if receive a successful result
+				buttonAddToFavorites.setVisibility(View.VISIBLE);
 			} catch (Exception e) {
 				Log.e(TAG, "Failed to execute weather service task:", e);
 				Toast.makeText(MainActivity.this, "Error occured: "+ e.getMessage(), Toast.LENGTH_LONG).show();
@@ -209,6 +242,9 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 				wind.setText(result.getWind());
 				textViewLatitude.setText(result.getLatitude());
 				textViewLongitude.setText(result.getLongitude());
+				
+				//set favorite button state
+				buttonAddToFavorites.setChecked(isInFavorites(result.getLocation()));
 			}
 
 		}
@@ -224,7 +260,15 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		@Override
 		public void onClick(View v) {
 			String favorite = location.getText().toString();
-			FavoritesUtility.add(MainActivity.this, favorite);
+			CompoundButton button = (CompoundButton) v;
+			if (button.isChecked()) {
+				//Add to favorites
+				FavoritesUtility.add(MainActivity.this, favorite);
+			} else {
+				//remove from favorites
+				FavoritesUtility.remove(MainActivity.this, favorite);
+			}
+			favoriteLocations = FavoritesUtility.getFavoriteLocations(MainActivity.this);
 		}
 	}
 	

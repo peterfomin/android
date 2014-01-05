@@ -82,4 +82,45 @@ public abstract class FavoritesUtility {
 			Log.e(TAG, "Failed to add new favorite location="+ favorite, e);
 		}
 	}
+
+	/**
+	 * Removes favorites file.
+	 * @param context
+	 */
+	public static void removeAllFavoriteLocations(Context context) {
+		File file = new File(context.getFilesDir(), FAVORITES_FILE_NAME);
+		file.delete();
+	}
+	
+	/**
+	 * Removes favorite location from the list of favorite locations.
+	 * @param context
+	 * @param locationToRemove
+	 */
+	public static void remove(Context context, String locationToRemove) {
+		File file = new File(context.getFilesDir(), FAVORITES_FILE_NAME);
+		try {
+			String data = StorageUtility.read(file);
+			JSONObject json = new JSONObject(data);
+			//current list of favorite locations
+			JSONArray favorites = json.getJSONArray(FAVORITES);
+			//new list of favorite locations, w/out locationToRemove
+			JSONArray newFavorites = new JSONArray();
+			for (int i = 0; i < favorites.length(); i++) {
+				String location = favorites.getString(i);
+				if (! location.equals(locationToRemove)) {
+					newFavorites.put(location);
+				}
+			}
+			//set new favorite locations in JSON
+			json.put(FAVORITES, newFavorites);
+			//save changes
+			StorageUtility.save(file, json.toString());
+		} catch (FileNotFoundException e) {
+			//ignore this one - no favorites stored
+		} catch (Exception e) {
+			Log.e(TAG, "Failed to remove favorite for file="+ file, e);
+		}
+		
+	}
 }

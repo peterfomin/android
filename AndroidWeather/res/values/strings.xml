@@ -17,5 +17,6 @@
     <string name="showLocationCoordinatesSummary">Show location coordinates as part of the weather data</string>
     <string name="favorites">Favorites</string>
     <string name="addTofavorites">Add to favorites</string>
+    <string name="removeAll">Remove All</string>
 
 </resources>
