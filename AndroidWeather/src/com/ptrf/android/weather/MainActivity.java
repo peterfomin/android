@@ -16,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import com.ptrf.android.weather.location.LocationService;
 import com.ptrf.android.weather.service.CurrentConditionsTask;
 import com.ptrf.android.weather.service.WeatherServiceTask;
+import com.ptrf.android.weather.util.FavoritesUtility;
 
 /**
  * Main activity.
@@ -32,9 +34,11 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	private static final String TAG = MainActivity.class.getName();
 
 	private static final String SHOW_LOCATION_COORDINATES = "showLocationCoordinates";
+	protected static final String FAVORITE_LOCATION_PARAMETER = MainActivity.class.getName()+ "favoriteLocation";
 	
 	private CheckBox checkboxUseCurrentLocation;
 	private Button buttonGetData = null;
+	private ImageButton buttonAddToFavorites = null;
 	private EditText editTextSearchString = null;
 	private TextView location = null;
 	private TextView temperature = null;
@@ -52,6 +56,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 
 		checkboxUseCurrentLocation = (CheckBox) findViewById(R.id.checkboxUseCurrentLocation);
 		buttonGetData = (Button) findViewById(R.id.buttonGetData);
+		buttonAddToFavorites = (ImageButton) findViewById(R.id.buttonAddToFavorites);
 		editTextSearchString = (EditText) findViewById(R.id.editTextSearchString);
 		location = (TextView) findViewById(R.id.textViewLocation);
 		temperature = (TextView) findViewById(R.id.textViewTemperature);
@@ -60,12 +65,24 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		textViewLatitude = (TextView) findViewById(R.id.textViewLatitude);
 		textViewLongitude = (TextView) findViewById(R.id.textViewLongitude);
 
+		//prefill favorite location if it's passed
+		Intent intent = getIntent();
+		String location = intent.getStringExtra(FAVORITE_LOCATION_PARAMETER);
+		if (location != null) {
+			editTextSearchString.setText(location);
+			checkboxUseCurrentLocation.setChecked(false);
+		}
+		
 		//initialize location service
 		locationService = new LocationService(getApplicationContext());
 
 		//Setup the Button's OnClickListener
-		buttonGetData.setOnClickListener(new DataButtonListener());
+		DataButtonListener dataButtonListener = new DataButtonListener();
+		buttonGetData.setOnClickListener(dataButtonListener);
 
+		//Setup the Favorites Button's OnClickListener
+		buttonAddToFavorites.setOnClickListener(new FavoritesButtonListener());
+		
 		//register listener for settings changes
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 		preferences.registerOnSharedPreferenceChangeListener(this);
@@ -77,6 +94,11 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		checkboxUseCurrentLocation.setOnCheckedChangeListener(useCurrentLocationChangeListener);
 		//trigger onchange event to display the screen controls properly according to the current settings
 		useCurrentLocationChangeListener.onCheckedChanged(checkboxUseCurrentLocation, checkboxUseCurrentLocation.isChecked());
+		
+		if (location != null) {
+			//if we had a favorite location then force refresh
+			dataButtonListener.onClick(buttonGetData);
+		}
 	}
 
 	@Override
@@ -96,8 +118,8 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		case R.id.settings:
 			startActivity(new Intent(this, SettingsActivity.class));
 			break;
-		case R.id.keys:
-			startActivity(new Intent(this, ManageKeysActivity.class));
+		case R.id.favorites:
+			startActivity(new Intent(this, FavoritesActivity.class));
 			break;
 		}
 
@@ -191,6 +213,19 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 
 		}
 
+	}
+	
+	/**
+	 * Listener for favorites button.
+	 *
+	 */
+	private class FavoritesButtonListener implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			String favorite = location.getText().toString();
+			FavoritesUtility.add(MainActivity.this, favorite);
+		}
 	}
 	
 	/**

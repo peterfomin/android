@@ -39,6 +39,15 @@
         android:layout_alignBottom="@+id/editTextSearchString"
         android:text="@string/buttonGetDataLabel" />
     
+    <ImageButton
+        android:id="@+id/buttonAddToFavorites"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/buttonGetData"
+        android:layout_alignBottom="@+id/buttonGetData"
+        android:contentDescription="@string/addTofavorites"
+	    android:src="@drawable/ic_launcher" />
+    
     <TextView
         android:id="@+id/textViewLocationLabel"
         android:layout_width="wrap_content"

@@ -32,8 +32,8 @@
             android:label="@string/settings" />
         
         <activity
-            android:name="com.ptrf.android.weather.ManageKeysActivity"
-            android:label="@string/manageKeys" />
+            android:name="com.ptrf.android.weather.FavoritesActivity"
+            android:label="@string/favorites" />
         
     </application>
 
