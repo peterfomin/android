@@ -111,10 +111,8 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		//trigger onchange event to display the screen controls properly according to the current settings
 		useCurrentLocationChangeListener.onCheckedChanged(checkboxUseCurrentLocation, checkboxUseCurrentLocation.isChecked());
 		
-		if (favoriteLocation != null) {
-			//if we had a favorite location then force refresh
-			searchEditorActionListener.onEditorAction(editTextSearchString, 0, null);
-		}
+		//force data refresh
+		refreshWeatherData();
 	}
 
 	/**
@@ -179,67 +177,76 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			}
         }
     }
-	
+
+    /**
+     * Refresh the weather data.
+     */
+	@SuppressLint("DefaultLocale")
+	private void refreshWeatherData() {
+		//Get the weather data
+		WeatherServiceTask task = new CurrentConditionsTask();
+		String url = "http://api.wunderground.com/api/%s/conditions/q/%s.json";
+		String key = "878810199c30c035";
+
+		String query = null;
+		if (checkboxUseCurrentLocation.isChecked()) {
+			Location location = locationService.getCurrentLocation();
+			Log.d(TAG, "location="+ location);
+			if (location == null) {
+				Toast.makeText(MainActivity.this, "Current location data is not available. Please enable location setting.", Toast.LENGTH_LONG).show();
+				return;
+			}
+			query = String.format("%.6f,%.6f", location.getLatitude(), location.getLongitude());
+		} else {
+			query = editTextSearchString.getText().toString();
+			if (query == null || query.trim().equals("")) {
+				Toast.makeText(MainActivity.this, "Please specify the location or use Current location setting.", Toast.LENGTH_LONG).show();
+				return;
+			}
+			//UW service requires spaces to be replaced with '_'
+			query = query.replaceAll(" +", "_");
+		}
+		
+		//Executes the task with the specified parameters
+		task.execute(url, key, query);
+		
+		WeatherData result = null;
+		try {
+			//Waits if necessary for the computation to complete, and then retrieves its result.
+			result = task.get();
+			if (task.getException() != null) {
+				throw new RuntimeException(task.getException().getMessage(), task.getException());
+			}
+			//show favorite button if receive a successful result
+			buttonAddToFavorites.setVisibility(View.VISIBLE);
+		} catch (Exception e) {
+			Log.e(TAG, "Failed to execute weather service task:", e);
+			Toast.makeText(MainActivity.this, "Error occured: "+ e.getMessage(), Toast.LENGTH_LONG).show();
+		}
+		
+		if (result != null) {
+			location.setText(result.getLocation());
+			temperature.setText(result.getTemperature());
+			weather.setText(result.getWeather());
+			wind.setText(result.getWind());
+			textViewLatitude.setText(result.getLatitude());
+			textViewLongitude.setText(result.getLongitude());
+			
+			//set favorite button state
+			buttonAddToFavorites.setChecked(isInFavorites(result.getLocation()));
+		}
+		
+		return;
+	}
+    
     /**
      * Listener for search text.
      */
 	public class SearchEditorActionListener implements OnEditorActionListener {
 
-		@SuppressLint("DefaultLocale")
 		@Override
 		public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-			//Get the weather data
-			WeatherServiceTask task = new CurrentConditionsTask();
-			String url = "http://api.wunderground.com/api/%s/conditions/q/%s.json";
-			String key = "878810199c30c035";
-
-			String query = null;
-			if (checkboxUseCurrentLocation.isChecked()) {
-				Location location = locationService.getCurrentLocation();
-				Log.d(TAG, "location="+ location);
-				if (location == null) {
-					Toast.makeText(MainActivity.this, "Current location data is not available. Please enable location setting.", Toast.LENGTH_LONG).show();
-					return true;
-				}
-				query = String.format("%.6f,%.6f", location.getLatitude(), location.getLongitude());
-			} else {
-				query = editTextSearchString.getText().toString();
-				if (query == null || query.trim().equals("")) {
-					Toast.makeText(MainActivity.this, "Please specify the location or use Current location setting.", Toast.LENGTH_LONG).show();
-					return true;
-				}
-				//UW service requires spaces to be replaced with '_'
-				query = query.replaceAll(" +", "_");
-			}
-			
-			//Executes the task with the specified parameters
-			task.execute(url, key, query);
-			
-			WeatherData result = null;
-			try {
-				//Waits if necessary for the computation to complete, and then retrieves its result.
-				result = task.get();
-				if (task.getException() != null) {
-					throw new RuntimeException(task.getException().getMessage(), task.getException());
-				}
-				//show favorite button if receive a successful result
-				buttonAddToFavorites.setVisibility(View.VISIBLE);
-			} catch (Exception e) {
-				Log.e(TAG, "Failed to execute weather service task:", e);
-				Toast.makeText(MainActivity.this, "Error occured: "+ e.getMessage(), Toast.LENGTH_LONG).show();
-			}
-			
-			if (result != null) {
-				location.setText(result.getLocation());
-				temperature.setText(result.getTemperature());
-				weather.setText(result.getWeather());
-				wind.setText(result.getWind());
-				textViewLatitude.setText(result.getLatitude());
-				textViewLongitude.setText(result.getLongitude());
-				
-				//set favorite button state
-				buttonAddToFavorites.setChecked(isInFavorites(result.getLocation()));
-			}
+			refreshWeatherData();
 			return true;
 		}
 
@@ -268,7 +275,6 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	
 	/**
 	 * UseCurrentLocation checkbox state change listener.
-	 *
 	 */
 	public class UseCurrentLocationChangeListener implements OnCheckedChangeListener {
 
@@ -279,6 +285,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 				locationService.startLocationUpdates();
 				editTextSearchString.setVisibility(View.INVISIBLE);
 				editTextSearchString.setText("");
+				refreshWeatherData();
 			} else {
 				locationService.stopLocationUpdates();
 				editTextSearchString.setVisibility(View.VISIBLE);
