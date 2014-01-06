@@ -26,25 +26,17 @@
         android:ems="10"
         android:hint="@string/editTextSearchStringHint"
         android:visibility="invisible"
-        android:maxLines="1">
+        android:singleLine="true">
 
         <requestFocus />
     </EditText>
-            
-    <Button
-        android:id="@+id/buttonGetData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/editTextSearchString"
-        android:layout_alignBottom="@+id/editTextSearchString"
-        android:text="@string/buttonGetDataLabel" />
     
     <ToggleButton
         android:id="@+id/buttonAddToFavorites"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/buttonGetData"
-        android:layout_alignBottom="@+id/buttonGetData"
+        android:layout_toRightOf="@+id/editTextSearchString"
+        android:layout_alignBottom="@+id/editTextSearchString"
         android:contentDescription="@string/addTofavorites"
         android:textOff=""
         android:textOn=""
@@ -58,8 +50,7 @@
         android:layout_below="@+id/editTextSearchString"
         android:layout_marginTop="44dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/textViewLocationLabel"
-        />
+        android:text="@string/textViewLocationLabel" />
 
     <TextView
         android:id="@+id/textViewLocation"
@@ -118,6 +109,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/textViewWindLabel"
         android:layout_alignTop="@+id/textViewWindLabel"
+        android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView

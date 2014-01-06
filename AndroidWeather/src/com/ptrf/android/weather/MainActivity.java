@@ -11,16 +11,17 @@ import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -39,7 +40,6 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	protected static final String FAVORITE_LOCATION_PARAMETER = MainActivity.class.getName()+ "favoriteLocation";
 	
 	private CheckBox checkboxUseCurrentLocation;
-	private Button buttonGetData = null;
 	private ToggleButton buttonAddToFavorites = null;
 	private EditText editTextSearchString = null;
 	private TextView location = null;
@@ -62,7 +62,6 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		favoriteLocations = FavoritesUtility.getFavoriteLocations(this);
 		
 		checkboxUseCurrentLocation = (CheckBox) findViewById(R.id.checkboxUseCurrentLocation);
-		buttonGetData = (Button) findViewById(R.id.buttonGetData);
 		buttonAddToFavorites = (ToggleButton) findViewById(R.id.buttonAddToFavorites);
 		editTextSearchString = (EditText) findViewById(R.id.editTextSearchString);
 		location = (TextView) findViewById(R.id.textViewLocation);
@@ -80,12 +79,12 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			checkboxUseCurrentLocation.setChecked(false);
 		}
 		
+		//add OnEditorActionListener to handle return key on the text field
+		SearchEditorActionListener searchEditorActionListener = new SearchEditorActionListener();
+		editTextSearchString.setOnEditorActionListener(searchEditorActionListener);
+		
 		//initialize location service
 		locationService = new LocationService(getApplicationContext());
-
-		//Setup the Button's OnClickListener
-		DataButtonListener dataButtonListener = new DataButtonListener();
-		buttonGetData.setOnClickListener(dataButtonListener);
 
 		//set initial state of the favorite button
 		String currentLocationValue = location.getText().toString();
@@ -114,7 +113,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		
 		if (favoriteLocation != null) {
 			//if we had a favorite location then force refresh
-			dataButtonListener.onClick(buttonGetData);
+			searchEditorActionListener.onEditorAction(editTextSearchString, 0, null);
 		}
 	}
 
@@ -181,15 +180,14 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
         }
     }
 	
-	/**
-	 * Listener for get data button.
-	 *
-	 */
-	private class DataButtonListener implements OnClickListener {
+    /**
+     * Listener for search text.
+     */
+	public class SearchEditorActionListener implements OnEditorActionListener {
 
 		@SuppressLint("DefaultLocale")
 		@Override
-		public void onClick(View v) {
+		public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 			//Get the weather data
 			WeatherServiceTask task = new CurrentConditionsTask();
 			String url = "http://api.wunderground.com/api/%s/conditions/q/%s.json";
@@ -201,21 +199,19 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 				Log.d(TAG, "location="+ location);
 				if (location == null) {
 					Toast.makeText(MainActivity.this, "Current location data is not available. Please enable location setting.", Toast.LENGTH_LONG).show();
-					return;
+					return true;
 				}
 				query = String.format("%.6f,%.6f", location.getLatitude(), location.getLongitude());
 			} else {
 				query = editTextSearchString.getText().toString();
 				if (query == null || query.trim().equals("")) {
 					Toast.makeText(MainActivity.this, "Please specify the location or use Current location setting.", Toast.LENGTH_LONG).show();
-					return;
+					return true;
 				}
 				//UW service requires spaces to be replaced with '_'
 				query = query.replaceAll(" +", "_");
 			}
 			
-			buttonGetData.setEnabled(false);
-
 			//Executes the task with the specified parameters
 			task.execute(url, key, query);
 			
@@ -231,8 +227,6 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			} catch (Exception e) {
 				Log.e(TAG, "Failed to execute weather service task:", e);
 				Toast.makeText(MainActivity.this, "Error occured: "+ e.getMessage(), Toast.LENGTH_LONG).show();
-			} finally {
-				buttonGetData.setEnabled(true);
 			}
 			
 			if (result != null) {
@@ -246,7 +240,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 				//set favorite button state
 				buttonAddToFavorites.setChecked(isInFavorites(result.getLocation()));
 			}
-
+			return true;
 		}
 
 	}
