@@ -3,6 +3,8 @@ package com.ptrf.android.weather.service;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+
 import com.ptrf.android.weather.WeatherData;
 
 /**
@@ -10,6 +12,10 @@ import com.ptrf.android.weather.WeatherData;
  *
  */
 public class CurrentConditionsTask extends WeatherServiceTask {
+
+	public CurrentConditionsTask(Context context) {
+		super(context);
+	}
 
 	@Override
 	protected String createRequestUrl(String[] args) {

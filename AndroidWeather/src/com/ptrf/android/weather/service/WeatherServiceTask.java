@@ -12,10 +12,12 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.ptrf.android.weather.WeatherData;
-
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.ptrf.android.weather.WeatherData;
 
 /**
  * Abstract Weather service task.
@@ -25,7 +27,37 @@ public abstract class WeatherServiceTask extends AsyncTask<String, Void, Weather
 	private static final String TAG = WeatherServiceTask.class.getName();
 
 	private Throwable exception = null;
+	private ProgressDialog progressDialog;
+	private Context context;
 	
+	/**
+	 * Protected constructor for subclasses.
+	 * @param context parent context, i.e. activity, etc, used for progress dialog creation and result callback
+	 */
+	protected WeatherServiceTask(Context context) {
+		this.context = context;
+	}
+	
+	@Override
+	protected void onPreExecute() {
+		super.onPreExecute();
+		progressDialog = ProgressDialog.show(context, "Retrieving data", "Please wait...", true, false);
+	}
+
+	@Override
+	protected void onPostExecute(WeatherData result) {
+		super.onPostExecute(result);
+		
+		if (context instanceof ResultReceiver) {
+			ResultReceiver resultReceiver = (ResultReceiver) context;
+			resultReceiver.receiveResult(result, getException());
+		}
+		
+		if (progressDialog.isShowing()) {
+			progressDialog.dismiss();
+		}
+	}
+
 	@Override
 	protected WeatherData doInBackground(String... args) {
 		

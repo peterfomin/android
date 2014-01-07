@@ -27,13 +27,14 @@ import android.widget.ToggleButton;
 
 import com.ptrf.android.weather.location.LocationService;
 import com.ptrf.android.weather.service.CurrentConditionsTask;
+import com.ptrf.android.weather.service.ResultReceiver;
 import com.ptrf.android.weather.service.WeatherServiceTask;
 import com.ptrf.android.weather.util.FavoritesUtility;
 
 /**
  * Main activity.
  */
-public class MainActivity extends Activity implements OnSharedPreferenceChangeListener {
+public class MainActivity extends Activity implements OnSharedPreferenceChangeListener, ResultReceiver {
 	private static final String TAG = MainActivity.class.getName();
 
 	private static final String SHOW_LOCATION_COORDINATES = "showLocationCoordinates";
@@ -194,7 +195,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	@SuppressLint("DefaultLocale")
 	private void refreshWeatherData() {
 		//Get the weather data
-		WeatherServiceTask task = new CurrentConditionsTask();
+		WeatherServiceTask task = new CurrentConditionsTask(this);
 		String url = "http://api.wunderground.com/api/%s/conditions/q/%s.json";
 		String key = "878810199c30c035";
 
@@ -220,19 +221,22 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		//Executes the task with the specified parameters
 		task.execute(url, key, query);
 		
-		WeatherData result = null;
-		try {
-			//Waits if necessary for the computation to complete, and then retrieves its result.
-			result = task.get();
-			if (task.getException() != null) {
-				throw new RuntimeException(task.getException().getMessage(), task.getException());
-			}
-			//show favorite button if receive a successful result
-			buttonAddToFavorites.setVisibility(View.VISIBLE);
-		} catch (Exception e) {
-			Log.e(TAG, "Failed to execute weather service task:", e);
-			Toast.makeText(MainActivity.this, "Error occured: "+ e.getMessage(), Toast.LENGTH_LONG).show();
+		return;
+	}
+    
+	/**
+	 * Receives result from the WeatherServiceTask.
+	 * @param result
+	 */
+	@Override
+	public void receiveResult(WeatherData result, Throwable exception) {
+		if (exception != null) {
+			Log.e(TAG, "Failed to execute weather service task:", exception);
+			Toast.makeText(MainActivity.this, "Error occured: "+ exception.getMessage(), Toast.LENGTH_LONG).show();
+			return;
 		}
+		//show favorite button if receive a successful result
+		buttonAddToFavorites.setVisibility(View.VISIBLE);
 		
 		if (result != null) {
 			location.setText(result.getLocation());
@@ -245,10 +249,8 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			//set favorite button state
 			buttonAddToFavorites.setChecked(isInFavorites(result.getLocation()));
 		}
-		
-		return;
 	}
-    
+	
     /**
      * Listener for search text.
      */
