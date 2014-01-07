@@ -14,6 +14,8 @@
     <string name="textViewLongitudeLabel">Longitude:</string>
     <string name="showLocationCoordinatesLabel">Show location coordinates</string>
     <string name="showLocationCoordinatesSummary">Show location coordinates as part of the weather data</string>
+    <string name="serviceKeyLabel">Service Key</string>
+    <string name="serviceKeySummary">Enter service key that must be obtained at http://www.wunderground.com/weather/api/</string>
     <string name="favorites">Favorites</string>
     <string name="addTofavorites">Add to favorites</string>
     <string name="removeAll">Remove All</string>

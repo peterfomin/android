@@ -190,6 +190,15 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
     }
 
     /**
+     * Returns service key configured in the shared preferences i.e. settings.
+     * @return service key
+     */
+    private String getServiceKey() {
+    	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+    	return preferences.getString("serviceKey", "");//"878810199c30c035"
+	}
+    
+    /**
      * Refresh the weather data.
      */
 	@SuppressLint("DefaultLocale")
@@ -197,7 +206,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		//Get the weather data
 		WeatherServiceTask task = new CurrentConditionsTask(this);
 		String url = "http://api.wunderground.com/api/%s/conditions/q/%s.json";
-		String key = "878810199c30c035";
+		String key = getServiceKey();
 
 		String query = null;
 		if (checkboxUseCurrentLocation.isChecked()) {
