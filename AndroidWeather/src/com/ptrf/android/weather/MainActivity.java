@@ -53,13 +53,40 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 
 	private List<String> favoriteLocations;
 
+	/**
+	 * Called when activity is started with intent using Intent.FLAG_ACTIVITY_CLEAR_TOP.
+	 */
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		Log.d(TAG, "onNewIntent intent="+ intent);
+
+		//prefill favorite location if it's passed
+		String favoriteLocation = intent.getStringExtra(FAVORITE_LOCATION_PARAMETER);
+		if (favoriteLocation != null) {
+			editTextSearchString.setText(favoriteLocation);
+			checkboxUseCurrentLocation.setChecked(false);
+		}
+		
+		//re-initialize favorite locations cache
+		favoriteLocations = FavoritesUtility.getFavoriteLocations(this);
+		
+		//force data refresh
+		refreshWeatherData();
+	}
+
+	/**
+	 * Called when new instance of the activity is created.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Log.d(TAG, "onCreate savedInstanceState="+ savedInstanceState);
+		
 		setContentView(R.layout.activity_main);
 
-		//initialize favorite locations
-		favoriteLocations = FavoritesUtility.getFavoriteLocations(this);
+		//initialize location service
+		locationService = new LocationService(getApplicationContext());
 		
 		checkboxUseCurrentLocation = (CheckBox) findViewById(R.id.checkboxUseCurrentLocation);
 		buttonAddToFavorites = (ToggleButton) findViewById(R.id.buttonAddToFavorites);
@@ -70,31 +97,10 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		wind = (TextView) findViewById(R.id.textViewWind);
 		textViewLatitude = (TextView) findViewById(R.id.textViewLatitude);
 		textViewLongitude = (TextView) findViewById(R.id.textViewLongitude);
-
-		//prefill favorite location if it's passed
-		Intent intent = getIntent();
-		String favoriteLocation = intent.getStringExtra(FAVORITE_LOCATION_PARAMETER);
-		if (favoriteLocation != null) {
-			editTextSearchString.setText(favoriteLocation);
-			checkboxUseCurrentLocation.setChecked(false);
-		}
 		
 		//add OnEditorActionListener to handle return key on the text field
 		SearchEditorActionListener searchEditorActionListener = new SearchEditorActionListener();
 		editTextSearchString.setOnEditorActionListener(searchEditorActionListener);
-		
-		//initialize location service
-		locationService = new LocationService(getApplicationContext());
-
-		//set initial state of the favorite button
-		String currentLocationValue = location.getText().toString();
-		if (currentLocationValue == null || currentLocationValue.trim().equals("")) {
-			//hide favorite button
-			buttonAddToFavorites.setVisibility(View.INVISIBLE);
-		} else {
-			//unhide favorite button
-			buttonAddToFavorites.setVisibility(View.VISIBLE);
-		}
 		
 		//Setup the Favorites Button's OnClickListener
 		buttonAddToFavorites.setOnClickListener(new FavoritesButtonListener());
@@ -106,11 +112,15 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		onSharedPreferenceChanged(preferences, SHOW_LOCATION_COORDINATES);
 		
 		//Setup the Checkbox's OnClickListener
-		UseCurrentLocationChangeListener useCurrentLocationChangeListener = new UseCurrentLocationChangeListener();
-		checkboxUseCurrentLocation.setOnCheckedChangeListener(useCurrentLocationChangeListener);
-		//trigger onchange event to display the screen controls properly according to the current settings
-		useCurrentLocationChangeListener.onCheckedChanged(checkboxUseCurrentLocation, checkboxUseCurrentLocation.isChecked());
-		
+		checkboxUseCurrentLocation.setOnCheckedChangeListener(new UseCurrentLocationChangeListener());
+		if (checkboxUseCurrentLocation.isChecked()) {
+			//start location updates to get the last known location
+			locationService.startLocationUpdates();
+		}
+
+		//initialize favorite locations cache
+		favoriteLocations = FavoritesUtility.getFavoriteLocations(this);
+
 		//force data refresh
 		refreshWeatherData();
 	}

@@ -50,6 +50,10 @@ public class FavoritesActivity extends ListActivity {
 	protected void onListItemClick(ListView l, View v, final int position, long id) {
 		String location = adapter.getItem(position);
 		Intent intent = new Intent(this, MainActivity.class);
+		//when MainActivity is launched, all tasks on top of it are cleared so that MainActivity is top.
+		//A new back stack is created with MainActivity at the top, and using singleTop ensures that MainActivity is created only once
+		//since MainActivity is now on top due to FLAG_ACTIVITY_CLEAR_TOP
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	    intent.putExtra(MainActivity.FAVORITE_LOCATION_PARAMETER, location);
 	    startActivity(intent);
 	}
