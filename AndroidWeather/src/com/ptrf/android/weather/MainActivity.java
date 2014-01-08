@@ -84,7 +84,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		super.onCreate(savedInstanceState);
 		Log.d(TAG, "onCreate savedInstanceState="+ savedInstanceState);
 		
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.main);
 
 		//initialize location service
 		locationService = new LocationService(getApplicationContext());
