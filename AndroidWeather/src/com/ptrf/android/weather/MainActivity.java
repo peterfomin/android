@@ -233,7 +233,13 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		WeatherServiceTask task = new CurrentConditionsTask(this);
 		String url = "http://api.wunderground.com/api/%s/conditions/q/%s.json";
 		String key = getServiceKey();
-
+		
+		//if key is not specified then report it as error w/out calling the service
+		if (key == null || key.trim().equals("")) {
+			Toast.makeText(MainActivity.this, "Please specify a valid service key in the settings.", Toast.LENGTH_LONG).show();
+			return;
+		}
+		
 		String query = null;
 		if (checkboxUseCurrentLocation.isChecked()) {
 			//use current device location
