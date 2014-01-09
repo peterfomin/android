@@ -13,11 +13,19 @@ import android.util.Log;
 
 /**
  * Favorites utility that encapsulates favorites read/write functionality.
- *
+ * Marked as abstract to emphasize the static usage only i.e. can't be instantiated.
  */
 public abstract class FavoritesUtility {
-	private static final String FAVORITES = "favorites";
 	private static final String TAG = FavoritesUtility.class.toString();
+
+	/**
+	 * JSON KEY for favorites array.
+	 */
+	private static final String FAVORITES = "favorites";
+	
+	/**
+	 * Name of the favorite file.
+	 */
     private static final String FAVORITES_FILE_NAME = "favorites.json";
 	
     /**

@@ -2,7 +2,6 @@ package com.ptrf.android.weather;
 
 /**
  * Data transfer object that holds the weather data.
- *
  */
 public class WeatherData {
 

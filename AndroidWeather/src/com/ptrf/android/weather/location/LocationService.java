@@ -8,20 +8,29 @@ import android.os.Bundle;
 import android.util.Log;
 
 /**
- * Location service.
- *
+ * Location service that is responsible for returning the current device location.
  */
 public class LocationService implements LocationListener {
 	private static final String TAG = LocationService.class.getName();
 	
+	/**
+	 * LocationManager that is used to obtain last known location.
+	 */
     private LocationManager locationManager;
     
+    /**
+     * Creates new instance of LocationService.
+     * Initializes the LocationManager.
+     * @param context
+     */
 	public LocationService(Context context) {
 	    locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 	}
 	
 	/**
-	 * Adds itself as a location update listener into location manager.
+	 * Adds itself as a location updates listener into location manager.
+	 * An instance of the LocationListener must be registered with the LocationManager to receive updates so
+	 * the LocationManager's getLastKnownLocation() method would return a valid value.
 	 */
 	public void startLocationUpdates() {
 	    
@@ -41,7 +50,7 @@ public class LocationService implements LocationListener {
 	}
 	
 	/**
-	 * Removes itself as a location update listener.
+	 * Removes itself as a location updates listener.
 	 */
 	public void stopLocationUpdates() {
 		Log.d(TAG, String.format("Removing %s as location provider listener", this));
@@ -49,7 +58,7 @@ public class LocationService implements LocationListener {
 	}
 	
 	/**
-	 * Returns the location selected from all providers.
+	 * Returns the location selected from GPS_PROVIDER and NETWORK_PROVIDER.
 	 */
 	public Location getCurrentLocation() {
 		
@@ -83,6 +92,8 @@ public class LocationService implements LocationListener {
 	    return location;
 	}
 
+	//Did not have to provide any concrete implementation to get the last know location updated.
+	
 	@Override
 	public void onLocationChanged(Location location) {
 		Log.d(TAG, String.format("onLocationChanged: location=%s", location));

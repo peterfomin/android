@@ -5,7 +5,7 @@ import android.preference.PreferenceActivity;
 
 /**
  * Application settings activity.
- *
+ * Extends the base class for an activity to show a hierarchy of preferences.
  */
 public class SettingsActivity extends PreferenceActivity {
 	

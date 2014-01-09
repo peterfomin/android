@@ -20,8 +20,7 @@ import android.util.Log;
 import com.ptrf.android.weather.WeatherData;
 
 /**
- * Abstract Weather service task.
- * 
+ * Abstract Weather service task that extends AsyncTask for asynchronous processing of the weather service request.
  */
 public abstract class WeatherServiceTask extends AsyncTask<String, Void, WeatherData> {
 	private static final String TAG = WeatherServiceTask.class.getName();
@@ -38,29 +37,22 @@ public abstract class WeatherServiceTask extends AsyncTask<String, Void, Weather
 		this.context = context;
 	}
 	
+	/**
+	 * Runs before {@link #doInBackground}.
+	 */
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
 		progressDialog = ProgressDialog.show(context, "Retrieving data", "Please wait...", true, false);
 	}
 
-	@Override
-	protected void onPostExecute(WeatherData result) {
-		super.onPostExecute(result);
-		
-		if (context instanceof ResultReceiver) {
-			ResultReceiver resultReceiver = (ResultReceiver) context;
-			resultReceiver.receiveResult(result, getException());
-		}
-		
-		if (progressDialog.isShowing()) {
-			progressDialog.dismiss();
-		}
-	}
-
+	/**
+	 * Makes a weather service call and returns the populated instance of WeatherData.
+	 */
 	@Override
 	protected WeatherData doInBackground(String... args) {
 		
+		//call subclass'implemenation to create the request URL
 		String requestUrl = createRequestUrl(args);
 
 		WeatherData result = null;
@@ -74,6 +66,7 @@ public abstract class WeatherServiceTask extends AsyncTask<String, Void, Weather
 			HttpConnectionParams.setConnectionTimeout(httpParameters, 15000);
 			HttpConnectionParams.setSoTimeout(httpParameters, 15000);
 
+			//create new instance of the HttpClient
 			HttpClient httpclient = new DefaultHttpClient(httpParameters);
 			HttpGet httpget = new HttpGet(requestUrl);
 
@@ -81,8 +74,10 @@ public abstract class WeatherServiceTask extends AsyncTask<String, Void, Weather
 			HttpResponse response = httpclient.execute(httpget);
 			Log.d(TAG, "response status="+ response.getStatusLine().toString());
 
+			//get service response entity
 			HttpEntity entity = response.getEntity();
 
+			//get service response as string
 			String content = EntityUtils.toString(entity);
 			Log.v(TAG, "response content="+ content);
 			
@@ -92,6 +87,7 @@ public abstract class WeatherServiceTask extends AsyncTask<String, Void, Weather
 			//error handling
 			checkError(json);
 			
+			//call subclass' implementation to convert JSON into instance of WeatherData
 			result = createWeatherData(json);
 
 		} catch (Exception e) {
@@ -100,7 +96,25 @@ public abstract class WeatherServiceTask extends AsyncTask<String, Void, Weather
 
 		return result;
 	}
-	
+
+	/**
+	 * Runs after {@link #doInBackground}.
+	 */
+	@Override
+	protected void onPostExecute(WeatherData result) {
+		super.onPostExecute(result);
+		
+		if (context instanceof ResultReceiver) {
+			//pass the result into the ResultReceiver instance 
+			ResultReceiver resultReceiver = (ResultReceiver) context;
+			resultReceiver.receiveResult(result, getException());
+		}
+		
+		if (progressDialog.isShowing()) {
+			progressDialog.dismiss();
+		}
+	}
+
 	/**
 	 * Checks for error json element and throws exception if found.
 	 * @param json
@@ -115,6 +129,7 @@ public abstract class WeatherServiceTask extends AsyncTask<String, Void, Weather
 		}
 		if (! response.isNull("results")) {
 			//JSONObject error = response.getJSONObject("results");
+			//TODO: handle multiple locations returned
 			throw new Exception("Location specified is not unique. Please refine your location.");
 		}
 	}

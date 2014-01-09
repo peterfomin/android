@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -21,8 +22,18 @@ import com.ptrf.android.weather.util.FavoritesUtility;
 public class FavoritesActivity extends ListActivity {
 	private static final String TAG = FavoritesActivity.class.toString();
 	
+	/**
+	 * List data adapter.
+	 * An Adapter object acts as a bridge between an {@link AdapterView} and the
+	 * underlying data for that view. The Adapter provides access to the data items.
+	 * The Adapter is also responsible for making a {@link android.view.View} for
+	 * each item in the data set.
+	 */
 	private ArrayAdapter<String> adapter;
 
+	/**
+	 * Called when the activity is starting.
+	 */
     @Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
@@ -33,7 +44,7 @@ public class FavoritesActivity extends ListActivity {
 
     /**
      * Creates new adapter using favorites data.
-     * @return
+     * @return new instance of ArrayAdapter
      */
     private ArrayAdapter<String> createArrayAdapter() {
     	List<String> items = new ArrayList<String>();

@@ -32,14 +32,24 @@ import com.ptrf.android.weather.service.WeatherServiceTask;
 import com.ptrf.android.weather.util.FavoritesUtility;
 
 /**
- * Main activity.
+ * Main activity. Responsible for displaying main set of controls, 
+ * calling the weather service and displaying the weather data.
+ * It implements ResultReceiver interface to receive the data from the WeatherServiceTask.
  */
 public class MainActivity extends Activity implements OnSharedPreferenceChangeListener, ResultReceiver {
 	private static final String TAG = MainActivity.class.getName();
 
+	/**
+	 * Shared Preferences key for showLocationCoordinates setting.
+	 */
 	private static final String SHOW_LOCATION_COORDINATES = "showLocationCoordinates";
+	
+	/**
+	 * Parameter key to pass the favorite location as part of the Intent created in FavoritesActivity.
+	 */
 	protected static final String FAVORITE_LOCATION_PARAMETER = MainActivity.class.getName()+ "favoriteLocation";
 	
+	//UI components
 	private CheckBox checkboxUseCurrentLocation;
 	private ToggleButton buttonAddToFavorites = null;
 	private EditText editTextSearchString = null;
@@ -50,12 +60,19 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	private TextView textViewLatitude = null;
 	private TextView textViewLongitude = null;
 
+	/**
+	 * Reference to the location service.
+	 */
 	private LocationService locationService = null;
 
+	/**
+	 * Cached list of the favorite locations used to display the proper favorite button state.
+	 */
 	private List<String> favoriteLocations;
 
 	/**
 	 * Called when activity is started with intent using Intent.FLAG_ACTIVITY_CLEAR_TOP.
+	 * See {@link MainActivity#onListItemClick} for more details.
 	 */
 	@Override
 	protected void onNewIntent(Intent intent) {
@@ -89,6 +106,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		//initialize location service
 		locationService = new LocationService(getApplicationContext());
 		
+		//initialize UI components
 		checkboxUseCurrentLocation = (CheckBox) findViewById(R.id.checkboxUseCurrentLocation);
 		buttonAddToFavorites = (ToggleButton) findViewById(R.id.buttonAddToFavorites);
 		editTextSearchString = (EditText) findViewById(R.id.editTextSearchString);
@@ -100,8 +118,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		textViewLongitude = (TextView) findViewById(R.id.textViewLongitude);
 		
 		//add OnEditorActionListener to handle return key on the text field
-		SearchEditorActionListener searchEditorActionListener = new SearchEditorActionListener();
-		editTextSearchString.setOnEditorActionListener(searchEditorActionListener);
+		editTextSearchString.setOnEditorActionListener(new SearchEditorActionListener());
 		
 		//Setup the Favorites Button's OnClickListener
 		buttonAddToFavorites.setOnClickListener(new FavoritesButtonListener());
@@ -140,6 +157,10 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		return false;
 	}
 	
+	/**
+	 * Initialize the contents of the Activity's standard options menu.
+	 * The content of the menu is defined in /res/menu/main.xml.
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -149,6 +170,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 
 	/**
 	 * Process menu options selection.
+	 * This method is called whenever an item in your options menu is selected.
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -162,9 +184,13 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			break;
 		}
 
+		//Return false to allow normal menu processing to proceed, true to consume it here.
 		return true;
 	}
 
+	/**
+	 * Called when a shared preference is changed, added, or removed.
+	 */
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     	
@@ -199,35 +225,39 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	}
     
     /**
-     * Refresh the weather data.
+     * Refresh the weather data calling the wunderground.com weather service provider.
      */
 	@SuppressLint("DefaultLocale")
 	private void refreshWeatherData() {
-		//Get the weather data
+		//create new task
 		WeatherServiceTask task = new CurrentConditionsTask(this);
 		String url = "http://api.wunderground.com/api/%s/conditions/q/%s.json";
 		String key = getServiceKey();
 
 		String query = null;
 		if (checkboxUseCurrentLocation.isChecked()) {
+			//use current device location
+			//get current device location from the LocationService
 			Location location = locationService.getCurrentLocation();
 			Log.d(TAG, "location="+ location);
 			if (location == null) {
-				Toast.makeText(MainActivity.this, "Current location data is not available. Please enable location setting.", Toast.LENGTH_LONG).show();
+				Toast.makeText(MainActivity.this, "Current location data is not available. Please change location setting.", Toast.LENGTH_LONG).show();
 				return;
 			}
 			query = String.format("%.6f,%.6f", location.getLatitude(), location.getLongitude());
 		} else {
+			//use location specified
 			query = editTextSearchString.getText().toString();
 			if (query == null || query.trim().equals("")) {
 				Toast.makeText(MainActivity.this, "Please specify the location or use Current location setting.", Toast.LENGTH_LONG).show();
 				return;
 			}
-			//UW service requires spaces to be replaced with '_'
+			//wunderground.com service requires spaces to be replaced with '_'
+			//' +' means one or more consecutive spaces
 			query = query.replaceAll(" +", "_");
 		}
 		
-		//Executes the task with the specified parameters
+		//execute the task with the specified parameters
 		task.execute(url, key, query);
 		
 		return;
@@ -235,7 +265,8 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
     
 	/**
 	 * Receives result from the WeatherServiceTask.
-	 * @param result
+	 * @param result weather data result
+	 * @param exception exception if an error occurred
 	 */
 	@Override
 	public void receiveResult(WeatherData result, Throwable exception) {
@@ -244,10 +275,12 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			Toast.makeText(MainActivity.this, "Error occured: "+ exception.getMessage(), Toast.LENGTH_LONG).show();
 			return;
 		}
-		//show favorite button if receive a successful result
-		buttonAddToFavorites.setVisibility(View.VISIBLE);
-		
+
 		if (result != null) {
+			//show favorite button if received a successful result
+			buttonAddToFavorites.setVisibility(View.VISIBLE);
+
+			//set values of the UI components based on the data received
 			location.setText(result.getLocation());
 			temperature.setText(result.getTemperature());
 			weather.setText(result.getWeather());
@@ -274,7 +307,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	}
 	
 	/**
-	 * Listener for favorites button.
+	 * Listener for favorite button.
 	 *
 	 */
 	private class FavoritesButtonListener implements OnClickListener {
@@ -290,6 +323,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 				//remove from favorites
 				FavoritesUtility.remove(MainActivity.this, favorite);
 			}
+			//refresh cached favorite locations
 			favoriteLocations = FavoritesUtility.getFavoriteLocations(MainActivity.this);
 		}
 	}

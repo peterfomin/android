@@ -8,8 +8,7 @@ import android.content.Context;
 import com.ptrf.android.weather.WeatherData;
 
 /**
- * Weather service task.
- *
+ * Weather service task to receive current conditions.
  */
 public class CurrentConditionsTask extends WeatherServiceTask {
 
