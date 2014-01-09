@@ -1,5 +1,7 @@
 package com.ptrf.android.weather.service;
 
+import java.net.SocketTimeoutException;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -90,6 +92,9 @@ public abstract class WeatherServiceTask extends AsyncTask<String, Void, Weather
 			//call subclass' implementation to convert JSON into instance of WeatherData
 			result = createWeatherData(json);
 
+		} catch (SocketTimeoutException e) {
+			//SocketTimeoutException does not provide an error message - create our own exception
+			setException(new Exception("Service request timed out", e));
 		} catch (Exception e) {
 			setException(e);
 		}
