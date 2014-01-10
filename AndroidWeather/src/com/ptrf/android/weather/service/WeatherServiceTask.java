@@ -131,25 +131,6 @@ public abstract class WeatherServiceTask extends AsyncTask<Object, Void, Weather
 		}
 	}
 
-	/**
-	 * Checks for error json element and throws exception if found.
-	 * @param json
-	 * @throws Exception
-	 */
-	private void checkError(JSONObject json) throws Exception {
-		
-		JSONObject response = json.getJSONObject("response");
-		if (! response.isNull("error")) {
-			JSONObject error = response.getJSONObject("error");
-			throw new Exception(error.getString("description"));
-		}
-		if (! response.isNull("results")) {
-			//JSONObject error = response.getJSONObject("results");
-			//TODO: handle multiple locations returned
-			throw new Exception("Location specified is not unique. Please refine your location.");
-		}
-	}
-
 	public Throwable getException() {
 		return exception;
 	}
@@ -165,8 +146,9 @@ public abstract class WeatherServiceTask extends AsyncTask<Object, Void, Weather
 	 * @param deviceLocation location of the device - should be used by default if specified
 	 * @param enteredLocation location entered by user - should be used if device location is not specified
 	 * @return service request url
+	 * @throws Exception if an error occurs
 	 */
-	protected abstract String createRequestUrl(SharedPreferences preferences, Location deviceLocation, String enteredLocation);
+	protected abstract String createRequestUrl(SharedPreferences preferences, Location deviceLocation, String enteredLocation) throws Exception;
 
 	/**
 	 * Returns an instance of WeatherData retrieved from the JSON object.
@@ -175,7 +157,13 @@ public abstract class WeatherServiceTask extends AsyncTask<Object, Void, Weather
 	 * @return instance of WeatherData
 	 * @throws JSONException
 	 */
-	protected abstract WeatherData createWeatherData(JSONObject json)
-			throws JSONException;
+	protected abstract WeatherData createWeatherData(JSONObject json) throws JSONException;
 
+
+	/**
+	 * Checks for error json element and throws exception if found.
+	 * @param json
+	 * @throws Exception
+	 */
+	protected abstract void checkError(JSONObject json) throws Exception;
 }

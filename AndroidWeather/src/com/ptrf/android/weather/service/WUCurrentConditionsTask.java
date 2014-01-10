@@ -11,7 +11,7 @@ import android.location.Location;
 import com.ptrf.android.weather.WeatherData;
 
 /**
- * Weather service task to receive current conditions.
+ * Weather service task to receive current conditions from api.wunderground.com.
  */
 public class WUCurrentConditionsTask extends WeatherServiceTask {
 
@@ -27,13 +27,13 @@ public class WUCurrentConditionsTask extends WeatherServiceTask {
 	
 	@SuppressLint("DefaultLocale")
 	@Override
-	protected String createRequestUrl(SharedPreferences preferences, Location deviceLocation, String enteredLocation) {
+	protected String createRequestUrl(SharedPreferences preferences, Location deviceLocation, String enteredLocation) throws Exception {
 		
 		String key = preferences.getString("serviceKey", "");
 		
 		//if key is not specified then report it as error w/out calling the service
 		if (key == null || key.trim().equals("")) {
-			throw new IllegalArgumentException("Please specify a valid service key in the settings.");
+			throw new Exception("Please specify a valid service key in the settings.");
 		}
 		
 		String query = null;
@@ -66,4 +66,23 @@ public class WUCurrentConditionsTask extends WeatherServiceTask {
 		return result;
 	}
 	
+	/**
+	 * Checks for error json element and throws exception if found.
+	 * @param json
+	 * @throws Exception
+	 */
+	@Override
+	protected void checkError(JSONObject json) throws Exception {
+		
+		JSONObject response = json.getJSONObject("response");
+		if (! response.isNull("error")) {
+			JSONObject error = response.getJSONObject("error");
+			throw new Exception(error.getString("description"));
+		}
+		if (! response.isNull("results")) {
+			//JSONObject error = response.getJSONObject("results");
+			//TODO: handle multiple locations returned
+			throw new Exception("Location specified is not unique. Please refine your location.");
+		}
+	}
 }
