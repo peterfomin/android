@@ -16,7 +16,10 @@ import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.ptrf.android.weather.WeatherData;
@@ -24,7 +27,7 @@ import com.ptrf.android.weather.WeatherData;
 /**
  * Abstract Weather service task that extends AsyncTask for asynchronous processing of the weather service request.
  */
-public abstract class WeatherServiceTask extends AsyncTask<String, Void, WeatherData> {
+public abstract class WeatherServiceTask extends AsyncTask<Object, Void, WeatherData> {
 	private static final String TAG = WeatherServiceTask.class.getName();
 
 	private Throwable exception = null;
@@ -52,14 +55,22 @@ public abstract class WeatherServiceTask extends AsyncTask<String, Void, Weather
 	 * Makes a weather service call and returns the populated instance of WeatherData.
 	 */
 	@Override
-	protected WeatherData doInBackground(String... args) {
+	protected WeatherData doInBackground(Object... args) {
 		
-		//call subclass'implemenation to create the request URL
-		String requestUrl = createRequestUrl(args);
+		//expect first argument to be device location
+		Location deviceLocation = (Location)args[0];
 
+		//expect second argument to be entered location
+		String enteredLocation = (String)args[1];
+		
+		//obtain shared preferences used for the request creation
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+		
 		WeatherData result = null;
 		setException(null);
 		try {
+			//call subclass' method to create the service request url
+			String requestUrl = createRequestUrl(preferences, deviceLocation, enteredLocation);
 
 			// Create the HTTP request
 			HttpParams httpParameters = new BasicHttpParams();
@@ -150,10 +161,12 @@ public abstract class WeatherServiceTask extends AsyncTask<String, Void, Weather
 	/**
 	 * Returns the service request url for the rest service call.
 	 * 
-	 * @param args
+	 * @param preferences application shared preferences
+	 * @param deviceLocation location of the device - should be used by default if specified
+	 * @param enteredLocation location entered by user - should be used if device location is not specified
 	 * @return service request url
 	 */
-	protected abstract String createRequestUrl(String[] args);
+	protected abstract String createRequestUrl(SharedPreferences preferences, Location deviceLocation, String enteredLocation);
 
 	/**
 	 * Returns an instance of WeatherData retrieved from the JSON object.

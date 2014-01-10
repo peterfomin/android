@@ -26,7 +26,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.ptrf.android.weather.location.LocationService;
-import com.ptrf.android.weather.service.CurrentConditionsTask;
+import com.ptrf.android.weather.service.WUCurrentConditionsTask;
 import com.ptrf.android.weather.service.ResultReceiver;
 import com.ptrf.android.weather.service.WeatherServiceTask;
 import com.ptrf.android.weather.util.FavoritesUtility;
@@ -214,15 +214,6 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			}
         }
     }
-
-    /**
-     * Returns service key configured in the shared preferences i.e. settings.
-     * @return service key
-     */
-    private String getServiceKey() {
-    	SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-    	return preferences.getString("serviceKey", "");//"878810199c30c035"
-	}
     
     /**
      * Refresh the weather data calling the wunderground.com weather service provider.
@@ -230,41 +221,30 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	@SuppressLint("DefaultLocale")
 	private void refreshWeatherData() {
 		//create new task
-		WeatherServiceTask task = new CurrentConditionsTask(this);
-		String url = "http://api.wunderground.com/api/%s/conditions/q/%s.json";
-		String key = getServiceKey();
+		WeatherServiceTask task = new WUCurrentConditionsTask(this);
 		
-		//if key is not specified then report it as error w/out calling the service
-		if (key == null || key.trim().equals("")) {
-			Toast.makeText(MainActivity.this, "Please specify a valid service key in the settings.", Toast.LENGTH_LONG).show();
-			return;
-		}
-		
-		String query = null;
+		Location deviceLocation = null;
+		String enteredLocation = null;
 		if (checkboxUseCurrentLocation.isChecked()) {
 			//use current device location
 			//get current device location from the LocationService
-			Location location = locationService.getCurrentLocation();
-			Log.d(TAG, "location="+ location);
-			if (location == null) {
-				Toast.makeText(MainActivity.this, "Current location data is not available. Please change location setting.", Toast.LENGTH_LONG).show();
+			deviceLocation = locationService.getCurrentLocation();
+			Log.d(TAG, "location="+ deviceLocation);
+			if (deviceLocation == null) {
+				Toast.makeText(this, "Current location data is not available. Please change location setting.", Toast.LENGTH_LONG).show();
 				return;
 			}
-			query = String.format("%.6f,%.6f", location.getLatitude(), location.getLongitude());
 		} else {
 			//use location specified
-			query = editTextSearchString.getText().toString();
-			if (query == null || query.trim().equals("")) {
-				Toast.makeText(MainActivity.this, "Please specify the location or use Current location setting.", Toast.LENGTH_LONG).show();
+			enteredLocation = editTextSearchString.getText().toString();
+			if (enteredLocation == null || enteredLocation.trim().equals("")) {
+				Toast.makeText(this, "Please specify the location or use Current location option.", Toast.LENGTH_LONG).show();
 				return;
 			}
-			//wunderground.com service requires spaces to be replaced with '_'
-			//' +' means one or more consecutive spaces
-			query = query.replaceAll(" +", "_");
 		}
 		
 		//execute the task with the specified parameters
-		task.execute(url, key, query);
+		task.execute(deviceLocation, enteredLocation);
 		
 		return;
 	}
@@ -278,7 +258,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	public void receiveResult(WeatherData result, Throwable exception) {
 		if (exception != null) {
 			Log.e(TAG, "Failed to execute weather service task:", exception);
-			Toast.makeText(MainActivity.this, "Error occured: "+ exception.getMessage(), Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Error occured: "+ exception.getMessage(), Toast.LENGTH_LONG).show();
 			return;
 		}
 

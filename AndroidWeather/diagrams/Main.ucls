@@ -57,8 +57,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="com.ptrf.android.weather.service.CurrentConditionsTask" project="AndroidWeather" 
-    file="/AndroidWeather/src/com/ptrf/android/weather/service/CurrentConditionsTask.java" binary="false" 
+  <class id="7" language="java" name="com.ptrf.android.weather.service.WUCurrentConditionsTask" project="AndroidWeather" 
+    file="/AndroidWeather/src/com/ptrf/android/weather/service/WUCurrentConditionsTask.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="844" y="750"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
