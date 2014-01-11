@@ -34,7 +34,7 @@ public class WWOCurrentConditionsTask extends WeatherServiceTask {
 		//get shared preferences
 		SharedPreferences preferences = getSharedPreferences();
 		//get service key
-		String key = preferences.getString(SERVICE_KEY, null); //8v7wze7eq9389w4sbcm9ju6y
+		String key = preferences.getString(SERVICE_KEY, null);
 		
 		//if key is not specified then report it as error w/out calling the service
 		if (key == null || key.trim().equals("")) {
