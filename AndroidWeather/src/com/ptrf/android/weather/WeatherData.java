@@ -11,6 +11,7 @@ public class WeatherData {
 	private String wind;
 	private String latitude;
 	private String longitude;
+	private String providedBy;
 	
 	public String getLocation() {
 		return location;
@@ -60,11 +61,19 @@ public class WeatherData {
 		this.longitude = longitude;
 	}
 
+	public String getProvidedBy() {
+		return providedBy;
+	}
+
+	public void setProvidedBy(String providedBy) {
+		this.providedBy = providedBy;
+	}
+
 	@Override
 	public String toString() {
 		return String
-				.format("WeatherData [location=%s, temperature=%s, weather=%s, wind=%s, latitude=%s, longitude=%s]",
-						location, temperature, weather, wind, latitude, longitude);
+				.format("WeatherData [location=%s, temperature=%s, weather=%s, wind=%s, latitude=%s, longitude=%s, providedBy=%s]",
+						location, temperature, weather, wind, latitude, longitude, providedBy);
 	}
 
 }

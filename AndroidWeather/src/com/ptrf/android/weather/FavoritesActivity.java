@@ -75,10 +75,10 @@ public class FavoritesActivity extends ListActivity {
 	 */
 	public void removeAll(View button) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(this);
-        adb.setTitle("Remove?");
-        adb.setMessage("Are you sure you want to remove all favorites?");
-        adb.setNegativeButton("Cancel", null);
-        adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+        adb.setTitle(R.string.removeAll);
+        adb.setMessage(getString(R.string.msg_removeAllFavorites));
+        adb.setNegativeButton(getString(R.string.cancel), null);
+        adb.setPositiveButton(getString(R.string.ok), new AlertDialog.OnClickListener() {
                 public void onClick(DialogInterface dialog, int choice) {
                 	//remove all items
                 	adapter.clear();

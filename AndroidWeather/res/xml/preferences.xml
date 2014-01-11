@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <ListPreference
+        android:key="serviceProvider"
+        android:title="@string/serviceProviderTitle"
+        android:dialogTitle="@string/serviceProviderDialogTitle"
+        android:entries="@array/serviceProviderEntries"
+        android:entryValues="@array/serviceProviderValues" />
+
+    <EditTextPreference
+        android:key="wuServiceKey"
+        android:singleLine="true"
+        android:summary="@string/wuServiceKeySummary"
+        android:title="@string/wuServiceKeyTitle" />
+    
+    <EditTextPreference
+        android:key="wwoServiceKey"
+        android:singleLine="true"
+        android:summary="@string/wwoServiceKeySummary"
+        android:title="@string/wwoServiceKeyTitle" />
+    
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="showLocationCoordinates"
         android:summary="@string/showLocationCoordinatesSummary"
         android:title="@string/showLocationCoordinatesLabel" />
-
-    <EditTextPreference
-        android:key="serviceKey"
-        android:singleLine="true"
-        android:summary="@string/serviceKeySummary"
-        android:title="@string/serviceKeyLabel" />
 
 </PreferenceScreen>

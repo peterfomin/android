@@ -22,6 +22,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.ptrf.android.weather.R;
 import com.ptrf.android.weather.WeatherData;
 
 /**
@@ -30,8 +31,19 @@ import com.ptrf.android.weather.WeatherData;
 public abstract class WeatherServiceTask extends AsyncTask<Object, Void, WeatherData> {
 	private static final String TAG = WeatherServiceTask.class.getName();
 
+	/**
+	 * Exception that occurred during task execution.
+	 */
 	private Throwable exception = null;
+
+	/**
+	 * Instance of ProgressDialog that is used for showing the "Please wait" message.
+	 */
 	private ProgressDialog progressDialog;
+	
+	/**
+	 * Parent context, i.e. activity. 
+	 */
 	private Context context;
 	
 	/**
@@ -48,7 +60,7 @@ public abstract class WeatherServiceTask extends AsyncTask<Object, Void, Weather
 	@Override
 	protected void onPreExecute() {
 		super.onPreExecute();
-		progressDialog = ProgressDialog.show(context, "Retrieving data", "Please wait...", true, false);
+		progressDialog = ProgressDialog.show(getContext(), getString(R.string.progressDialogTitle), getString(R.string.msg_pleaseWait), true, false);
 	}
 
 	/**
@@ -63,21 +75,18 @@ public abstract class WeatherServiceTask extends AsyncTask<Object, Void, Weather
 		//expect second argument to be entered location
 		String enteredLocation = (String)args[1];
 		
-		//obtain shared preferences used for the request creation
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-		
 		WeatherData result = null;
 		setException(null);
 		try {
 			//call subclass' method to create the service request url
-			String requestUrl = createRequestUrl(preferences, deviceLocation, enteredLocation);
+			String requestUrl = createRequestUrl(deviceLocation, enteredLocation);
 
 			// Create the HTTP request
 			HttpParams httpParameters = new BasicHttpParams();
 
 			// Setup timeouts
-			HttpConnectionParams.setConnectionTimeout(httpParameters, 15000);
-			HttpConnectionParams.setSoTimeout(httpParameters, 15000);
+			HttpConnectionParams.setConnectionTimeout(httpParameters, 10000);
+			HttpConnectionParams.setSoTimeout(httpParameters, 10000);
 
 			//create new instance of the HttpClient
 			HttpClient httpclient = new DefaultHttpClient(httpParameters);
@@ -105,7 +114,7 @@ public abstract class WeatherServiceTask extends AsyncTask<Object, Void, Weather
 
 		} catch (SocketTimeoutException e) {
 			//SocketTimeoutException does not provide an error message - create our own exception
-			setException(new Exception("Service request timed out", e));
+			setException(new Exception(getString(R.string.msg_serviceRequestTimeout), e));
 		} catch (Exception e) {
 			setException(e);
 		}
@@ -120,9 +129,9 @@ public abstract class WeatherServiceTask extends AsyncTask<Object, Void, Weather
 	protected void onPostExecute(WeatherData result) {
 		super.onPostExecute(result);
 		
-		if (context instanceof ResultReceiver) {
+		if (getContext() instanceof ResultReceiver) {
 			//pass the result into the ResultReceiver instance 
-			ResultReceiver resultReceiver = (ResultReceiver) context;
+			ResultReceiver resultReceiver = (ResultReceiver) getContext();
 			resultReceiver.receiveResult(result, getException());
 		}
 		
@@ -130,25 +139,16 @@ public abstract class WeatherServiceTask extends AsyncTask<Object, Void, Weather
 			progressDialog.dismiss();
 		}
 	}
-
-	public Throwable getException() {
-		return exception;
-	}
 	
-	private void setException(Throwable exception) {
-		this.exception = exception;
-	}
-
 	/**
 	 * Returns the service request url for the rest service call.
 	 * 
-	 * @param preferences application shared preferences
 	 * @param deviceLocation location of the device - should be used by default if specified
 	 * @param enteredLocation location entered by user - should be used if device location is not specified
 	 * @return service request url
 	 * @throws Exception if an error occurs
 	 */
-	protected abstract String createRequestUrl(SharedPreferences preferences, Location deviceLocation, String enteredLocation) throws Exception;
+	protected abstract String createRequestUrl(Location deviceLocation, String enteredLocation) throws Exception;
 
 	/**
 	 * Returns an instance of WeatherData retrieved from the JSON object.
@@ -159,11 +159,44 @@ public abstract class WeatherServiceTask extends AsyncTask<Object, Void, Weather
 	 */
 	protected abstract WeatherData createWeatherData(JSONObject json) throws JSONException;
 
-
 	/**
 	 * Checks for error json element and throws exception if found.
 	 * @param json
 	 * @throws Exception
 	 */
 	protected abstract void checkError(JSONObject json) throws Exception;
+	
+	public Throwable getException() {
+		return exception;
+	}
+	
+	private void setException(Throwable exception) {
+		this.exception = exception;
+	}
+
+	/**
+	 * Returns parent context i.e. activity.
+	 */
+	protected Context getContext() {
+		return context;
+	}
+
+	/**
+	 * Returns default shared preferences.
+	 * @return default shared preferences.
+	 */
+	protected SharedPreferences getSharedPreferences() {
+		return PreferenceManager.getDefaultSharedPreferences(getContext());
+	}
+
+
+	/**
+	 * Helper method to get the resource string value using context and resource id.
+	 * @param resId resource id
+	 * @return resource string value
+	 */
+	protected String getString(int resId) {
+		return getContext().getString(resId);
+	}
+
 }

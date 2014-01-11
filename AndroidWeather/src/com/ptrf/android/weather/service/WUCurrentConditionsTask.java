@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
 
+import com.ptrf.android.weather.R;
 import com.ptrf.android.weather.WeatherData;
 
 /**
@@ -15,6 +16,7 @@ import com.ptrf.android.weather.WeatherData;
  */
 public class WUCurrentConditionsTask extends WeatherServiceTask {
 
+	private static final String SERVICE_KEY = "wuServiceKey";
 	private static final String URL = "http://api.wunderground.com/api/%s/conditions/q/%s.json";
 
 	/**
@@ -27,13 +29,15 @@ public class WUCurrentConditionsTask extends WeatherServiceTask {
 	
 	@SuppressLint("DefaultLocale")
 	@Override
-	protected String createRequestUrl(SharedPreferences preferences, Location deviceLocation, String enteredLocation) throws Exception {
-		
-		String key = preferences.getString("serviceKey", "");
+	protected String createRequestUrl(Location deviceLocation, String enteredLocation) throws Exception {
+		//get shared preferences
+		SharedPreferences preferences = getSharedPreferences();
+		//get service key
+		String key = preferences.getString(SERVICE_KEY, null);
 		
 		//if key is not specified then report it as error w/out calling the service
 		if (key == null || key.trim().equals("")) {
-			throw new Exception("Please specify a valid service key in the settings.");
+			throw new Exception(getString(R.string.msg_wuServiceSpecifyKey));
 		}
 		
 		String query = null;
@@ -63,6 +67,9 @@ public class WUCurrentConditionsTask extends WeatherServiceTask {
 		result.setLatitude(displayLocation.getString("latitude"));
 		result.setLongitude(displayLocation.getString("longitude"));
 		
+		//set Service Data Provided By Message specific to this implementation
+		result.setProvidedBy(getString(R.string.msg_wuServiceDataProvidedBy));
+		
 		return result;
 	}
 	
@@ -82,7 +89,7 @@ public class WUCurrentConditionsTask extends WeatherServiceTask {
 		if (! response.isNull("results")) {
 			//JSONObject error = response.getJSONObject("results");
 			//TODO: handle multiple locations returned
-			throw new Exception("Location specified is not unique. Please refine your location.");
+			throw new Exception(getString(R.string.msg_wuServiceLocationNotUnique));
 		}
 	}
 }

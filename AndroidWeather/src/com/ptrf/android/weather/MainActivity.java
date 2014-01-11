@@ -26,9 +26,9 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.ptrf.android.weather.location.LocationService;
-import com.ptrf.android.weather.service.WUCurrentConditionsTask;
 import com.ptrf.android.weather.service.ResultReceiver;
 import com.ptrf.android.weather.service.WeatherServiceTask;
+import com.ptrf.android.weather.service.WeatherServiceTaskFactory;
 import com.ptrf.android.weather.util.FavoritesUtility;
 
 /**
@@ -209,8 +209,6 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 				textViewLongitude.setVisibility(View.INVISIBLE);
 				findViewById(R.id.textViewLatitudeLabel).setVisibility(View.INVISIBLE);
 				findViewById(R.id.textViewLongitudeLabel).setVisibility(View.INVISIBLE);
-//				textViewLatitude.setText("");
-//				textViewLongitude.setText("");
 			}
         }
     }
@@ -220,8 +218,16 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
      */
 	@SuppressLint("DefaultLocale")
 	private void refreshWeatherData() {
-		//create new task
-		WeatherServiceTask task = new WUCurrentConditionsTask(this);
+		
+		//create new task based on the provider service settings
+		WeatherServiceTask task = null;
+		try {
+			task = WeatherServiceTaskFactory.createWeatherServiceTask(this);
+		} catch (Exception e) {
+			//if an exception thrown creating new task then call receiveResult to report it
+			receiveResult(null, e);
+			return;
+		}
 		
 		Location deviceLocation = null;
 		String enteredLocation = null;
@@ -231,14 +237,14 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			deviceLocation = locationService.getCurrentLocation();
 			Log.d(TAG, "location="+ deviceLocation);
 			if (deviceLocation == null) {
-				Toast.makeText(this, "Current location data is not available. Please change location setting.", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, getString(R.string.msg_currentLocationNotAvailable), Toast.LENGTH_LONG).show();
 				return;
 			}
 		} else {
 			//use location specified
 			enteredLocation = editTextSearchString.getText().toString();
 			if (enteredLocation == null || enteredLocation.trim().equals("")) {
-				Toast.makeText(this, "Please specify the location or use Current location option.", Toast.LENGTH_LONG).show();
+				Toast.makeText(this, getString(R.string.msg_enteredLocationNotAvailable), Toast.LENGTH_LONG).show();
 				return;
 			}
 		}
@@ -258,7 +264,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	public void receiveResult(WeatherData result, Throwable exception) {
 		if (exception != null) {
 			Log.e(TAG, "Failed to execute weather service task:", exception);
-			Toast.makeText(this, "Error occured: "+ exception.getMessage(), Toast.LENGTH_LONG).show();
+			Toast.makeText(this, exception.getMessage(), Toast.LENGTH_LONG).show();
 			return;
 		}
 
@@ -276,6 +282,9 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			
 			//set favorite button state
 			buttonAddToFavorites.setChecked(isInFavorites(result.getLocation()));
+			
+			TextView textViewDataProvider = (TextView)findViewById(R.id.textViewDataProvider);
+			textViewDataProvider.setText(result.getProvidedBy());
 		}
 	}
 	
