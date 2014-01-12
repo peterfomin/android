@@ -8,152 +8,181 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <CheckBox android:id="@+id/checkboxUseCurrentLocation"
-        android:layout_width="wrap_content"
+    <!-- controls layout -->
+    <RelativeLayout
+        android:id="@+id/layoutControls"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/useCurrentLocationLabel"
-        android:checked="true"
-        />
+        android:layout_centerVertical="true"
+        android:layout_alignParentTop="true">
+
+	    <CheckBox android:id="@+id/checkboxUseCurrentLocation"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        android:text="@string/useCurrentLocationLabel"
+	        android:checked="true"
+	        />
+	    
+	    <EditText
+	        android:id="@+id/editTextSearchString"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignLeft="@+id/checkboxUseCurrentLocation"
+	        android:layout_below="@+id/checkboxUseCurrentLocation"
+	        android:hint="@string/editTextSearchStringHint"
+	        android:visibility="invisible"
+	        android:singleLine="true">
+	
+	        <requestFocus />
+	    </EditText>
     
-    <EditText
-        android:id="@+id/editTextSearchString"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/checkboxUseCurrentLocation"
-        android:layout_below="@+id/checkboxUseCurrentLocation"
-        android:ems="10"
-        android:hint="@string/editTextSearchStringHint"
-        android:visibility="invisible"
-        android:singleLine="true">
+    </RelativeLayout>
 
-        <requestFocus />
-    </EditText>
+    <!-- data layout -->
+    <RelativeLayout
+        android:id="@+id/layoutData"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+	        
+	    <ToggleButton
+	        android:id="@+id/buttonAddToFavorites"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+	        android:contentDescription="@string/addTofavorites"
+	        android:textOff=""
+	        android:textOn=""
+	        android:visibility="invisible"
+		    android:background="@drawable/btn_star" />
+
+	    <TextView
+	        android:id="@+id/textViewLocationLabel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@+id/buttonAddToFavorites"
+	        android:layout_alignBottom="@+id/buttonAddToFavorites"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:text="@string/textViewLocationLabel" />
+	    
+	    <TextView
+	        android:id="@+id/textViewLocation"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_toRightOf="@+id/textViewLocationLabel"
+	        android:layout_alignTop="@+id/textViewLocationLabel"
+	        android:textAppearance="?android:attr/textAppearanceMedium" 
+	        android:singleLine="true"/>
+	    
+	    <TextView
+	        android:id="@+id/textViewTemperatureLabel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/textViewTemperatureLabel"
+	        android:layout_alignRight="@+id/textViewLocationLabel"
+	        android:layout_below="@+id/textViewLocationLabel"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <TextView
+	        android:id="@+id/textViewTemperature"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_toRightOf="@+id/textViewTemperatureLabel"
+	        android:layout_alignTop="@+id/textViewTemperatureLabel"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <TextView
+	        android:id="@+id/textViewWeatherLabel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/textViewWeatherLabel"
+	        android:layout_alignRight="@+id/textViewTemperatureLabel"
+	        android:layout_below="@+id/textViewTemperatureLabel"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <TextView
+	        android:id="@+id/textViewWeather"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_toRightOf="@+id/textViewWeatherLabel"
+	        android:layout_alignTop="@+id/textViewWeatherLabel"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <TextView
+	        android:id="@+id/textViewWindLabel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/textViewWindLabel"
+	        android:layout_alignRight="@+id/textViewWeatherLabel"
+	        android:layout_below="@+id/textViewWeatherLabel"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <TextView
+	        android:id="@+id/textViewWind"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_toRightOf="@+id/textViewWindLabel"
+	        android:layout_alignTop="@+id/textViewWindLabel"
+	        android:singleLine="true"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <TextView
+	        android:id="@+id/textViewLatitudeLabel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/textViewLatitudeLabel"
+	        android:layout_alignRight="@+id/textViewWindLabel"
+	        android:layout_below="@+id/textViewWindLabel"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <TextView
+	        android:id="@+id/textViewLatitude"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_toRightOf="@+id/textViewLatitudeLabel"
+	        android:layout_alignTop="@+id/textViewLatitudeLabel"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <TextView
+	        android:id="@+id/textViewLongitudeLabel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/textViewLongitudeLabel"
+	        android:layout_alignRight="@+id/textViewLatitudeLabel"
+	        android:layout_below="@+id/textViewLatitudeLabel"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <TextView
+	        android:id="@+id/textViewLongitude"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_toRightOf="@+id/textViewLongitudeLabel"
+	        android:layout_alignTop="@+id/textViewLongitudeLabel"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	        
+    </RelativeLayout>
     
-    <TextView
-        android:id="@+id/textViewLocationLabel"
-        android:layout_width="wrap_content"
+    <!-- footer layout -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editTextSearchString"
-        android:layout_below="@+id/editTextSearchString"
-        android:layout_marginTop="44dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/textViewLocationLabel" />
-
-        
-    <ToggleButton
-        android:id="@+id/buttonAddToFavorites"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/textViewLocationLabel"
-        android:layout_alignBottom="@+id/textViewLocationLabel"
-        android:contentDescription="@string/addTofavorites"
-        android:textOff=""
-        android:textOn=""
-        android:visibility="invisible"
-	    android:background="@drawable/btn_star" />
-    
-    <TextView
-        android:id="@+id/textViewLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/buttonAddToFavorites"
-        android:layout_alignTop="@+id/textViewLocationLabel"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-    
-    <TextView
-        android:id="@+id/textViewTemperatureLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/textViewTemperatureLabel"
-        android:layout_alignLeft="@+id/textViewLocationLabel"
-        android:layout_below="@+id/textViewLocationLabel"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewTemperature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/textViewTemperatureLabel"
-        android:layout_alignTop="@+id/textViewTemperatureLabel"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewWeatherLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/textViewWeatherLabel"
-        android:layout_alignLeft="@+id/textViewTemperatureLabel"
-        android:layout_below="@+id/textViewTemperatureLabel"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewWeather"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/textViewWeatherLabel"
-        android:layout_alignTop="@+id/textViewWeatherLabel"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewWindLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/textViewWindLabel"
-        android:layout_alignLeft="@+id/textViewWeatherLabel"
-        android:layout_below="@+id/textViewWeatherLabel"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewWind"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/textViewWindLabel"
-        android:layout_alignTop="@+id/textViewWindLabel"
-        android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewLatitudeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/textViewLatitudeLabel"
-        android:layout_alignLeft="@+id/textViewWindLabel"
-        android:layout_below="@+id/textViewWindLabel"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewLatitude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/textViewLatitudeLabel"
-        android:layout_alignTop="@+id/textViewLatitudeLabel"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewLongitudeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/textViewLongitudeLabel"
-        android:layout_alignLeft="@+id/textViewLatitudeLabel"
-        android:layout_below="@+id/textViewLatitudeLabel"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewLongitude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/textViewLongitudeLabel"
-        android:layout_alignTop="@+id/textViewLongitudeLabel"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewDataProvider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true">
+
+		<TextView
+	        android:id="@+id/textViewDataProvider"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"/>
+        
+   	</LinearLayout>
 
 </RelativeLayout>
