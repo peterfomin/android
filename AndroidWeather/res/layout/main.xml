@@ -9,28 +9,25 @@
     tools:context=".MainActivity" >
 
     <!-- controls layout -->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/layoutControls"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
+        android:orientation="vertical"
         android:gravity="center">
 
 	    <CheckBox android:id="@+id/checkboxUseCurrentLocation"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignParentLeft="true"
-	        android:layout_alignParentTop="true"
 	        android:text="@string/useCurrentLocationLabel"
-	        android:checked="true"
-	        />
+	        android:checked="true"/>
 	    
 	    <EditText
 	        android:id="@+id/editTextSearchString"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignLeft="@+id/checkboxUseCurrentLocation"
 	        android:layout_below="@+id/checkboxUseCurrentLocation"
 	        android:hint="@string/editTextSearchStringHint"
 	        android:visibility="invisible"
@@ -39,7 +36,7 @@
 	        <requestFocus />
 	    </EditText>
     
-    </RelativeLayout>
+    </LinearLayout>
 
     <!-- data layout -->
     <RelativeLayout
@@ -173,6 +170,7 @@
     
     <!-- footer layout -->
     <LinearLayout
+        android:id="@+id/layoutFooter"
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
