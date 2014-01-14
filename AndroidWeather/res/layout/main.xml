@@ -21,14 +21,15 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/useCurrentLocationLabel"
+	        style="@style/WeatherTextNormal"
 	        android:checked="true"/>
 	    
 	    <EditText
 	        android:id="@+id/editTextSearchString"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@+id/checkboxUseCurrentLocation"
 	        android:hint="@string/editTextSearchStringHint"
+	        style="@style/WeatherTextNormal"
 	        android:visibility="invisible"
 	        android:singleLine="true">
 	
@@ -61,7 +62,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_toRightOf="@+id/buttonAddToFavorites"
 	        android:layout_alignBottom="@+id/buttonAddToFavorites"
-	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        style="@style/WeatherTextNormal"
 	        android:text="@string/textViewLocationLabel" />
 	    
 	    <TextView
@@ -71,7 +72,7 @@
 	        android:layout_marginLeft="5dp"
 	        android:layout_toRightOf="@+id/textViewLocationLabel"
 	        android:layout_alignTop="@+id/textViewLocationLabel"
-	        android:textAppearance="?android:attr/textAppearanceMedium" 
+	        style="@style/WeatherTextNormal" 
 	        android:singleLine="true"/>
 	    
 	    <TextView
@@ -81,7 +82,7 @@
 	        android:text="@string/textViewTemperatureLabel"
 	        android:layout_alignRight="@+id/textViewLocationLabel"
 	        android:layout_below="@+id/textViewLocationLabel"
-	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	        style="@style/WeatherTextNormal" />
 	
 	    <TextView
 	        android:id="@+id/textViewTemperature"
@@ -90,7 +91,7 @@
 	        android:layout_marginLeft="5dp"
 	        android:layout_toRightOf="@+id/textViewTemperatureLabel"
 	        android:layout_alignTop="@+id/textViewTemperatureLabel"
-	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	        style="@style/WeatherTextNormal" />
 	
 	    <TextView
 	        android:id="@+id/textViewWeatherLabel"
@@ -99,7 +100,7 @@
 	        android:text="@string/textViewWeatherLabel"
 	        android:layout_alignRight="@+id/textViewTemperatureLabel"
 	        android:layout_below="@+id/textViewTemperatureLabel"
-	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	        style="@style/WeatherTextNormal" />
 	
 	    <TextView
 	        android:id="@+id/textViewWeather"
@@ -108,7 +109,7 @@
 	        android:layout_marginLeft="5dp"
 	        android:layout_toRightOf="@+id/textViewWeatherLabel"
 	        android:layout_alignTop="@+id/textViewWeatherLabel"
-	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	        style="@style/WeatherTextNormal" />
 	
 	    <TextView
 	        android:id="@+id/textViewWindLabel"
@@ -117,7 +118,7 @@
 	        android:text="@string/textViewWindLabel"
 	        android:layout_alignRight="@+id/textViewWeatherLabel"
 	        android:layout_below="@+id/textViewWeatherLabel"
-	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	        style="@style/WeatherTextNormal" />
 	
 	    <TextView
 	        android:id="@+id/textViewWind"
@@ -127,7 +128,7 @@
 	        android:layout_toRightOf="@+id/textViewWindLabel"
 	        android:layout_alignTop="@+id/textViewWindLabel"
 	        android:singleLine="true"
-	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	        style="@style/WeatherTextNormal" />
 	
 	    <TextView
 	        android:id="@+id/textViewLatitudeLabel"
@@ -136,7 +137,7 @@
 	        android:text="@string/textViewLatitudeLabel"
 	        android:layout_alignRight="@+id/textViewWindLabel"
 	        android:layout_below="@+id/textViewWindLabel"
-	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	        style="@style/WeatherTextNormal" />
 	
 	    <TextView
 	        android:id="@+id/textViewLatitude"
@@ -145,7 +146,7 @@
 	        android:layout_marginLeft="5dp"
 	        android:layout_toRightOf="@+id/textViewLatitudeLabel"
 	        android:layout_alignTop="@+id/textViewLatitudeLabel"
-	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	        style="@style/WeatherTextNormal" />
 	
 	    <TextView
 	        android:id="@+id/textViewLongitudeLabel"
@@ -154,7 +155,7 @@
 	        android:text="@string/textViewLongitudeLabel"
 	        android:layout_alignRight="@+id/textViewLatitudeLabel"
 	        android:layout_below="@+id/textViewLatitudeLabel"
-	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	        style="@style/WeatherTextNormal" />
 	
 	    <TextView
 	        android:id="@+id/textViewLongitude"
@@ -163,7 +164,7 @@
 	        android:layout_marginLeft="5dp"
 	        android:layout_toRightOf="@+id/textViewLongitudeLabel"
 	        android:layout_alignTop="@+id/textViewLongitudeLabel"
-	        android:textAppearance="?android:attr/textAppearanceMedium" />
+	        style="@style/WeatherTextNormal" />
 	        
     </RelativeLayout>
     

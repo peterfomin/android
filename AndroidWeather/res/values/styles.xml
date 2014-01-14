@@ -17,4 +17,9 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="WeatherTextNormal" parent="@android:style/TextAppearance.Medium">
+	</style>
+
+    <style name="WeatherTextSmall" parent="@android:style/TextAppearance.Small">
+	</style>
 </resources>
