@@ -20,6 +20,11 @@ public abstract class WeatherServiceTaskFactory {
 	public static WeatherServiceTask createWeatherServiceTask(Context context) throws Exception {
 		WeatherServiceTask task = null;
 		
+		//for testing only
+//		if (true) {
+//			return new MockedCurrentConditionsTask(context);
+//		}
+		
 		//get application shared properties
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 		
