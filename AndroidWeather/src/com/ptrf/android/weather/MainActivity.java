@@ -20,6 +20,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -56,6 +57,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	private TextView location = null;
 	private TextView temperature = null;
 	private TextView weather = null;
+	private ImageView weatherImage = null;
 	private TextView wind = null;
 	private TextView textViewLatitude = null;
 	private TextView textViewLongitude = null;
@@ -113,6 +115,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		location = (TextView) findViewById(R.id.textViewLocation);
 		temperature = (TextView) findViewById(R.id.textViewTemperature);
 		weather = (TextView) findViewById(R.id.textViewWeather);
+		weatherImage = (ImageView) findViewById(R.id.imageViewWeather);
 		wind = (TextView) findViewById(R.id.textViewWind);
 		textViewLatitude = (TextView) findViewById(R.id.textViewLatitude);
 		textViewLongitude = (TextView) findViewById(R.id.textViewLongitude);
@@ -276,6 +279,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			location.setText(result.getLocation());
 			temperature.setText(result.getTemperature());
 			weather.setText(result.getWeather());
+			weatherImage.setImageDrawable(result.getWeatherImage());
 			wind.setText(result.getWind());
 			textViewLatitude.setText(result.getLatitude());
 			textViewLongitude.setText(result.getLongitude());

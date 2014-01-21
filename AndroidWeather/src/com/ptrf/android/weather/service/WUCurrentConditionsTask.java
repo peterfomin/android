@@ -10,6 +10,7 @@ import android.location.Location;
 
 import com.ptrf.android.weather.R;
 import com.ptrf.android.weather.WeatherData;
+import com.ptrf.android.weather.util.ImageUtility;
 
 /**
  * Weather service task to receive current conditions from api.wunderground.com.
@@ -63,6 +64,10 @@ public class WUCurrentConditionsTask extends WeatherServiceTask {
 		result.setLocation(displayLocation.getString("full"));
 		result.setTemperature(currentObservation.getString("temperature_string"));
 		result.setWeather(currentObservation.getString("weather"));
+		String urlAddress = currentObservation.getString("icon_url");
+		if (urlAddress != null && urlAddress.trim().length() > 0) {
+			result.setWeatherImage(ImageUtility.createImageFromURL(urlAddress));
+		}
 		result.setWind(currentObservation.getString("wind_string"));
 		result.setLatitude(displayLocation.getString("latitude"));
 		result.setLongitude(displayLocation.getString("longitude"));

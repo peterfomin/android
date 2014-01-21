@@ -1,5 +1,7 @@
 package com.ptrf.android.weather;
 
+import android.graphics.drawable.Drawable;
+
 /**
  * Data transfer object that holds the weather data.
  */
@@ -8,6 +10,7 @@ public class WeatherData {
 	private String location;
 	private String temperature;
 	private String weather;
+	private Drawable weatherImage;
 	private String wind;
 	private String latitude;
 	private String longitude;
@@ -35,6 +38,14 @@ public class WeatherData {
 
 	public void setWeather(String weather) {
 		this.weather = weather;
+	}
+
+	public Drawable getWeatherImage() {
+		return weatherImage;
+	}
+
+	public void setWeatherImage(Drawable weatherImage) {
+		this.weatherImage = weatherImage;
 	}
 
 	public String getWind() {
@@ -72,8 +83,8 @@ public class WeatherData {
 	@Override
 	public String toString() {
 		return String
-				.format("WeatherData [location=%s, temperature=%s, weather=%s, wind=%s, latitude=%s, longitude=%s, providedBy=%s]",
-						location, temperature, weather, wind, latitude, longitude, providedBy);
+				.format("WeatherData [location=%s, temperature=%s, weather=%s, weatherUrl=%s, wind=%s, latitude=%s, longitude=%s, providedBy=%s]",
+						location, temperature, weather, weatherImage, wind, latitude, longitude, providedBy);
 	}
 
 }

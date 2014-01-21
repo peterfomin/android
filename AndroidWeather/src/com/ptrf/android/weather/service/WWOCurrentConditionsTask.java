@@ -11,6 +11,7 @@ import android.location.Location;
 
 import com.ptrf.android.weather.R;
 import com.ptrf.android.weather.WeatherData;
+import com.ptrf.android.weather.util.ImageUtility;
 
 /**
  * Weather service task to receive current conditions from api.worldweatheronline.com.
@@ -65,10 +66,14 @@ public class WWOCurrentConditionsTask extends WeatherServiceTask {
 		if (currentConditions.length() > 0) {
 			JSONObject currentCondition = currentConditions.getJSONObject(0);
 			result.setTemperature(currentCondition.getString("temp_F")); //TODO: add celcious
-			result.setWeather(getArrayValues(currentCondition.getJSONArray("weatherDesc"), "value"));
+			result.setWeather(getFirstArrayValue(currentCondition.getJSONArray("weatherDesc"), "value"));
+			String urlAddress = getFirstArrayValue(currentCondition.getJSONArray("weatherIconUrl"), "value");
+			if (urlAddress != null && urlAddress.trim().length() > 0) {
+				result.setWeatherImage(ImageUtility.createImageFromURL(urlAddress));
+			}
 			result.setWind(currentCondition.getString("winddir16Point"));
 		}
-		result.setLocation(getArrayValues(data.getJSONArray("request"), "query"));
+		result.setLocation(getFirstArrayValue(data.getJSONArray("request"), "query"));
 		
 //		JSONObject displayLocation = currentObservation.getJSONObject("display_location");
 //		result.setLatitude(displayLocation.getString("latitude"));
@@ -88,21 +93,44 @@ public class WWOCurrentConditionsTask extends WeatherServiceTask {
 	
 	/**
 	 * Iterates over array passed in and extracts given object property.
+	 * I.e. for "weatherDesc": [{"value": "Fog"}] it will return "Fog".
 	 * @param array array to iterate over
-	 * @param property
-	 * @return
+	 * @param property json object property name
+	 * @param separator value separator
+	 * @return object property values
 	 * @throws JSONException
 	 */
-	private String getArrayValues(JSONArray array, String property) throws JSONException {
+	@SuppressWarnings("unused")
+	private String getArrayValues(JSONArray array, String property, String separator) throws JSONException {
 		StringBuilder builder = new StringBuilder();
 		
 		if (array != null) {
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject object = array.getJSONObject(i);
+				if (builder.length() > 0) {
+					builder.append(separator);
+				}
 				builder.append(object.get(property));
 			}
 		}
 		return builder.toString();
+	}
+
+	/**
+	 * Extracts given object property from the first array element.
+	 * I.e. for "weatherDesc": [{"value": "Fog"}] it will return "Fog".
+	 * @param array array to iterate over
+	 * @param property json object property name
+	 * @return object property from the first array element
+	 * @throws JSONException
+	 */
+	private String getFirstArrayValue(JSONArray array, String property) throws JSONException {
+//		if (array != null && array.length() > 0 ) {
+//			return array.getJSONObject(0).getString(property);
+//		} else {
+//			return null;
+//		}
+		return (array != null && array.length() > 0 ? array.getJSONObject(0).getString(property) : null);
 	}
 
 }

@@ -106,13 +106,23 @@
 	        android:layout_below="@+id/textViewTemperatureLabel"
 	        style="@style/WeatherTextNormal" />
 	
+	    <ImageView
+	        android:id="@+id/imageViewWeather"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_toRightOf="@+id/textViewWeatherLabel"
+	        android:layout_alignBottom="@+id/textViewWeatherLabel"
+	        android:contentDescription="@string/imageViewWeatherContentDescription"
+	        style="@style/WeatherTextNormal" />
+
 	    <TextView
 	        android:id="@+id/textViewWeather"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_marginLeft="5dp"
-	        android:layout_toRightOf="@+id/textViewWeatherLabel"
-	        android:layout_alignTop="@+id/textViewWeatherLabel"
+	        android:layout_toRightOf="@+id/imageViewWeather"
+	        android:layout_alignBottom="@+id/imageViewWeather"
 	        style="@style/WeatherTextNormal" />
 	
 	    <TextView
