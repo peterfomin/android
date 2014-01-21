@@ -19,7 +19,7 @@ import com.ptrf.android.weather.util.ImageUtility;
 public class WWOCurrentConditionsTask extends WeatherServiceTask {
 
 	private static final String SERVICE_KEY = "wwoServiceKey";
-	private static final String URL = "http://api.worldweatheronline.com/free/v1/weather.ashx?key=%s&q=%s&format=json";
+	private static final String URL = "http://api.worldweatheronline.com/free/v1/weather.ashx?key=%s&q=%s&includelocation=yes&format=json";
 
 	/**
 	 * Creates new instance of the task.
@@ -73,11 +73,23 @@ public class WWOCurrentConditionsTask extends WeatherServiceTask {
 			}
 			result.setWind(currentCondition.getString("winddir16Point"));
 		}
-		result.setLocation(getFirstArrayValue(data.getJSONArray("request"), "query"));
 		
-//		JSONObject displayLocation = currentObservation.getJSONObject("display_location");
-//		result.setLatitude(displayLocation.getString("latitude"));
-//		result.setLongitude(displayLocation.getString("longitude"));
+		StringBuilder location = new StringBuilder();
+		JSONArray areas = data.getJSONArray("nearest_area");
+		if (areas.length() > 0) {
+			//pick the first one
+			JSONObject area = areas.getJSONObject(0);
+			
+			//set location returned
+			location.append(getFirstArrayValue(area.getJSONArray("areaName"), "value"));
+			location.append(",");
+			location.append(getFirstArrayValue(area.getJSONArray("region"), "value"));
+			result.setLocation(location.toString());
+			
+			//set GPS coordinates
+			result.setLatitude(area.getString("latitude"));
+			result.setLongitude(area.getString("longitude"));
+		}
 		
 		//set Service Data Provided By Message specific to this implementation
 		result.setProvidedBy(getString(R.string.msg_wwoServiceDataProvidedBy));
