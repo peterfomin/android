@@ -37,17 +37,27 @@ public class MockedCurrentConditionsTask extends WeatherServiceTask {
 		WeatherData result = new WeatherData();
 
 		result.setLocation("Plymouth, MN");
+
 		Temperature temperature = new Temperature();
 		temperature.setValueC("0");
 		temperature.setValueF("32");
 		result.setTemperature(temperature);
+		
+		Temperature feelsLike = new Temperature();
+		feelsLike.setValueC("0");
+		feelsLike.setValueF("32");
+		result.setFeelsLike(feelsLike);
+		
 		result.setWeather("Sunny");
+		
 		Wind wind = new Wind();
 		wind.setDirection("NNW");
 		wind.setSpeedKph("10");
 		wind.setSpeedMph("5");
 		result.setWind(wind);
-
+		
+		result.setHumidity("33%");
+		
 		// set Service Data Provided By Message specific to this implementation
 		result.setProvidedBy(MockedCurrentConditionsTask.class.getName());
 

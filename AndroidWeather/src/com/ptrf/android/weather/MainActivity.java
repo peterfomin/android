@@ -26,6 +26,7 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.ptrf.android.weather.data.Temperature;
 import com.ptrf.android.weather.data.WeatherData;
 import com.ptrf.android.weather.location.LocationService;
 import com.ptrf.android.weather.service.ResultReceiver;
@@ -205,10 +206,10 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 				findViewById(R.id.textViewLatitudeLabel).setVisibility(View.VISIBLE);
 				findViewById(R.id.textViewLongitudeLabel).setVisibility(View.VISIBLE);
 			} else {
-				textViewLatitude.setVisibility(View.INVISIBLE);
-				textViewLongitude.setVisibility(View.INVISIBLE);
-				findViewById(R.id.textViewLatitudeLabel).setVisibility(View.INVISIBLE);
-				findViewById(R.id.textViewLongitudeLabel).setVisibility(View.INVISIBLE);
+				textViewLatitude.setVisibility(View.GONE);
+				textViewLongitude.setVisibility(View.GONE);
+				findViewById(R.id.textViewLatitudeLabel).setVisibility(View.GONE);
+				findViewById(R.id.textViewLongitudeLabel).setVisibility(View.GONE);
 			}
         }
     }
@@ -268,6 +269,8 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			return;
 		}
 
+		Log.v(TAG, "result="+ result);
+		
 		if (result != null) {
 			//show favorite button if received a successful result
 			buttonAddToFavorites.setVisibility(View.VISIBLE);
@@ -280,6 +283,22 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			temperatureF.setText(result.getTemperature().getValueFWithUnit());
 			temperatureC.setText(result.getTemperature().getValueCWithUnit());
 			
+			TextView feelsLikeLabel = (TextView) findViewById(R.id.textViewFeelsLikeLabel);
+			TextView feelsLikeF = (TextView) findViewById(R.id.textViewFeelsLikeF);
+			TextView feelsLikeC = (TextView) findViewById(R.id.textViewFeelsLikeC);
+			Temperature feelsLike = result.getFeelsLike();
+			if (feelsLike != null) {
+				feelsLikeF.setText(feelsLike.getValueFWithUnit());
+				feelsLikeC.setText(feelsLike.getValueCWithUnit());
+				feelsLikeLabel.setVisibility(View.VISIBLE);
+				feelsLikeF.setVisibility(View.VISIBLE);
+				feelsLikeC.setVisibility(View.VISIBLE);
+			} else {
+				feelsLikeLabel.setVisibility(View.GONE);
+				feelsLikeF.setVisibility(View.GONE);
+				feelsLikeC.setVisibility(View.GONE);
+			}
+
 			weather.setText(result.getWeather());
 			weatherImage.setImageDrawable(result.getWeatherImage());
 			
@@ -289,6 +308,9 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			windDirection.setText(result.getWind().getDirection());
 			windSpeedMph.setText(result.getWind().getSpeedMphWithUnit());
 			windSpeedKph.setText(result.getWind().getSpeedKphWithUnit());
+			
+			TextView humidity = (TextView) findViewById(R.id.textViewHumidity);
+			humidity.setText(result.getHumidity());
 			
 			textViewLatitude.setText(result.getLatitude());
 			textViewLongitude.setText(result.getLongitude());

@@ -22,7 +22,7 @@ public class Wind {
 	}
 
 	public String getSpeedMphWithUnit() {
-		return getSpeedMph() + "MPH" ;
+		return getSpeedMph() + "mph" ;
 	}
 	
 	public void setSpeedMph(String speedMph) {
@@ -34,7 +34,7 @@ public class Wind {
 	}
 
 	public String getSpeedKphWithUnit() {
-		return getSpeedKph() + "KMH";
+		return getSpeedKph() + "kmh";
 	}
 	
 	public void setSpeedKph(String speedKph) {

@@ -107,12 +107,39 @@
 	        style="@style/WeatherTextNormal" />
 	
 	    <TextView
+	        android:id="@+id/textViewFeelsLikeLabel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/textViewFeelsLikeLabel"
+	        android:layout_alignRight="@+id/textViewTemperatureLabel"
+	        android:layout_below="@+id/textViewTemperatureLabel"
+	        style="@style/WeatherTextNormal" />
+	
+	    <TextView
+	        android:id="@+id/textViewFeelsLikeF"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_toRightOf="@+id/textViewFeelsLikeLabel"
+	        android:layout_alignTop="@+id/textViewFeelsLikeLabel"
+	        style="@style/WeatherTextNormal" />
+	
+	    <TextView
+	        android:id="@+id/textViewFeelsLikeC"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_toRightOf="@+id/textViewFeelsLikeF"
+	        android:layout_alignTop="@+id/textViewFeelsLikeF"
+	        style="@style/WeatherTextNormal" />
+	
+	    <TextView
 	        android:id="@+id/textViewWeatherLabel"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/textViewWeatherLabel"
-	        android:layout_alignRight="@+id/textViewTemperatureLabel"
-	        android:layout_below="@+id/textViewTemperatureLabel"
+	        android:layout_alignRight="@+id/textViewFeelsLikeLabel"
+	        android:layout_below="@+id/textViewFeelsLikeLabel"
 	        style="@style/WeatherTextNormal" />
 	
 	    <ImageView
@@ -174,12 +201,30 @@
 	        style="@style/WeatherTextNormal" />
 	
 	    <TextView
+	        android:id="@+id/textViewHumidityLabel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/textViewHumidityLabel"
+	        android:layout_alignRight="@+id/textViewWindLabel"
+	        android:layout_below="@+id/textViewWindLabel"
+	        style="@style/WeatherTextNormal" />
+	
+	    <TextView
+	        android:id="@+id/textViewHumidity"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_toRightOf="@+id/textViewHumidityLabel"
+	        android:layout_alignTop="@+id/textViewHumidityLabel"
+	        style="@style/WeatherTextNormal" />
+	
+	    <TextView
 	        android:id="@+id/textViewLatitudeLabel"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/textViewLatitudeLabel"
-	        android:layout_alignRight="@+id/textViewWindLabel"
-	        android:layout_below="@+id/textViewWindLabel"
+	        android:layout_alignRight="@+id/textViewHumidityLabel"
+	        android:layout_below="@+id/textViewHumidityLabel"
 	        style="@style/WeatherTextNormal" />
 	
 	    <TextView

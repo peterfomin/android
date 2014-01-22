@@ -67,20 +67,27 @@ public class WWOCurrentConditionsTask extends WeatherServiceTask {
 		JSONArray currentConditions = data.getJSONArray("current_condition");
 		if (currentConditions.length() > 0) {
 			JSONObject currentCondition = currentConditions.getJSONObject(0);
+			
 			Temperature temperature = new Temperature();
 			temperature.setValueF(currentCondition.getString("temp_F"));
 			temperature.setValueC(currentCondition.getString("temp_C"));
 			result.setTemperature(temperature);
+			
+			//No feels like element available
+			
 			result.setWeather(getFirstArrayValue(currentCondition.getJSONArray("weatherDesc"), "value"));
 			String urlAddress = getFirstArrayValue(currentCondition.getJSONArray("weatherIconUrl"), "value");
 			if (urlAddress != null && urlAddress.trim().length() > 0) {
 				result.setWeatherImage(ImageUtility.createImageFromURL(urlAddress));
 			}
+			
 			Wind wind = new Wind();
 			wind.setDirection(currentCondition.getString("winddir16Point"));
 			wind.setSpeedKph(currentCondition.getString("windspeedKmph"));
 			wind.setSpeedMph(currentCondition.getString("windspeedMiles"));
 			result.setWind(wind);
+			
+			result.setHumidity(currentCondition.getString("humidity"));
 		}
 		
 		StringBuilder location = new StringBuilder();

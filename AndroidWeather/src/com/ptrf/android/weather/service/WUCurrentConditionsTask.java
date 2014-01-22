@@ -64,10 +64,17 @@ public class WUCurrentConditionsTask extends WeatherServiceTask {
 		JSONObject currentObservation = json.getJSONObject("current_observation");
 		JSONObject displayLocation = currentObservation.getJSONObject("display_location");
 		result.setLocation(displayLocation.getString("full"));
+
 		Temperature temperature = new Temperature();
 		temperature.setValueC(currentObservation.getString("temp_c"));
 		temperature.setValueF(currentObservation.getString("temp_f"));
 		result.setTemperature(temperature);
+		
+		Temperature feelsLike = new Temperature();
+		feelsLike.setValueC(currentObservation.getString("feelslike_c"));
+		feelsLike.setValueF(currentObservation.getString("feelslike_f"));
+		result.setFeelsLike(feelsLike);
+		
 		result.setWeather(currentObservation.getString("weather"));
 		String urlAddress = currentObservation.getString("icon_url");
 		if (urlAddress != null && urlAddress.trim().length() > 0) {
@@ -78,6 +85,9 @@ public class WUCurrentConditionsTask extends WeatherServiceTask {
 		wind.setSpeedKph(currentObservation.getString("wind_kph"));
 		wind.setSpeedMph(currentObservation.getString("wind_mph"));
 		result.setWind(wind);
+
+		result.setHumidity(currentObservation.getString("relative_humidity"));
+		
 		result.setLatitude(displayLocation.getString("latitude"));
 		result.setLongitude(displayLocation.getString("longitude"));
 		
