@@ -23,7 +23,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.ptrf.android.weather.R;
-import com.ptrf.android.weather.WeatherData;
+import com.ptrf.android.weather.data.WeatherData;
 
 /**
  * Abstract Weather service task that extends AsyncTask for asynchronous processing of the weather service request.

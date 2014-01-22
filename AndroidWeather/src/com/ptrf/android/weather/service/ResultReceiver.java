@@ -1,6 +1,6 @@
 package com.ptrf.android.weather.service;
 
-import com.ptrf.android.weather.WeatherData;
+import com.ptrf.android.weather.data.WeatherData;
 
 /**
  * Interface defining result receiver.

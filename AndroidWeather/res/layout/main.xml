@@ -89,12 +89,21 @@
 	        style="@style/WeatherTextNormal" />
 	
 	    <TextView
-	        android:id="@+id/textViewTemperature"
+	        android:id="@+id/textViewTemperatureF"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_marginLeft="5dp"
 	        android:layout_toRightOf="@+id/textViewTemperatureLabel"
 	        android:layout_alignTop="@+id/textViewTemperatureLabel"
+	        style="@style/WeatherTextNormal" />
+	
+	    <TextView
+	        android:id="@+id/textViewTemperatureC"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_toRightOf="@+id/textViewTemperatureF"
+	        android:layout_alignTop="@+id/textViewTemperatureF"
 	        style="@style/WeatherTextNormal" />
 	
 	    <TextView
@@ -135,12 +144,32 @@
 	        style="@style/WeatherTextNormal" />
 	
 	    <TextView
-	        android:id="@+id/textViewWind"
+	        android:id="@+id/textViewWindDirection"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_marginLeft="5dp"
 	        android:layout_toRightOf="@+id/textViewWindLabel"
 	        android:layout_alignTop="@+id/textViewWindLabel"
+	        android:singleLine="true"
+	        style="@style/WeatherTextNormal" />
+	
+	    <TextView
+	        android:id="@+id/textViewWindSpeedMph"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_toRightOf="@+id/textViewWindDirection"
+	        android:layout_alignTop="@+id/textViewWindDirection"
+	        android:singleLine="true"
+	        style="@style/WeatherTextNormal" />
+	
+	    <TextView
+	        android:id="@+id/textViewWindSpeedKph"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="5dp"
+	        android:layout_toRightOf="@+id/textViewWindSpeedMph"
+	        android:layout_alignTop="@+id/textViewWindSpeedMph"
 	        android:singleLine="true"
 	        style="@style/WeatherTextNormal" />
 	

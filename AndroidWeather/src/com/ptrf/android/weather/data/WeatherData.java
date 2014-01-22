@@ -1,4 +1,4 @@
-package com.ptrf.android.weather;
+package com.ptrf.android.weather.data;
 
 import android.graphics.drawable.Drawable;
 
@@ -8,10 +8,12 @@ import android.graphics.drawable.Drawable;
 public class WeatherData {
 
 	private String location;
-	private String temperature;
+	private Temperature temperature;
+	private Temperature feelsLike;
 	private String weather;
 	private Drawable weatherImage;
-	private String wind;
+	private Wind wind;
+	private String humidity;
 	private String latitude;
 	private String longitude;
 	private String providedBy;
@@ -24,12 +26,20 @@ public class WeatherData {
 		this.location = location;
 	}
 
-	public String getTemperature() {
+	public Temperature getTemperature() {
 		return temperature;
 	}
 
-	public void setTemperature(String temperature) {
+	public void setTemperature(Temperature temperature) {
 		this.temperature = temperature;
+	}
+
+	public Temperature getFeelsLike() {
+		return feelsLike;
+	}
+
+	public void setFeelsLike(Temperature feelsLike) {
+		this.feelsLike = feelsLike;
 	}
 
 	public String getWeather() {
@@ -48,12 +58,20 @@ public class WeatherData {
 		this.weatherImage = weatherImage;
 	}
 
-	public String getWind() {
+	public Wind getWind() {
 		return wind;
 	}
 
-	public void setWind(String wind) {
+	public void setWind(Wind wind) {
 		this.wind = wind;
+	}
+
+	public String getHumidity() {
+		return humidity;
+	}
+
+	public void setHumidity(String humidity) {
+		this.humidity = humidity;
 	}
 
 	public String getLatitude() {
@@ -83,8 +101,8 @@ public class WeatherData {
 	@Override
 	public String toString() {
 		return String
-				.format("WeatherData [location=%s, temperature=%s, weather=%s, weatherUrl=%s, wind=%s, latitude=%s, longitude=%s, providedBy=%s]",
-						location, temperature, weather, weatherImage, wind, latitude, longitude, providedBy);
+				.format("WeatherData [location=%s, temperature=%s, feelsLike=%s, weather=%s, weatherImage=%s, wind=%s, humidity=%s, latitude=%s, longitude=%s, providedBy=%s]",
+						location, temperature, feelsLike, weather, weatherImage, wind, humidity, latitude, longitude, providedBy);
 	}
-
+	
 }

@@ -26,6 +26,7 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.ptrf.android.weather.data.WeatherData;
 import com.ptrf.android.weather.location.LocationService;
 import com.ptrf.android.weather.service.ResultReceiver;
 import com.ptrf.android.weather.service.WeatherServiceTask;
@@ -55,10 +56,8 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	private ToggleButton buttonAddToFavorites = null;
 	private EditText editTextSearchString = null;
 	private TextView location = null;
-	private TextView temperature = null;
 	private TextView weather = null;
 	private ImageView weatherImage = null;
-	private TextView wind = null;
 	private TextView textViewLatitude = null;
 	private TextView textViewLongitude = null;
 
@@ -113,10 +112,8 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		buttonAddToFavorites = (ToggleButton) findViewById(R.id.buttonAddToFavorites);
 		editTextSearchString = (EditText) findViewById(R.id.editTextSearchString);
 		location = (TextView) findViewById(R.id.textViewLocation);
-		temperature = (TextView) findViewById(R.id.textViewTemperature);
 		weather = (TextView) findViewById(R.id.textViewWeather);
 		weatherImage = (ImageView) findViewById(R.id.imageViewWeather);
-		wind = (TextView) findViewById(R.id.textViewWind);
 		textViewLatitude = (TextView) findViewById(R.id.textViewLatitude);
 		textViewLongitude = (TextView) findViewById(R.id.textViewLongitude);
 		
@@ -277,10 +274,22 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 
 			//set values of the UI components based on the data received
 			location.setText(result.getLocation());
-			temperature.setText(result.getTemperature());
+			
+			TextView temperatureF = (TextView) findViewById(R.id.textViewTemperatureF);
+			TextView temperatureC = (TextView) findViewById(R.id.textViewTemperatureC);
+			temperatureF.setText(result.getTemperature().getValueFWithUnit());
+			temperatureC.setText(result.getTemperature().getValueCWithUnit());
+			
 			weather.setText(result.getWeather());
 			weatherImage.setImageDrawable(result.getWeatherImage());
-			wind.setText(result.getWind());
+			
+			TextView windDirection = (TextView) findViewById(R.id.textViewWindDirection);
+			TextView windSpeedMph = (TextView) findViewById(R.id.textViewWindSpeedMph);
+			TextView windSpeedKph = (TextView) findViewById(R.id.textViewWindSpeedKph);
+			windDirection.setText(result.getWind().getDirection());
+			windSpeedMph.setText(result.getWind().getSpeedMphWithUnit());
+			windSpeedKph.setText(result.getWind().getSpeedKphWithUnit());
+			
 			textViewLatitude.setText(result.getLatitude());
 			textViewLongitude.setText(result.getLongitude());
 			

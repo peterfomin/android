@@ -10,7 +10,9 @@ import android.content.SharedPreferences;
 import android.location.Location;
 
 import com.ptrf.android.weather.R;
-import com.ptrf.android.weather.WeatherData;
+import com.ptrf.android.weather.data.Temperature;
+import com.ptrf.android.weather.data.WeatherData;
+import com.ptrf.android.weather.data.Wind;
 import com.ptrf.android.weather.util.ImageUtility;
 
 /**
@@ -65,13 +67,20 @@ public class WWOCurrentConditionsTask extends WeatherServiceTask {
 		JSONArray currentConditions = data.getJSONArray("current_condition");
 		if (currentConditions.length() > 0) {
 			JSONObject currentCondition = currentConditions.getJSONObject(0);
-			result.setTemperature(currentCondition.getString("temp_F")); //TODO: add celcious
+			Temperature temperature = new Temperature();
+			temperature.setValueF(currentCondition.getString("temp_F"));
+			temperature.setValueC(currentCondition.getString("temp_C"));
+			result.setTemperature(temperature);
 			result.setWeather(getFirstArrayValue(currentCondition.getJSONArray("weatherDesc"), "value"));
 			String urlAddress = getFirstArrayValue(currentCondition.getJSONArray("weatherIconUrl"), "value");
 			if (urlAddress != null && urlAddress.trim().length() > 0) {
 				result.setWeatherImage(ImageUtility.createImageFromURL(urlAddress));
 			}
-			result.setWind(currentCondition.getString("winddir16Point"));
+			Wind wind = new Wind();
+			wind.setDirection(currentCondition.getString("winddir16Point"));
+			wind.setSpeedKph(currentCondition.getString("windspeedKmph"));
+			wind.setSpeedMph(currentCondition.getString("windspeedMiles"));
+			result.setWind(wind);
 		}
 		
 		StringBuilder location = new StringBuilder();

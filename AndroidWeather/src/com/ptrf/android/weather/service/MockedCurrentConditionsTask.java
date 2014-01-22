@@ -7,7 +7,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
 
-import com.ptrf.android.weather.WeatherData;
+import com.ptrf.android.weather.data.Temperature;
+import com.ptrf.android.weather.data.WeatherData;
+import com.ptrf.android.weather.data.Wind;
 
 /**
  * Mocked weather service task to received mocked weather conditions.
@@ -35,9 +37,16 @@ public class MockedCurrentConditionsTask extends WeatherServiceTask {
 		WeatherData result = new WeatherData();
 
 		result.setLocation("Plymouth, MN");
-		result.setTemperature("32F (0 C)");
+		Temperature temperature = new Temperature();
+		temperature.setValueC("0");
+		temperature.setValueF("32");
+		result.setTemperature(temperature);
 		result.setWeather("Sunny");
-		result.setWind("NNW 10 mph");
+		Wind wind = new Wind();
+		wind.setDirection("NNW");
+		wind.setSpeedKph("10");
+		wind.setSpeedMph("5");
+		result.setWind(wind);
 
 		// set Service Data Provided By Message specific to this implementation
 		result.setProvidedBy(MockedCurrentConditionsTask.class.getName());
