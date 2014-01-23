@@ -20,11 +20,6 @@ public abstract class WeatherServiceTaskFactory {
 	public static WeatherServiceTask createWeatherServiceTask(Context context) throws Exception {
 		WeatherServiceTask task = null;
 		
-		//for testing only
-//		if (true) {
-//			return new MockedCurrentConditionsTask(context);
-//		}
-		
 		//get application shared properties
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 		
@@ -36,6 +31,8 @@ public abstract class WeatherServiceTaskFactory {
 			task = new WUCurrentConditionsTask(context);
 		} else if (WWOCurrentConditionsTask.class.getName().equals(serviceProvider)) {
 			task = new WWOCurrentConditionsTask(context);
+		} else if (MockedCurrentConditionsTask.class.getName().equals(serviceProvider)) {
+			task = new MockedCurrentConditionsTask(context);
 		} else {
 			throw new Exception(context.getString(R.string.msg_selectServiceProvider));
 		}

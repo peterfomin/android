@@ -30,11 +30,13 @@
     <string-array name="serviceProviderEntries">
 	    <item>Weather Underground</item>
 	    <item>World Weather Online</item>
+	    <item>Test Service Provider</item>
 	</string-array>
 
     <string-array name="serviceProviderValues">
 	    <item>com.ptrf.android.weather.service.WUCurrentConditionsTask</item>
 	    <item>com.ptrf.android.weather.service.WWOCurrentConditionsTask</item>
+	    <item>com.ptrf.android.weather.service.MockedCurrentConditionsTask</item>
 	</string-array>
 
     <string name="wuServiceKeyTitle">Weather Underground Service Key</string>
