@@ -87,7 +87,7 @@ public class WWOCurrentConditionsTask extends WeatherServiceTask {
 			wind.setSpeedMph(currentCondition.getString("windspeedMiles"));
 			result.setWind(wind);
 			
-			result.setHumidity(currentCondition.getString("humidity"));
+			result.setHumidity(currentCondition.getString("humidity") + "%");
 		}
 		
 		StringBuilder location = new StringBuilder();
