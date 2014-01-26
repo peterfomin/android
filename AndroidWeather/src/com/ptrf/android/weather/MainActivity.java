@@ -64,11 +64,6 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	private LocationService locationService = null;
 
 	/**
-	 * Cached list of the favorite locations used to display the proper favorite button state.
-	 */
-	private List<String> favoriteLocations;
-
-	/**
 	 * Called when activity is started with intent using Intent.FLAG_ACTIVITY_CLEAR_TOP.
 	 * See {@link MainActivity#onListItemClick} for more details.
 	 */
@@ -85,9 +80,6 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			CheckBox checkboxUseCurrentLocation = (CheckBox) findViewById(R.id.checkboxUseCurrentLocation);
 			checkboxUseCurrentLocation.setChecked(false);
 		}
-		
-		//re-initialize favorite locations cache
-		favoriteLocations = FavoritesUtility.getFavoriteLocations(this);
 		
 		//force data refresh
 		refreshWeatherData();
@@ -130,9 +122,6 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			locationService.startLocationUpdates();
 		}
 
-		//initialize favorite locations cache
-		favoriteLocations = FavoritesUtility.getFavoriteLocations(this);
-
 		//force data refresh
 		refreshWeatherData();
 	}
@@ -143,6 +132,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	 * @return
 	 */
 	private boolean isInFavorites(String location) {
+		List<String> favoriteLocations = FavoritesUtility.getFavoriteLocations(this);
 		for (String favorite : favoriteLocations) {
 			if (favorite.equals(location)) {
 				return true;
@@ -383,8 +373,6 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 				//remove from favorites
 				FavoritesUtility.remove(MainActivity.this, favorite);
 			}
-			//refresh cached favorite locations
-			favoriteLocations = FavoritesUtility.getFavoriteLocations(MainActivity.this);
 		}
 	}
 	
