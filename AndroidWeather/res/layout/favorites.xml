@@ -10,9 +10,8 @@
         android:id="@+id/buttonRemoveAllFavorites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
         android:onClick="removeAll"
-        android:text="@string/removeAll" />
+        android:text="@string/removeAllFavorites" />
     
     <ListView
         android:id="@android:id/list"

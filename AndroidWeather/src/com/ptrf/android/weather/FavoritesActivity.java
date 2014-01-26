@@ -38,6 +38,13 @@ public class FavoritesActivity extends ListActivity {
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
 		setContentView(R.layout.favorites);
+		
+		ListView listView = (ListView) findViewById(android.R.id.list);
+		//enable long click event for list items
+		listView.setLongClickable(true);
+		//attach the LongClickListener to the list
+		listView.setOnItemLongClickListener(new FavoritesLongClickListener());
+
 		//initialize list from saved json file
 		setListAdapter(createArrayAdapter());
 	}
@@ -75,17 +82,48 @@ public class FavoritesActivity extends ListActivity {
 	 */
 	public void removeAll(View button) {
 		AlertDialog.Builder adb = new AlertDialog.Builder(this);
-        adb.setTitle(R.string.removeAll);
+        adb.setTitle(R.string.removeAllFavorites);
         adb.setMessage(getString(R.string.msg_removeAllFavorites));
         adb.setNegativeButton(getString(R.string.cancel), null);
         adb.setPositiveButton(getString(R.string.ok), new AlertDialog.OnClickListener() {
                 public void onClick(DialogInterface dialog, int choice) {
-                	//remove all items
+                	//remove all items from adapter
                 	adapter.clear();
+                	//remove all items from from storage
                 	FavoritesUtility.removeAllFavoriteLocations(FavoritesActivity.this);
+                	//notify adapter of the changes made to force the data refresh
                     adapter.notifyDataSetChanged();
                 }
         });
         adb.show();
+	}
+
+	/**
+	 * FavoritesLongClickListener that processes the long click event. 
+	 *
+	 */
+	private class FavoritesLongClickListener implements AdapterView.OnItemLongClickListener {
+
+		@Override
+		public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+			AlertDialog.Builder adb = new AlertDialog.Builder(FavoritesActivity.this);
+	        adb.setTitle(R.string.removeFavorite);
+	        adb.setMessage(getString(R.string.msg_removeFavorite));
+	        adb.setNegativeButton(getString(R.string.cancel), null);
+	        adb.setPositiveButton(getString(R.string.ok), new AlertDialog.OnClickListener() {
+	                public void onClick(DialogInterface dialog, int choice) {
+	                	//obtain selected favorite location from adapter
+	                	String item = adapter.getItem(position);
+	                	//remove selected favorite location from adapter
+	                	adapter.remove(item);
+	                	//remove selected favorite location from storage
+						FavoritesUtility.remove(FavoritesActivity.this, item);
+						//notify adapter of the changes made to force the data refresh
+	                    adapter.notifyDataSetChanged();
+	                }
+	        });
+	        adb.show();
+			return true;
+		}
 	}
 }

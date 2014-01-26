@@ -17,7 +17,8 @@
     <string name="textViewLongitudeLabel">Longitude:</string>
     <string name="favorites">Favorites</string>
     <string name="addTofavorites">Add to favorites</string>
-    <string name="removeAll">Remove All Favorites</string>
+    <string name="removeAllFavorites">Remove All Favorites</string>
+    <string name="removeFavorite">Remove Favorite</string>
     <string name="progressDialogTitle">Retrieving data</string>
 
     <string name="ok">OK</string>
@@ -69,7 +70,8 @@
     <string name="msg_serviceRequestTimeout">Service request timed out. Please try again later or change weather service provider.</string>
     <string name="msg_pleaseWait">Please wait&#8230;</string>
 
-    <string name="msg_removeAllFavorites">Are you sure you want to remove all favorites?</string>
+    <string name="msg_removeAllFavorites">Are you sure you want to remove all favorite locations?</string>
+    <string name="msg_removeFavorite">Are you sure you want to remove this favorite location?</string>
     
     <string name="msg_selectServiceProvider">Please select weather service provider in the application settings.</string>
 
