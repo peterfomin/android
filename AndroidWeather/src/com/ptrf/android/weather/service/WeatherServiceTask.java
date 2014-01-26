@@ -51,6 +51,9 @@ public abstract class WeatherServiceTask extends AsyncTask<Object, Void, Weather
 	 * @param context parent context, i.e. activity, etc, used for progress dialog creation and result callback
 	 */
 	protected WeatherServiceTask(Context context) {
+		if (!(context instanceof ResultReceiver)) {
+			throw new IllegalArgumentException("Context must implement "+ ResultReceiver.class.getName());
+		}
 		this.context = context;
 	}
 	
@@ -129,12 +132,13 @@ public abstract class WeatherServiceTask extends AsyncTask<Object, Void, Weather
 	protected void onPostExecute(WeatherData result) {
 		super.onPostExecute(result);
 		
-		if (getContext() instanceof ResultReceiver) {
-			//pass the result into the ResultReceiver instance 
-			ResultReceiver resultReceiver = (ResultReceiver) getContext();
-			resultReceiver.receiveResult(result, getException());
-		}
-		
+		//context is guaranteed to be an instance of ResultReceiver by the constructor
+		//it's safe to cast context to ResultReceiver
+		ResultReceiver resultReceiver = (ResultReceiver) getContext();
+		//pass the result into the ResultReceiver instance 
+		resultReceiver.receiveResult(result, getException());
+
+		//dismiss progress dialog
 		if (progressDialog.isShowing()) {
 			progressDialog.dismiss();
 		}

@@ -58,16 +58,6 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	 */
 	protected static final String FAVORITE_LOCATION_PARAMETER = MainActivity.class.getName()+ "favoriteLocation";
 	
-	//UI components
-	private CheckBox checkboxUseCurrentLocation;
-	private ToggleButton buttonAddToFavorites = null;
-	private EditText editTextSearchString = null;
-	private TextView location = null;
-	private TextView weather = null;
-	private ImageView weatherImage = null;
-	private TextView textViewLatitude = null;
-	private TextView textViewLongitude = null;
-
 	/**
 	 * Reference to the location service.
 	 */
@@ -90,7 +80,9 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		//prefill favorite location if it's passed
 		String favoriteLocation = intent.getStringExtra(FAVORITE_LOCATION_PARAMETER);
 		if (favoriteLocation != null) {
+			EditText editTextSearchString = (EditText) findViewById(R.id.editTextSearchString);
 			editTextSearchString.setText(favoriteLocation);
+			CheckBox checkboxUseCurrentLocation = (CheckBox) findViewById(R.id.checkboxUseCurrentLocation);
 			checkboxUseCurrentLocation.setChecked(false);
 		}
 		
@@ -115,14 +107,9 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		locationService = new LocationService(getApplicationContext());
 		
 		//initialize UI components
-		checkboxUseCurrentLocation = (CheckBox) findViewById(R.id.checkboxUseCurrentLocation);
-		buttonAddToFavorites = (ToggleButton) findViewById(R.id.buttonAddToFavorites);
-		editTextSearchString = (EditText) findViewById(R.id.editTextSearchString);
-		location = (TextView) findViewById(R.id.textViewLocation);
-		weather = (TextView) findViewById(R.id.textViewWeather);
-		weatherImage = (ImageView) findViewById(R.id.imageViewWeather);
-		textViewLatitude = (TextView) findViewById(R.id.textViewLatitude);
-		textViewLongitude = (TextView) findViewById(R.id.textViewLongitude);
+		CheckBox checkboxUseCurrentLocation = (CheckBox) findViewById(R.id.checkboxUseCurrentLocation);
+		ToggleButton buttonAddToFavorites = (ToggleButton) findViewById(R.id.buttonAddToFavorites);
+		EditText editTextSearchString = (EditText) findViewById(R.id.editTextSearchString);
 		
 		//add OnEditorActionListener to handle return key on the text field
 		editTextSearchString.setOnEditorActionListener(new SearchEditorActionListener());
@@ -206,6 +193,8 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
         if (SHOW_LOCATION_COORDINATES.equals(key)) {
             boolean showLocationCoordinates = sharedPreferences.getBoolean(key, false);
             Log.d(TAG, "changed setting key="+ key +" value="+ showLocationCoordinates);
+            TextView textViewLatitude = (TextView) findViewById(R.id.textViewLatitude);
+            TextView textViewLongitude = (TextView) findViewById(R.id.textViewLongitude);
             if (showLocationCoordinates) {
 				textViewLatitude.setVisibility(View.VISIBLE);
 				textViewLongitude.setVisibility(View.VISIBLE);
@@ -263,6 +252,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		
 		Location deviceLocation = null;
 		String enteredLocation = null;
+		CheckBox checkboxUseCurrentLocation = (CheckBox) findViewById(R.id.checkboxUseCurrentLocation);
 		if (checkboxUseCurrentLocation.isChecked()) {
 			//use current device location
 			//get current device location from the LocationService
@@ -274,6 +264,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			}
 		} else {
 			//use location specified
+			EditText editTextSearchString = (EditText) findViewById(R.id.editTextSearchString);
 			enteredLocation = editTextSearchString.getText().toString();
 			if (enteredLocation == null || enteredLocation.trim().equals("")) {
 				Toast.makeText(this, getString(R.string.msg_enteredLocationNotAvailable), Toast.LENGTH_LONG).show();
@@ -304,9 +295,11 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		
 		if (result != null) {
 			//show favorite button if received a successful result
+			ToggleButton buttonAddToFavorites = (ToggleButton) findViewById(R.id.buttonAddToFavorites);
 			buttonAddToFavorites.setVisibility(View.VISIBLE);
 
 			//set values of the UI components based on the data received
+			TextView location = (TextView) findViewById(R.id.textViewLocation);
 			location.setText(result.getLocation());
 			
 			TextView temperatureF = (TextView) findViewById(R.id.textViewTemperatureF);
@@ -330,7 +323,10 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 				feelsLikeC.setVisibility(View.GONE);
 			}
 
+			TextView weather = (TextView) findViewById(R.id.textViewWeather);
 			weather.setText(result.getWeather());
+			
+			ImageView weatherImage = (ImageView) findViewById(R.id.imageViewWeather);
 			weatherImage.setImageDrawable(result.getWeatherImage());
 			
 			TextView windDirection = (TextView) findViewById(R.id.textViewWindDirection);
@@ -343,6 +339,8 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			TextView humidity = (TextView) findViewById(R.id.textViewHumidity);
 			humidity.setText(result.getHumidity());
 			
+			TextView textViewLatitude = (TextView) findViewById(R.id.textViewLatitude);
+            TextView textViewLongitude = (TextView) findViewById(R.id.textViewLongitude);
 			textViewLatitude.setText(result.getLatitude());
 			textViewLongitude.setText(result.getLongitude());
 			
@@ -375,6 +373,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 
 		@Override
 		public void onClick(View v) {
+			TextView location = (TextView) findViewById(R.id.textViewLocation);
 			String favorite = location.getText().toString();
 			CompoundButton button = (CompoundButton) v;
 			if (button.isChecked()) {
@@ -396,7 +395,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 
 		@Override
 		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-			
+			EditText editTextSearchString = (EditText) findViewById(R.id.editTextSearchString);
 			if (isChecked) {
 				locationService.startLocationUpdates();
 				editTextSearchString.setVisibility(View.INVISIBLE);
