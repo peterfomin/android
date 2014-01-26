@@ -33,6 +33,7 @@ import com.ptrf.android.weather.service.ResultReceiver;
 import com.ptrf.android.weather.service.WeatherServiceTask;
 import com.ptrf.android.weather.service.WeatherServiceTaskFactory;
 import com.ptrf.android.weather.util.FavoritesUtility;
+import com.ptrf.android.weather.util.UnitsOfMeasure;
 
 /**
  * Main activity. Responsible for displaying main set of controls, 
@@ -46,6 +47,11 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	 * Shared Preferences key for showLocationCoordinates setting.
 	 */
 	private static final String SHOW_LOCATION_COORDINATES = "showLocationCoordinates";
+	
+	/**
+	 * Shared Preferences key for showLocationCoordinates setting.
+	 */
+	private static final String UNITS_OF_MEASURE = "unitsOfMeasure";
 	
 	/**
 	 * Parameter key to pass the favorite location as part of the Intent created in FavoritesActivity.
@@ -211,6 +217,31 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 				findViewById(R.id.textViewLatitudeLabel).setVisibility(View.GONE);
 				findViewById(R.id.textViewLongitudeLabel).setVisibility(View.GONE);
 			}
+        } else if(UNITS_OF_MEASURE.equals(key)){
+        	//show configured units of measure
+        	
+        	//get currently configured value for units of measure
+        	String unitsConfigured = sharedPreferences.getString(key, null);
+        	//get enum value corresponding to the configuration value
+			UnitsOfMeasure units = UnitsOfMeasure.valueOf(unitsConfigured);
+			
+			//set the English and Metric flags
+			boolean showEnglishUnits = (units == UnitsOfMeasure.English || units == UnitsOfMeasure.Both);
+			boolean showMetricUnits = (units == UnitsOfMeasure.Metric || units == UnitsOfMeasure.Both);
+			
+			//set visibility of the applicable components based on the units configured to display
+			
+			findViewById(R.id.textViewTemperatureF).setVisibility(showEnglishUnits ? View.VISIBLE : View.GONE);
+			findViewById(R.id.textViewTemperatureC).setVisibility(showMetricUnits ? View.VISIBLE : View.GONE);
+
+			//if feelsLike label is not visible that means we don't have data for it to display and the whole section was disabled
+			if (findViewById(R.id.textViewFeelsLikeLabel).getVisibility() == View.VISIBLE) {
+				findViewById(R.id.textViewFeelsLikeF).setVisibility(showEnglishUnits ? View.VISIBLE : View.GONE);
+				findViewById(R.id.textViewFeelsLikeC).setVisibility(showMetricUnits ? View.VISIBLE : View.GONE);
+			}
+			
+			findViewById(R.id.textViewWindSpeedMph).setVisibility(showEnglishUnits ? View.VISIBLE : View.GONE);
+			findViewById(R.id.textViewWindSpeedKph).setVisibility(showMetricUnits ? View.VISIBLE : View.GONE);
         }
     }
     

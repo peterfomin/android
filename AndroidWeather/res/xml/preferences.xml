@@ -26,4 +26,11 @@
         android:summary="@string/showLocationCoordinatesSummary"
         android:title="@string/showLocationCoordinatesLabel" />
 
+    <ListPreference
+        android:key="unitsOfMeasure"
+        android:title="@string/unitsOfMeasureTitle"
+        android:dialogTitle="@string/unitsOfMeasureDialogTitle"
+        android:entries="@array/unitsOfMeasureEntries"
+        android:entryValues="@array/unitsOfMeasureValues" />
+
 </PreferenceScreen>

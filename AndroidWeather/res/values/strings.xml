@@ -48,6 +48,21 @@
     <string name="showLocationCoordinatesLabel">Show location coordinates</string>
     <string name="showLocationCoordinatesSummary">Show location coordinates as part of the weather data</string>
 
+    <string name="unitsOfMeasureTitle">Unit of Measure</string>
+    <string name="unitsOfMeasureDialogTitle">Units of Measure</string>
+
+    <string-array name="unitsOfMeasureEntries">
+	    <item>Both</item>
+	    <item>English</item>
+	    <item>Metric</item>
+	</string-array>
+
+    <string-array name="unitsOfMeasureValues">
+	    <item>Both</item>
+	    <item>English</item>
+	    <item>Metric</item>
+	</string-array>
+
     <!-- messages -->
     <string name="msg_currentLocationNotAvailable">Current location data is not available. Please change location setting.</string>
     <string name="msg_enteredLocationNotAvailable">Please specify the location or use Current location option.</string>
