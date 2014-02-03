@@ -1,15 +1,16 @@
-package com.ptrf.android.weather.service;
+package com.ptrf.android.weather.service.mocked;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.location.Location;
 
+import com.ptrf.android.weather.data.CurrentConditions;
 import com.ptrf.android.weather.data.Temperature;
 import com.ptrf.android.weather.data.WeatherData;
 import com.ptrf.android.weather.data.Wind;
+import com.ptrf.android.weather.service.WeatherServiceTask;
 
 /**
  * Mocked weather service task to received mocked weather conditions.
@@ -19,14 +20,12 @@ public class MockedCurrentConditionsTask extends WeatherServiceTask {
 	/**
 	 * Creates new instance of the task.
 	 * 
-	 * @param context
-	 *            current activity
+	 * @param context current activity
 	 */
 	public MockedCurrentConditionsTask(Context context) {
 		super(context);
 	}
 
-	@SuppressLint("DefaultLocale")
 	@Override
 	protected String createRequestUrl(Location deviceLocation, String enteredLocation) throws Exception {
 		return null;
@@ -34,7 +33,7 @@ public class MockedCurrentConditionsTask extends WeatherServiceTask {
 
 	@Override
 	protected WeatherData createWeatherData(JSONObject json) throws JSONException {
-		WeatherData result = new WeatherData();
+		CurrentConditions result = new CurrentConditions();
 
 		result.setLocation("Plymouth, MN");
 

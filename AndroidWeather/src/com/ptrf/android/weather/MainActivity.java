@@ -26,6 +26,7 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.ptrf.android.weather.data.CurrentConditions;
 import com.ptrf.android.weather.data.Temperature;
 import com.ptrf.android.weather.data.WeatherData;
 import com.ptrf.android.weather.location.LocationService;
@@ -166,6 +167,17 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		case R.id.favorites:
 			startActivity(new Intent(this, FavoritesActivity.class));
 			break;
+		case R.id.forecast:
+			TextView textViewLocation = (TextView) findViewById(R.id.textViewLocation);
+			String location = textViewLocation.getText().toString();
+			if (location == null || location.trim().equals("")) {
+				Toast.makeText(this, getString(R.string.msg_currentLocationNotAvailable), Toast.LENGTH_LONG).show();
+			} else {
+				Intent intent = new Intent(this, ForecastActivity.class);
+				intent.putExtra(ForecastActivity.LOCATION_PARAMETER, location);
+				startActivity(intent);
+			}
+			break;
 		}
 
 		//Return false to allow normal menu processing to proceed, true to consume it here.
@@ -233,7 +245,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		//create new task based on the provider service settings
 		WeatherServiceTask task = null;
 		try {
-			task = WeatherServiceTaskFactory.createWeatherServiceTask(this);
+			task = WeatherServiceTaskFactory.createWeatherServiceTask(this, false);
 		} catch (Exception e) {
 			//if an exception thrown creating new task then call receiveResult to report it
 			receiveResult(null, e);
@@ -270,20 +282,23 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
     
 	/**
 	 * Receives result from the WeatherServiceTask.
-	 * @param result weather data result
+	 * @param data weather data result
 	 * @param exception exception if an error occurred
 	 */
 	@Override
-	public void receiveResult(WeatherData result, Throwable exception) {
+	public void receiveResult(WeatherData data, Throwable exception) {
 		if (exception != null) {
 			Log.e(TAG, "Failed to execute weather service task:", exception);
 			Toast.makeText(this, exception.getMessage(), Toast.LENGTH_LONG).show();
 			return;
 		}
 
-		Log.v(TAG, "result="+ result);
+		Log.v(TAG, "result="+ data);
 		
-		if (result != null) {
+		if (data != null) {
+			//expect current conditions data
+			CurrentConditions result = (CurrentConditions) data;
+			
 			//show favorite button if received a successful result
 			ToggleButton buttonAddToFavorites = (ToggleButton) findViewById(R.id.buttonAddToFavorites);
 			buttonAddToFavorites.setVisibility(View.VISIBLE);

@@ -56,7 +56,7 @@ public class FavoritesActivity extends ListActivity {
     private ArrayAdapter<String> createArrayAdapter() {
     	List<String> items = new ArrayList<String>();
     	items.addAll(FavoritesUtility.getFavoriteLocations(this));
-    	adapter = new ArrayAdapter<String>(this, R.layout.favorites_list, items);
+    	adapter = new ArrayAdapter<String>(this, R.layout.favorites_item, items);
     	Log.d(TAG, "Created new adapter="+ adapter );
 		return adapter;
     }

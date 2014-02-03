@@ -57,9 +57,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="com.ptrf.android.weather.service.WUCurrentConditionsTask" project="AndroidWeather" 
-    file="/AndroidWeather/src/com/ptrf/android/weather/service/WUCurrentConditionsTask.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
+  <class id="7" language="java" name="com.ptrf.android.weather.service.wu.WUCurrentConditionsTask" 
+    project="AndroidWeather" file="/AndroidWeather/src/com/ptrf/android/weather/service/wu/WUCurrentConditionsTask.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1104" y="652"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
@@ -94,9 +94,10 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="com.ptrf.android.weather.service.WWOCurrentConditionsTask" 
-    project="AndroidWeather" file="/AndroidWeather/src/com/ptrf/android/weather/service/WWOCurrentConditionsTask.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+  <class id="11" language="java" name="com.ptrf.android.weather.service.wwo.WWOCurrentConditionsTask" 
+    project="AndroidWeather" 
+    file="/AndroidWeather/src/com/ptrf/android/weather/service/wwo/WWOCurrentConditionsTask.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="802" y="659"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      

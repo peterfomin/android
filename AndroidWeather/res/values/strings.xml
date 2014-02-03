@@ -20,6 +20,7 @@
     <string name="removeAllFavorites">Remove All Favorites</string>
     <string name="removeFavorite">Remove Favorite</string>
     <string name="progressDialogTitle">Retrieving data</string>
+    <string name="forecast">Forecast</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
@@ -35,9 +36,9 @@
 	</string-array>
 
     <string-array name="serviceProviderValues">
-	    <item>com.ptrf.android.weather.service.WUCurrentConditionsTask</item>
-	    <item>com.ptrf.android.weather.service.WWOCurrentConditionsTask</item>
-	    <item>com.ptrf.android.weather.service.MockedCurrentConditionsTask</item>
+	    <item>WeatherUnderground</item>
+	    <item>WorldWeatherOnline</item>
+	    <item>Mocked</item>
 	</string-array>
 
     <string name="wuServiceKeyTitle">Weather Underground Service Key</string>

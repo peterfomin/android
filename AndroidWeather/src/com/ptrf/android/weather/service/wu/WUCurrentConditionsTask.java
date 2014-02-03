@@ -1,14 +1,13 @@
-package com.ptrf.android.weather.service;
+package com.ptrf.android.weather.service.wu;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Location;
 
 import com.ptrf.android.weather.R;
+import com.ptrf.android.weather.data.CurrentConditions;
 import com.ptrf.android.weather.data.Temperature;
 import com.ptrf.android.weather.data.WeatherData;
 import com.ptrf.android.weather.data.Wind;
@@ -17,9 +16,8 @@ import com.ptrf.android.weather.util.ImageUtility;
 /**
  * Weather service task to receive current conditions from api.wunderground.com.
  */
-public class WUCurrentConditionsTask extends WeatherServiceTask {
+public class WUCurrentConditionsTask extends WUWeatherServiceTask {
 
-	private static final String SERVICE_KEY = "wuServiceKey";
 	private static final String URL = "http://api.wunderground.com/api/%s/conditions/q/%s.json";
 
 	/**
@@ -29,37 +27,16 @@ public class WUCurrentConditionsTask extends WeatherServiceTask {
 	public WUCurrentConditionsTask(Context context) {
 		super(context);
 	}
-	
-	@SuppressLint("DefaultLocale")
-	@Override
-	protected String createRequestUrl(Location deviceLocation, String enteredLocation) throws Exception {
-		//get shared preferences
-		SharedPreferences preferences = getSharedPreferences();
-		//get service key
-		String key = preferences.getString(SERVICE_KEY, null);
-		
-		//if key is not specified then report it as error w/out calling the service
-		if (key == null || key.trim().equals("")) {
-			throw new Exception(getString(R.string.msg_wuServiceSpecifyKey));
-		}
-		
-		String query = null;
-		if (deviceLocation != null) {
-			query = String.format("%.6f,%.6f", deviceLocation.getLatitude(), deviceLocation.getLongitude());
-		} else {
-			query = enteredLocation;
-			//wunderground.com service requires spaces to be replaced with '_'
-			//' +' means one or more consecutive spaces
-			query = query.replaceAll(" +", "_");
-		}
-		
-		//replace placeholders in the URL with key and query
-		return String.format(URL, key, query);
-	}
 
 	@Override
+	protected String createRequestUrl(Location deviceLocation, String enteredLocation) throws Exception {
+		//replace placeholders in the URL with key and query
+		return String.format(URL, getServiceKey(), getQuery(deviceLocation, enteredLocation));
+	}
+	
+	@Override
 	protected WeatherData createWeatherData(JSONObject json) throws JSONException {
-		WeatherData result = new WeatherData();
+		CurrentConditions result = new CurrentConditions();
 		
 		JSONObject currentObservation = json.getJSONObject("current_observation");
 		JSONObject displayLocation = currentObservation.getJSONObject("display_location");
@@ -96,24 +73,5 @@ public class WUCurrentConditionsTask extends WeatherServiceTask {
 		
 		return result;
 	}
-	
-	/**
-	 * Checks for error json element and throws exception if found.
-	 * @param json
-	 * @throws Exception
-	 */
-	@Override
-	protected void checkError(JSONObject json) throws Exception {
-		
-		JSONObject response = json.getJSONObject("response");
-		if (! response.isNull("error")) {
-			JSONObject error = response.getJSONObject("error");
-			throw new Exception(error.getString("description"));
-		}
-		if (! response.isNull("results")) {
-			//JSONObject error = response.getJSONObject("results");
-			//TODO: handle multiple locations returned
-			throw new Exception(getString(R.string.msg_wuServiceLocationNotUnique));
-		}
-	}
+
 }
