@@ -3,7 +3,7 @@
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
   <class id="1" language="java" name="com.ptrf.android.weather.MainActivity" project="AndroidWeather" 
     file="/AndroidWeather/src/com/ptrf/android/weather/MainActivity.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="514" y="131"/>    
+    <position height="-1" width="-1" x="527" y="133"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="com.ptrf.android.weather.FavoritesActivity" project="AndroidWeather" 
     file="/AndroidWeather/src/com/ptrf/android/weather/FavoritesActivity.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="142" y="114"/>    
+    <position height="-1" width="-1" x="142" y="117"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,7 +21,7 @@
   </class>  
   <class id="3" language="java" name="com.ptrf.android.weather.SettingsActivity" project="AndroidWeather" 
     file="/AndroidWeather/src/com/ptrf/android/weather/SettingsActivity.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="851" y="67"/>    
+    <position height="-1" width="-1" x="867" y="72"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -40,8 +40,8 @@
   </class>  
   <interface id="5" language="java" name="com.ptrf.android.weather.service.ResultReceiver" project="AndroidWeather" 
     file="/AndroidWeather/src/com/ptrf/android/weather/service/ResultReceiver.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="795" y="295"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+    <position height="81" width="204" x="801" y="151"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -50,24 +50,14 @@
   <class id="6" language="java" name="com.ptrf.android.weather.service.WeatherServiceTask" project="AndroidWeather" 
     file="/AndroidWeather/src/com/ptrf/android/weather/service/WeatherServiceTask.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1088" y="311"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+    <position height="260" width="262" x="579" y="515"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="com.ptrf.android.weather.service.wu.WUCurrentConditionsTask" 
-    project="AndroidWeather" file="/AndroidWeather/src/com/ptrf/android/weather/service/wu/WUCurrentConditionsTask.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1104" y="652"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="8" language="java" name="com.ptrf.android.weather.util.FavoritesUtility" project="AndroidWeather" 
+  <class id="7" language="java" name="com.ptrf.android.weather.util.FavoritesUtility" project="AndroidWeather" 
     file="/AndroidWeather/src/com/ptrf/android/weather/util/FavoritesUtility.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="172" y="365"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -76,7 +66,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="com.ptrf.android.weather.util.StorageUtility" project="AndroidWeather" 
+  <class id="8" language="java" name="com.ptrf.android.weather.util.StorageUtility" project="AndroidWeather" 
     file="/AndroidWeather/src/com/ptrf/android/weather/util/StorageUtility.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="105" y="590"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
@@ -85,138 +75,95 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="com.ptrf.android.weather.data.WeatherData" project="AndroidWeather" 
+  <class id="9" language="java" name="com.ptrf.android.weather.data.WeatherData" project="AndroidWeather" 
     file="/AndroidWeather/src/com/ptrf/android/weather/data/WeatherData.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="679" y="447"/>    
+    <position height="-1" width="-1" x="733" y="389"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="com.ptrf.android.weather.service.wwo.WWOCurrentConditionsTask" 
-    project="AndroidWeather" 
-    file="/AndroidWeather/src/com/ptrf/android/weather/service/wwo/WWOCurrentConditionsTask.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="802" y="659"/>    
+  <class id="10" language="java" name="com.ptrf.android.weather.ForecastActivity" project="AndroidWeather" 
+    file="/AndroidWeather/src/com/ptrf/android/weather/ForecastActivity.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1019" y="408"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="com.ptrf.android.weather.data.Wind" project="AndroidWeather" 
-    file="/AndroidWeather/src/com/ptrf/android/weather/data/Wind.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="440" y="696"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="13" language="java" name="com.ptrf.android.weather.data.Temperature" project="AndroidWeather" 
-    file="/AndroidWeather/src/com/ptrf/android/weather/data/Temperature.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="593" y="699"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <association id="14">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="15" name="temperature"/>      
-      <multiplicity id="16" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="17">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="6"/>  
-  </generalization>  
-  <association id="18">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="19" name="feelsLike"/>      
-      <multiplicity id="20" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="21">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="5"/>  
-  </dependency>  
-  <generalization id="22">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="6"/>  
-  </generalization>  
-  <dependency id="23">    
+  <dependency id="11">    
     <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="8"/>  
+    <end type="TARGET" refId="6"/>  
   </dependency>  
-  <dependency id="24">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="1"/>  
-  </dependency>  
-  <dependency id="25">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="10"/>  
-  </dependency>  
-  <dependency id="26">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="9"/>  
-  </dependency>  
-  <association id="27">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="28" name="wind"/>      
-      <multiplicity id="29" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="30">    
+  <dependency id="12">    
     <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <realization id="13">    
+    <end type="SOURCE" refId="10"/>    
     <end type="TARGET" refId="5"/>  
   </realization>  
-  <dependency id="31">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="10"/>  
+  <dependency id="14">    
+    <bendpoint x="838" y="512"/>    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="5"/>  
   </dependency>  
-  <dependency id="32">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="6"/>  
-  </dependency>  
-  <dependency id="33">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="8"/>  
-  </dependency>  
-  <dependency id="34">    
+  <dependency id="15">    
     <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="10"/>  
+    <end type="TARGET" refId="9"/>  
   </dependency>  
-  <dependency id="35">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="10"/>  
-  </dependency>  
-  <dependency id="36">    
+  <dependency id="16">    
     <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="2"/>  
+    <end type="TARGET" refId="9"/>  
   </dependency>  
-  <dependency id="37">    
+  <dependency id="17">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="3"/>  
   </dependency>  
-  <association id="38">    
+  <dependency id="18">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <dependency id="19">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="20">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="21">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="22">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <realization id="23">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <dependency id="24">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <dependency id="25">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <association id="26">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="39" name="locationService"/>      
-      <multiplicity id="40" minimum="0" maximum="1"/>    
+      <attribute id="27" name="locationService"/>      
+      <multiplicity id="28" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="41">    
-    <end type="SOURCE" refId="11"/>    
+  <dependency id="29">    
+    <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="10"/>  
   </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
