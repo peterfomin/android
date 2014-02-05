@@ -1,5 +1,7 @@
 package com.ptrf.android.weather;
 
+import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -80,7 +82,7 @@ public class ForecastActivity extends Activity implements ResultReceiver {
 	}
 	
 	/**
-	 * Receives result from the WeatherServiceTask.
+	 * Receives result from the WeatherServiceTask and sets the data adapter for the ListView.
 	 * @param data weather data result
 	 * @param exception exception if an error occurred
 	 */
@@ -97,7 +99,15 @@ public class ForecastActivity extends Activity implements ResultReceiver {
 		if (data != null) {
 			// expect forecast data
 	    	Forecast forecast = (Forecast) data;
-	    	WeatherForecast[] weatherForecast = forecast.getWeatherForecast().toArray(new WeatherForecast[]{});
+	    	List<WeatherForecast> weatherForecastList = forecast.getWeatherForecast();
+	    	
+	    	//add header row, identified by null value
+	    	weatherForecastList.add(0, null);
+	    	
+	    	//convert list into array type for the adapter interface
+			WeatherForecast[] weatherForecast = weatherForecastList.toArray(new WeatherForecast[]{});
+			
+			//create new list data adapter
 			adapter = new ForecastDataAdapter(this, R.layout.forecast_row, weatherForecast);
 	    	Log.d(TAG, "Created new adapter="+ adapter );
 			
@@ -128,10 +138,11 @@ public class ForecastActivity extends Activity implements ResultReceiver {
                 if (view == null) {
                 	//obtain inflater
                     LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    //inflate the current row using specific layout
-                    view = inflater.inflate(R.layout.forecast_row, null);
                     //get item associated with the list position
                     WeatherForecast forecast = getItem(position);
+                    //inflate the current row using specific layout
+                    int layout = (forecast == null ? R.layout.forecast_header : R.layout.forecast_row);
+                    view = inflater.inflate(layout, null);
                     if (forecast != null) {
                     	//transfer the data into the UI elements
                     	TextView forecastDay = (TextView) view.findViewById(R.id.forecastDay);

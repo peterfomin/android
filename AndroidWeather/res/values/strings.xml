@@ -22,6 +22,14 @@
     <string name="progressDialogTitle">Retrieving data</string>
     <string name="forecast">Forecast</string>
 
+    <string name="forecastDay">Day</string>
+    <string name="forecastCondition">Forecast</string>
+    <string name="forecastTempLow">Low</string>
+    <string name="forecastTempHigh">High</string>
+    <string name="forecastWindDir">Wind</string>
+    <string name="forecastWindSpeed">Speed</string>
+    <string name="forecastPrecipitation">PoP</string>
+
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 	
