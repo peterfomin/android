@@ -114,7 +114,7 @@ public class WWOForecastTask extends WWOWeatherServiceTask {
 	@SuppressLint("SimpleDateFormat")
 	private String convertToDayName(String date) {
 		String day = null;
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-dd-MM");
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat dayFormat = new SimpleDateFormat("EEE");
 		try {
 			Date d = dateFormat.parse(date);
