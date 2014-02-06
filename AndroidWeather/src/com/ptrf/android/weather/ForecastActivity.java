@@ -130,38 +130,55 @@ public class ForecastActivity extends Activity implements ResultReceiver {
         }
 
         /**
+         * Since there are two types of the list elements then the corresponding type needs to be associated with the item. 
+         */
+        @Override
+		public int getItemViewType(int position) {
+        	WeatherForecast forecast = getItem(position);
+			return (forecast == null ? 0 : 1);
+		}
+
+        /**
+         * Since there are two types of the list elements it needs to be indicated by this method return value. 
+         */
+		@Override
+		public int getViewTypeCount() {
+			return 2;
+		}
+
+		/**
          * Creates the View instance for every forecast UI element defined in the layout. 
          */
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
                 View view = convertView;
+                //get item associated with the list position
+                WeatherForecast forecast = getItem(position);
                 if (view == null) {
                 	//obtain inflater
                     LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    //get item associated with the list position
-                    WeatherForecast forecast = getItem(position);
                     //inflate the current row using specific layout
                     int layout = (forecast == null ? R.layout.forecast_header : R.layout.forecast_row);
                     view = inflater.inflate(layout, null);
-                    if (forecast != null) {
-                    	//transfer the data into the UI elements
-                    	TextView forecastDay = (TextView) view.findViewById(R.id.forecastDay);
-                    	forecastDay.setText(forecast.getDay());
-                    	ImageView forecastConditionImage = (ImageView) view.findViewById(R.id.forecastConditionImage);
-                    	forecastConditionImage.setImageDrawable(forecast.getWeatherImage());
-                    	TextView forecastCondition = (TextView) view.findViewById(R.id.forecastCondition);
-                    	forecastCondition.setText(forecast.getWeather());
-                    	TextView forecastTempLow = (TextView) view.findViewById(R.id.forecastTempLow);
-                    	forecastTempLow.setText(forecast.getTemperatureLow().getValueFWithUnit());
-                    	TextView forecastTempHigh = (TextView) view.findViewById(R.id.forecastTempHigh);
-                    	forecastTempHigh.setText(forecast.getTemperatureHigh().getValueFWithUnit());
-                    	TextView forecastWindDir = (TextView) view.findViewById(R.id.forecastWindDir);
-                    	forecastWindDir.setText(forecast.getWind().getDirection());
-                    	TextView forecastWindSpeed = (TextView) view.findViewById(R.id.forecastWindSpeed);
-                    	forecastWindSpeed.setText(forecast.getWind().getSpeedMphWithUnit());
-                    	TextView forecastPrecipitation = (TextView) view.findViewById(R.id.forecastPrecipitation);
-                    	forecastPrecipitation.setText(forecast.getPrecipitation());
-					}
+                }
+                if (forecast != null) {
+                	//transfer the data into the UI elements
+                	TextView forecastDay = (TextView) view.findViewById(R.id.forecastDay);
+                	forecastDay.setText(forecast.getDay());
+                	ImageView forecastConditionImage = (ImageView) view.findViewById(R.id.forecastConditionImage);
+                	forecastConditionImage.setImageDrawable(forecast.getWeatherImage());
+                	TextView forecastCondition = (TextView) view.findViewById(R.id.forecastCondition);
+                	forecastCondition.setText(forecast.getWeather());
+                	TextView forecastTempLow = (TextView) view.findViewById(R.id.forecastTempLow);
+                	forecastTempLow.setText(forecast.getTemperatureLow().getValueFWithUnit());
+                	TextView forecastTempHigh = (TextView) view.findViewById(R.id.forecastTempHigh);
+                	forecastTempHigh.setText(forecast.getTemperatureHigh().getValueFWithUnit());
+                	TextView forecastWindDir = (TextView) view.findViewById(R.id.forecastWindDir);
+                	forecastWindDir.setText(forecast.getWind().getDirection());
+                	TextView forecastWindSpeed = (TextView) view.findViewById(R.id.forecastWindSpeed);
+                	forecastWindSpeed.setText(forecast.getWind().getSpeedMphWithUnit());
+                	TextView forecastPrecipitation = (TextView) view.findViewById(R.id.forecastPrecipitation);
+                	forecastPrecipitation.setText(forecast.getPrecipitation());
                 }
 
                 return view;
