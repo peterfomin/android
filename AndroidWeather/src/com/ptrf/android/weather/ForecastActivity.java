@@ -5,6 +5,7 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -161,23 +162,38 @@ public class ForecastActivity extends Activity implements ResultReceiver {
                     int layout = (forecast == null ? R.layout.forecast_header : R.layout.forecast_row);
                     view = inflater.inflate(layout, null);
                 }
+
+                //locate all of the conditionally shown UI components inside of the layout
+                TextView forecastTempLow = (TextView) view.findViewById(R.id.forecastTempLow);
+                TextView forecastTempHigh = (TextView) view.findViewById(R.id.forecastTempHigh);
+                TextView forecastWindDir = (TextView) view.findViewById(R.id.forecastWindDir);
+                TextView forecastWindSpeed = (TextView) view.findViewById(R.id.forecastWindSpeed);
+                TextView forecastPrecipitation = (TextView) view.findViewById(R.id.forecastPrecipitation);
+                
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                	//remove widgets to free more space
+                	forecastWindDir.setVisibility(View.GONE);
+                	forecastWindSpeed.setVisibility(View.GONE);
+                } else {
+                	//restore removed widgets in the landscape mode
+                	forecastWindDir.setVisibility(View.VISIBLE);
+                	forecastWindSpeed.setVisibility(View.VISIBLE);						
+                }
+
                 if (forecast != null) {
-                	//transfer the data into the UI elements
+                	//locate the rest of the UI components inside of the layout
                 	TextView forecastDay = (TextView) view.findViewById(R.id.forecastDay);
-                	forecastDay.setText(forecast.getDay());
                 	ImageView forecastConditionImage = (ImageView) view.findViewById(R.id.forecastConditionImage);
-                	forecastConditionImage.setImageDrawable(forecast.getWeatherImage());
                 	TextView forecastCondition = (TextView) view.findViewById(R.id.forecastCondition);
+                	
+                	//transfer the data into the UI elements
+                	forecastDay.setText(forecast.getDay());
+                	forecastConditionImage.setImageDrawable(forecast.getWeatherImage());
                 	forecastCondition.setText(forecast.getWeather());
-                	TextView forecastTempLow = (TextView) view.findViewById(R.id.forecastTempLow);
                 	forecastTempLow.setText(forecast.getTemperatureLow().getValueFWithUnit());
-                	TextView forecastTempHigh = (TextView) view.findViewById(R.id.forecastTempHigh);
                 	forecastTempHigh.setText(forecast.getTemperatureHigh().getValueFWithUnit());
-                	TextView forecastWindDir = (TextView) view.findViewById(R.id.forecastWindDir);
                 	forecastWindDir.setText(forecast.getWind().getDirection());
-                	TextView forecastWindSpeed = (TextView) view.findViewById(R.id.forecastWindSpeed);
                 	forecastWindSpeed.setText(forecast.getWind().getSpeedMphWithUnit());
-                	TextView forecastPrecipitation = (TextView) view.findViewById(R.id.forecastPrecipitation);
                 	forecastPrecipitation.setText(forecast.getPrecipitation());
                 }
 
