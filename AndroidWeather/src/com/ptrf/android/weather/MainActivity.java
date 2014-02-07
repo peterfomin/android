@@ -50,11 +50,6 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	private static final String SHOW_LOCATION_COORDINATES = "showLocationCoordinates";
 	
 	/**
-	 * Shared Preferences key for showLocationCoordinates setting.
-	 */
-	private static final String UNITS_OF_MEASURE = "unitsOfMeasure";
-	
-	/**
 	 * Parameter key to pass the favorite location as part of the Intent created in FavoritesActivity.
 	 */
 	protected static final String FAVORITE_LOCATION_PARAMETER = MainActivity.class.getName()+ "favoriteLocation";
@@ -116,7 +111,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		preferences.registerOnSharedPreferenceChangeListener(this);
 		//trigger onchange event to display the screen controls properly according to the current settings
 		onSharedPreferenceChanged(preferences, SHOW_LOCATION_COORDINATES);
-		onSharedPreferenceChanged(preferences, UNITS_OF_MEASURE);
+		onSharedPreferenceChanged(preferences, UnitsOfMeasure.UNITS_OF_MEASURE_KEY);
 		
 		//Setup the Checkbox's OnClickListener
 		checkboxUseCurrentLocation.setOnCheckedChangeListener(new UseCurrentLocationChangeListener());
@@ -210,12 +205,12 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 				findViewById(R.id.textViewLatitudeLabel).setVisibility(View.GONE);
 				findViewById(R.id.textViewLongitudeLabel).setVisibility(View.GONE);
 			}
-        } else if(UNITS_OF_MEASURE.equals(key)){
+        } else if(UnitsOfMeasure.UNITS_OF_MEASURE_KEY.equals(key)){
         	//show configured units of measure
         	
 			//set the English and Metric flags
-			boolean showEnglishUnits = showEnglishUnits(sharedPreferences);
-			boolean showMetricUnits = showMetricUnits(sharedPreferences);
+			boolean showEnglishUnits = UnitsOfMeasure.showEnglishUnits(sharedPreferences);
+			boolean showMetricUnits = UnitsOfMeasure.showMetricUnits(sharedPreferences);
 			
 			//set visibility of the applicable components based on the units configured to display
 			
@@ -232,45 +227,6 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			findViewById(R.id.textViewWindSpeedKph).setVisibility(showMetricUnits ? View.VISIBLE : View.GONE);
         }
     }
-
-    /**
-     * Returns true if English units should be shown.
-     * @param sharedPreferences shared preferences
-     * @return true if English units should be shown.
-     */
-    private boolean showEnglishUnits(SharedPreferences sharedPreferences) {
-    	//get currently configured units of measure 
-    	UnitsOfMeasure units = getConfiguredUnits(sharedPreferences);
-
-    	//return true is English units should be shown
-		return (units == UnitsOfMeasure.English || units == UnitsOfMeasure.Both);
-	}
-
-    /**
-     * Returns true if Metric units should be shown.
-     * @param sharedPreferences shared preferences
-     * @return true if Metric units should be shown.
-     */
-    private boolean showMetricUnits(SharedPreferences sharedPreferences) {
-    	//get currently configured units of measure 
-    	UnitsOfMeasure units = getConfiguredUnits(sharedPreferences);
-
-    	//return true is Metric units should be shown
-		return (units == UnitsOfMeasure.Metric || units == UnitsOfMeasure.Both);
-	}
-    
-    /**
-     * Returns currently configured units of measure.
-     * @param sharedPreferences shared preferences
-     * @return currently configured units of measure.
-     */
-	private UnitsOfMeasure getConfiguredUnits(SharedPreferences sharedPreferences) {
-		//get currently configured value for units of measure
-    	String unitsConfigured = sharedPreferences.getString(UNITS_OF_MEASURE, null);
-    	//get enum value corresponding to the configuration value
-		UnitsOfMeasure units = UnitsOfMeasure.valueOf(unitsConfigured);
-		return units;
-	}
     
     /**
      * Refresh the weather data calling the wunderground.com weather service provider.
@@ -360,8 +316,8 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 				//get default shared preferences 
 				SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 				//set the English and Metric flags
-				boolean showEnglishUnits = showEnglishUnits(sharedPreferences);
-				boolean showMetricUnits = showMetricUnits(sharedPreferences);
+				boolean showEnglishUnits = UnitsOfMeasure.showEnglishUnits(sharedPreferences);
+				boolean showMetricUnits = UnitsOfMeasure.showMetricUnits(sharedPreferences);
 				//set conditional visibility based on the preferences
 				feelsLikeF.setVisibility(showEnglishUnits ? View.VISIBLE : View.GONE);
 				feelsLikeC.setVisibility(showMetricUnits ? View.VISIBLE : View.GONE);
