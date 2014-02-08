@@ -13,6 +13,22 @@ public class Temperature {
 	private String valueF;
 	private String valueC;
 	
+	/**
+	 * Creates an instance of the Temperature.
+	 */
+	public Temperature() {
+	}
+	
+	/**
+	 * Creates an instance of the Temperature.
+	 * @param valueF
+	 * @param valueC
+	 */
+	public Temperature(String valueF, String valueC) {
+		this.valueF = valueF;
+		this.valueC = valueC;
+	}
+
 	public String getValueF() {
 		return valueF;
 	}

@@ -10,6 +10,26 @@ public class Wind {
 	private String speedMph;
 	private String speedKph;
 	
+	/**
+	 * Creates an instance of Wind.
+	 */
+	public Wind() {
+		super();
+	}
+	
+	/**
+	 * Creates an instance of Wind.
+	 * @param direction
+	 * @param speedMph
+	 * @param speedKph
+	 */
+	public Wind(String direction, String speedMph, String speedKph) {
+		super();
+		this.direction = direction;
+		this.speedMph = speedMph;
+		this.speedKph = speedKph;
+	}
+
 	public String getDirection() {
 		return direction;
 	}

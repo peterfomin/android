@@ -36,34 +36,13 @@ public class MockedForecastTask extends WeatherServiceTask {
 	protected WeatherData createWeatherData(JSONObject json) throws JSONException {
 		Forecast result = new Forecast();
 
-		result.setLocation("Plymouth, MN");
+		String location = "Plymouth, MN";
+		result.setLocation(location);
 		// set Service Data Provided By Message specific to this implementation
 		result.setProvidedBy(MockedForecastTask.class.getName());
 
-		WeatherForecast forecast = new WeatherForecast();
-		result.add(forecast);
-
-		forecast.setDay("Mon");
-		
-		Temperature temperatureLow = new Temperature();
-		temperatureLow.setValueC("0");
-		temperatureLow.setValueF("32");
-		forecast.setTemperatureLow(temperatureLow);
-		
-		Temperature temperatureHigh = new Temperature();
-		temperatureHigh.setValueC("5");
-		temperatureHigh.setValueF("41");
-		forecast.setTemperatureHigh(temperatureHigh);
-		
-		forecast.setWeather("Sunny");
-		
-		Wind wind = new Wind();
-		wind.setDirection("NNW");
-		wind.setSpeedKph("10");
-		wind.setSpeedMph("5");
-		forecast.setWind(wind);
-		
-		forecast.setPrecipitation("33%");
+		result.add(createWeatherForecast("Mon", new Temperature("0", "32"), new Temperature("5", "41"), "Sunny", new Wind("NNW", "7", "10"), "10%"));
+		result.add(createWeatherForecast("Tue", new Temperature("0", "32"), new Temperature("5", "41"), "Cloudy", new Wind("S", "0", "0"), "40%"));
 		
 		return result;
 	}
@@ -92,4 +71,26 @@ public class MockedForecastTask extends WeatherServiceTask {
 		return data;
 	}
 
+	/**
+	 * Create test instance of WeatherForecast.
+	 * @param day
+	 * @param low
+	 * @param high
+	 * @param weather
+	 * @param wind
+	 * @param precipitation
+	 * @return instance of WeatherForecast.
+	 */
+	private WeatherForecast createWeatherForecast(String day, Temperature low, Temperature high, String weather, Wind wind, String precipitation) {
+		WeatherForecast forecast = new WeatherForecast();
+		
+		forecast.setDay(day);
+		forecast.setTemperatureLow(low);
+		forecast.setTemperatureHigh(high);
+		forecast.setWeather(weather);
+		forecast.setWind(wind);
+		forecast.setPrecipitation(precipitation);
+		
+		return forecast;
+	}
 }
