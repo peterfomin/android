@@ -5,8 +5,10 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ import com.ptrf.android.weather.data.WeatherForecast;
 import com.ptrf.android.weather.service.ResultReceiver;
 import com.ptrf.android.weather.service.WeatherServiceTask;
 import com.ptrf.android.weather.service.WeatherServiceTaskFactory;
+import com.ptrf.android.weather.util.UnitsOfMeasure;
 
 /**
  * Forecast activity that shows weather forecast data.
@@ -164,37 +167,73 @@ public class ForecastActivity extends Activity implements ResultReceiver {
                 }
 
                 //locate all of the conditionally shown UI components inside of the layout
-                TextView forecastTempLow = (TextView) view.findViewById(R.id.forecastTempLow);
-                TextView forecastTempHigh = (TextView) view.findViewById(R.id.forecastTempHigh);
+                TextView forecastTempLowF = (TextView) view.findViewById(R.id.forecastTempLowF);
+                TextView forecastTempLowC = (TextView) view.findViewById(R.id.forecastTempLowC);
+                TextView forecastTempHighF = (TextView) view.findViewById(R.id.forecastTempHighF);
+                TextView forecastTempHighC = (TextView) view.findViewById(R.id.forecastTempHighC);
                 TextView forecastWindDir = (TextView) view.findViewById(R.id.forecastWindDir);
-                TextView forecastWindSpeed = (TextView) view.findViewById(R.id.forecastWindSpeed);
-                TextView forecastPrecipitation = (TextView) view.findViewById(R.id.forecastPrecipitation);
+                TextView forecastWindSpeedMph = (TextView) view.findViewById(R.id.forecastWindSpeedMph);
+                TextView forecastWindSpeedKph = (TextView) view.findViewById(R.id.forecastWindSpeedKph);
                 
+                //remove widgets to free more space in the PORTRAIT mode
                 if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                	//remove widgets to free more space
                 	forecastWindDir.setVisibility(View.GONE);
-                	forecastWindSpeed.setVisibility(View.GONE);
+                	forecastWindSpeedMph.setVisibility(View.GONE);
+                	forecastWindSpeedKph.setVisibility(View.GONE);
                 } else {
-                	//restore removed widgets in the landscape mode
+                	//restore removed widgets in the LANDSCAPE mode
                 	forecastWindDir.setVisibility(View.VISIBLE);
-                	forecastWindSpeed.setVisibility(View.VISIBLE);						
+                	forecastWindSpeedMph.setVisibility(View.VISIBLE);						
+                	forecastWindSpeedKph.setVisibility(View.VISIBLE);						
                 }
-
+                
+				//get default shared preferences 
+				SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(ForecastActivity.this);
+				//set the English and Metric flags
+				boolean showEnglishUnits = UnitsOfMeasure.showEnglishUnits(sharedPreferences);
+				boolean showMetricUnits = UnitsOfMeasure.showMetricUnits(sharedPreferences);
+				
+				//set proper visibility based on the units of measure configured for both header and data rows
+				//the English components in the header should not be removed
+				forecastTempLowC.setVisibility(showMetricUnits ? View.VISIBLE : View.GONE);
+				forecastTempLowF.setVisibility(showEnglishUnits ? View.VISIBLE : View.GONE);
+				forecastTempHighC.setVisibility(showMetricUnits ? View.VISIBLE : View.GONE);
+				forecastTempHighF.setVisibility(showEnglishUnits ? View.VISIBLE : View.GONE);
+            	//if wind direction was not removed then set proper visibility for wind speed
+            	//otherwise wind speed components have been removed to free space in this orientation mode
+            	if (forecastWindDir.getVisibility() == View.VISIBLE) {
+            		forecastWindSpeedKph.setVisibility(showMetricUnits ? View.VISIBLE : View.GONE);				
+            		forecastWindSpeedMph.setVisibility(showEnglishUnits ? View.VISIBLE : View.GONE);						
+            	}
+            	
+				//forecast instance is not null unless it's a header row
                 if (forecast != null) {
+                	
                 	//locate the rest of the UI components inside of the layout
                 	TextView forecastDay = (TextView) view.findViewById(R.id.forecastDay);
                 	ImageView forecastConditionImage = (ImageView) view.findViewById(R.id.forecastConditionImage);
                 	TextView forecastCondition = (TextView) view.findViewById(R.id.forecastCondition);
+                	TextView forecastPrecipitation = (TextView) view.findViewById(R.id.forecastPrecipitation);
                 	
                 	//transfer the data into the UI elements
                 	forecastDay.setText(forecast.getDay());
                 	forecastConditionImage.setImageDrawable(forecast.getWeatherImage());
                 	forecastCondition.setText(forecast.getWeather());
-                	forecastTempLow.setText(forecast.getTemperatureLow().getValueFWithUnit());
-                	forecastTempHigh.setText(forecast.getTemperatureHigh().getValueFWithUnit());
+                	forecastTempLowF.setText(forecast.getTemperatureLow().getValueFWithUnit());
+                	forecastTempLowC.setText(forecast.getTemperatureLow().getValueCWithUnit());
+                	forecastTempHighF.setText(forecast.getTemperatureHigh().getValueFWithUnit());
+                	forecastTempHighC.setText(forecast.getTemperatureHigh().getValueCWithUnit());
                 	forecastWindDir.setText(forecast.getWind().getDirection());
-                	forecastWindSpeed.setText(forecast.getWind().getSpeedMphWithUnit());
+                	forecastWindSpeedMph.setText(forecast.getWind().getSpeedMphWithUnit());
+                	forecastWindSpeedKph.setText(forecast.getWind().getSpeedKphWithUnit());
                 	forecastPrecipitation.setText(forecast.getPrecipitation());
+                } else {
+                	//forecast == null means it's a header row
+                	//if both English and metric units are shown then remove the text from the Metric headers
+                	//if not then restore the metric header text using English header so it would display properly if only metric units are shown
+                	forecastTempLowC.setText(showMetricUnits && showEnglishUnits ? "" : forecastTempLowF.getText().toString());
+                	forecastTempHighC.setText(showMetricUnits && showEnglishUnits ? "" : forecastTempHighF.getText().toString());
+                	forecastWindSpeedKph.setText(showMetricUnits && showEnglishUnits ? "" : forecastWindSpeedMph.getText().toString());
                 }
 
                 return view;

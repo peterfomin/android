@@ -30,7 +30,7 @@
         android:layout_weight="4" />
 
     <TextView
-        android:id="@+id/forecastTempLow"
+        android:id="@+id/forecastTempLowF"
         style="@style/WeatherTextNormal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -40,7 +40,27 @@
         android:layout_weight="2" />
 
     <TextView
-        android:id="@+id/forecastTempHigh"
+        android:id="@+id/forecastTempLowC"
+        style="@style/WeatherTextNormal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:gravity="right"
+        android:text="@string/forecastTempLow"
+        android:layout_weight="2" />
+
+    <TextView
+        android:id="@+id/forecastTempHighF"
+        style="@style/WeatherTextNormal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:gravity="right"
+        android:text="@string/forecastTempHigh"
+        android:layout_weight="2" />
+
+    <TextView
+        android:id="@+id/forecastTempHighC"
         style="@style/WeatherTextNormal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -60,7 +80,17 @@
         android:layout_weight="3" />
 
     <TextView
-        android:id="@+id/forecastWindSpeed"
+        android:id="@+id/forecastWindSpeedMph"
+        style="@style/WeatherTextNormal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:gravity="right"
+        android:text="@string/forecastWindSpeed"
+        android:layout_weight="3" />
+
+    <TextView
+        android:id="@+id/forecastWindSpeedKph"
         style="@style/WeatherTextNormal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
