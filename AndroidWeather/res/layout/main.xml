@@ -258,7 +258,7 @@
 	        android:id="@+id/buttonForecast"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_alignRight="@+id/textViewLongitudeLabel"
+	        android:layout_alignLeft="@+id/textViewLocation"
 	        android:layout_below="@+id/textViewLongitudeLabel"
 	        android:onClick="showForecast"
 	        android:gravity="center_horizontal"
