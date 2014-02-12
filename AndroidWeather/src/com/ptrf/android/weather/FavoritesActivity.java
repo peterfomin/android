@@ -77,7 +77,7 @@ public class FavoritesActivity extends ListActivity {
 	}
 
 	/**
-	 * Removes all favorites.
+	 * Removes all favorites. This method is referenced in the button layout definition.
 	 * @param button
 	 */
 	public void removeAll(View button) {

@@ -164,23 +164,28 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		case R.id.favorites:
 			startActivity(new Intent(this, FavoritesActivity.class));
 			break;
-		case R.id.forecast:
-			TextView textViewLocation = (TextView) findViewById(R.id.textViewLocation);
-			String location = textViewLocation.getText().toString();
-			if (location == null || location.trim().equals("")) {
-				Toast.makeText(this, getString(R.string.msg_currentLocationNotAvailable), Toast.LENGTH_LONG).show();
-			} else {
-				Intent intent = new Intent(this, ForecastActivity.class);
-				intent.putExtra(ForecastActivity.LOCATION_PARAMETER, location);
-				startActivity(intent);
-			}
-			break;
 		}
 
 		//Return false to allow normal menu processing to proceed, true to consume it here.
 		return true;
 	}
-
+	
+	/**
+	 * Shows forecast. This method is referenced in the button layout definition.
+	 * @param button
+	 */
+	public void showForecast(View button) {
+		TextView textViewLocation = (TextView) findViewById(R.id.textViewLocation);
+		String location = textViewLocation.getText().toString();
+		if (location == null || location.trim().equals("")) {
+			Toast.makeText(this, getString(R.string.msg_currentLocationNotAvailable), Toast.LENGTH_LONG).show();
+		} else {
+			Intent intent = new Intent(this, ForecastActivity.class);
+			intent.putExtra(ForecastActivity.LOCATION_PARAMETER, location);
+			startActivity(intent);
+		}
+	}
+	
 	/**
 	 * Called when a shared preference is changed, added, or removed.
 	 */

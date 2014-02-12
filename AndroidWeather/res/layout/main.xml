@@ -253,7 +253,18 @@
 	        android:layout_toRightOf="@+id/textViewLongitudeLabel"
 	        android:layout_alignTop="@+id/textViewLongitudeLabel"
 	        style="@style/WeatherTextNormal" />
-	        
+	
+	    <Button
+	        android:id="@+id/buttonForecast"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignRight="@+id/textViewLongitudeLabel"
+	        android:layout_below="@+id/textViewLongitudeLabel"
+	        android:onClick="showForecast"
+	        android:gravity="center_horizontal"
+	        android:drawableLeft="@android:drawable/ic_menu_week"
+	        android:text="@string/forecast" />
+	    
     </RelativeLayout>
 </ScrollView>
     
