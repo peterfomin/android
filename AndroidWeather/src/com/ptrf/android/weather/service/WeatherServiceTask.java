@@ -145,7 +145,7 @@ public abstract class WeatherServiceTask extends AsyncTask<Object, Void, Weather
 	}
 	
 	/**
-	 * Returns the service request url for the rest service call.
+	 * Returns the service request url for the service call.
 	 * 
 	 * @param deviceLocation location of the device - should be used by default if specified
 	 * @param enteredLocation location entered by user - should be used if device location is not specified

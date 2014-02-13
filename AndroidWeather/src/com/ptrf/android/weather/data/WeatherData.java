@@ -2,7 +2,7 @@ package com.ptrf.android.weather.data;
 
 /**
  * Base abstract data transfer object that holds the weather data.
- * Marked as abstract to avoid instantiation of this class. 
+ * Marked as abstract to prevent instantiation of this class. 
  */
 public abstract class WeatherData {
 

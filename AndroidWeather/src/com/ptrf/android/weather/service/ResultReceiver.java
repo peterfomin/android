@@ -3,7 +3,7 @@ package com.ptrf.android.weather.service;
 import com.ptrf.android.weather.data.WeatherData;
 
 /**
- * Interface defining result receiver.
+ * Interface defining the result receiver.
  * This interface makes WeatherServiceTask independent of a specific Activity.
  */
 public interface ResultReceiver {

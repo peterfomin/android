@@ -25,6 +25,9 @@ import com.ptrf.android.weather.util.ImageUtility;
  */
 public class WWOForecastTask extends WWOWeatherServiceTask {
 
+	/**
+	 * Service URL.
+	 */
 	private static final String URL = "http://api.worldweatheronline.com/free/v1/weather.ashx?key=%s&num_of_days=%s&q=%s&includelocation=yes&format=json";
 
 	/**
@@ -35,6 +38,9 @@ public class WWOForecastTask extends WWOWeatherServiceTask {
 		super(context);
 	}
 	
+	/**
+	 * Returns the service request url for the service call.
+	 */
 	@SuppressLint("DefaultLocale")
 	@Override
 	protected String createRequestUrl(Location deviceLocation, String enteredLocation) throws Exception {
@@ -43,6 +49,9 @@ public class WWOForecastTask extends WWOWeatherServiceTask {
 		return String.format(URL, getServiceKey(), forecastDays, getQuery(deviceLocation, enteredLocation));
 	}
 	
+	/**
+	 * Returns an instance of Forecast extension of WeatherData retrieved from the JSON object.
+	 */
 	@Override
 	protected WeatherData createWeatherData(JSONObject json) throws JSONException {
 		Forecast result = new Forecast();

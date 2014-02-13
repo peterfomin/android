@@ -27,11 +27,17 @@ public class MockedForecastTask extends WeatherServiceTask {
 		super(context);
 	}
 
+	/**
+	 * Not used by the mocked task.
+	 */
 	@Override
 	protected String createRequestUrl(Location deviceLocation, String enteredLocation) throws Exception {
 		return null;
 	}
 
+	/**
+	 * Creates the mocked weather data.
+	 */
 	@Override
 	protected WeatherData createWeatherData(JSONObject json) throws JSONException {
 		Forecast result = new Forecast();
@@ -48,7 +54,7 @@ public class MockedForecastTask extends WeatherServiceTask {
 	}
 
 	/**
-	 * Checks for error json element and throws exception if found.
+	 * Not used by the mocked task.
 	 * 
 	 * @param json
 	 * @throws Exception
@@ -58,7 +64,7 @@ public class MockedForecastTask extends WeatherServiceTask {
 	}
 
 	/**
-	 * No processing, only calling {@link #createWeatherData(JSONObject)} method.
+	 * Calls {@link #createWeatherData(JSONObject)} method and returns its result.
 	 */
 	@Override
 	protected WeatherData doInBackground(Object... args) {

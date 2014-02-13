@@ -20,6 +20,9 @@ import com.ptrf.android.weather.util.ImageUtility;
  */
 public class WUForecastTask extends WUWeatherServiceTask {
 
+	/**
+	 * Service URL.
+	 */
 	private static final String URL = "http://api.wunderground.com/api/%s/forecast/q/%s.json";
 
 	/**
@@ -30,12 +33,18 @@ public class WUForecastTask extends WUWeatherServiceTask {
 		super(context);
 	}
 
+	/**
+	 * Returns the service request url for the service call.
+	 */
 	@Override
 	protected String createRequestUrl(Location deviceLocation, String enteredLocation) throws Exception {
 		//replace placeholders in the URL with key and query
 		return String.format(URL, getServiceKey(), getQuery(deviceLocation, enteredLocation));
 	}
 	
+	/**
+	 * Returns an instance of Forecast extension of WeatherData retrieved from the JSON object.
+	 */
 	@Override
 	protected WeatherData createWeatherData(JSONObject json) throws JSONException {
 		Forecast result = new Forecast();

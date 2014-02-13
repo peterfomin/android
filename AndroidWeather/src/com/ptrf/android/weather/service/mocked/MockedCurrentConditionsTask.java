@@ -13,7 +13,7 @@ import com.ptrf.android.weather.data.Wind;
 import com.ptrf.android.weather.service.WeatherServiceTask;
 
 /**
- * Mocked weather service task to received mocked weather conditions.
+ * Mocked weather service task to receive mocked weather conditions.
  */
 public class MockedCurrentConditionsTask extends WeatherServiceTask {
 
@@ -26,11 +26,17 @@ public class MockedCurrentConditionsTask extends WeatherServiceTask {
 		super(context);
 	}
 
+	/**
+	 * Not used by the mocked task.
+	 */
 	@Override
 	protected String createRequestUrl(Location deviceLocation, String enteredLocation) throws Exception {
 		return null;
 	}
 
+	/**
+	 * Creates the mocked weather data.
+	 */
 	@Override
 	protected WeatherData createWeatherData(JSONObject json) throws JSONException {
 		CurrentConditions result = new CurrentConditions();
@@ -64,7 +70,7 @@ public class MockedCurrentConditionsTask extends WeatherServiceTask {
 	}
 
 	/**
-	 * Checks for error json element and throws exception if found.
+	 * Not used by the mocked task.
 	 * 
 	 * @param json
 	 * @throws Exception
@@ -74,7 +80,7 @@ public class MockedCurrentConditionsTask extends WeatherServiceTask {
 	}
 
 	/**
-	 * No processing, only calling {@link #createWeatherData(JSONObject)} method.
+	 * Calls {@link #createWeatherData(JSONObject)} method and returns its result.
 	 */
 	@Override
 	protected WeatherData doInBackground(Object... args) {

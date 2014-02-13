@@ -30,6 +30,9 @@ public class WWOCurrentConditionsTask extends WWOWeatherServiceTask {
 		super(context);
 	}
 	
+	/**
+	 * Returns the service request url for the service call.
+	 */
 	@SuppressLint("DefaultLocale")
 	@Override
 	protected String createRequestUrl(Location deviceLocation, String enteredLocation) throws Exception {
@@ -38,6 +41,9 @@ public class WWOCurrentConditionsTask extends WWOWeatherServiceTask {
 		return String.format(URL, getServiceKey(), getQuery(deviceLocation, enteredLocation));
 	}
 	
+	/**
+	 * Returns an instance of CurrentConditions extension of WeatherData retrieved from the JSON object.
+	 */
 	@Override
 	protected WeatherData createWeatherData(JSONObject json) throws JSONException {
 		CurrentConditions result = new CurrentConditions();

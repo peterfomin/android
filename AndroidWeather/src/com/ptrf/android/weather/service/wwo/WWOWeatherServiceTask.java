@@ -17,6 +17,9 @@ import com.ptrf.android.weather.service.WeatherServiceTask;
  */
 public abstract class WWOWeatherServiceTask extends WeatherServiceTask {
 
+	/**
+	 * Service key property to retrieve the service key setting from the shared preferences.
+	 */
 	private static final String SERVICE_KEY = "wwoServiceKey";
 
 	/**

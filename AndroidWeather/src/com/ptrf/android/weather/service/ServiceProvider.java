@@ -8,7 +8,7 @@ import com.ptrf.android.weather.service.wwo.WWOCurrentConditionsTask;
 import com.ptrf.android.weather.service.wwo.WWOForecastTask;
 
 /**
- * Enumeration holding constants defined for supported service providers.
+ * Enumeration holding constants defined for supported service providers and their current conditions and forecast tasks.
  */
 public enum ServiceProvider {
 	WeatherUnderground(WUCurrentConditionsTask.class.getName(), WUForecastTask.class.getName()), 
@@ -25,15 +25,28 @@ public enum ServiceProvider {
 	 */
 	private String forecastTaskClass;
 	
+	/**
+	 * Creates new instance of the ServiceProvider.
+	 * @param currentConditionsTaskClass
+	 * @param forecastTastClass
+	 */
 	ServiceProvider(String currentConditionsTaskClass, String forecastTastClass) {
 		this.currentConditionsTaskClass = currentConditionsTaskClass;
 		this.forecastTaskClass = forecastTastClass;
 	}
 
+	/**
+	 * Returns the name of the class to be used as the current conditions task.
+	 * @return current conditions task class name
+	 */
 	public String getCurrentConditionsTaskClass() {
 		return currentConditionsTaskClass;
 	}
 
+	/**
+	 * Returns the name of the class to be used as the forecast task.
+	 * @return forecast task class name
+	 */
 	public String getForecastTaskClass() {
 		return forecastTaskClass;
 	}

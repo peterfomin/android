@@ -18,6 +18,9 @@ import com.ptrf.android.weather.util.ImageUtility;
  */
 public class WUCurrentConditionsTask extends WUWeatherServiceTask {
 
+	/**
+	 * Service URL.
+	 */
 	private static final String URL = "http://api.wunderground.com/api/%s/conditions/q/%s.json";
 
 	/**
@@ -28,12 +31,18 @@ public class WUCurrentConditionsTask extends WUWeatherServiceTask {
 		super(context);
 	}
 
+	/**
+	 * Returns the service request url for the service call.
+	 */
 	@Override
 	protected String createRequestUrl(Location deviceLocation, String enteredLocation) throws Exception {
 		//replace placeholders in the URL with key and query
 		return String.format(URL, getServiceKey(), getQuery(deviceLocation, enteredLocation));
 	}
 	
+	/**
+	 * Returns an instance of CurrentConditions extension of WeatherData retrieved from the JSON object.
+	 */
 	@Override
 	protected WeatherData createWeatherData(JSONObject json) throws JSONException {
 		CurrentConditions result = new CurrentConditions();
