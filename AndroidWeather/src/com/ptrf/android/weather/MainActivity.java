@@ -2,7 +2,6 @@ package com.ptrf.android.weather;
 
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -44,6 +43,11 @@ import com.ptrf.android.weather.util.UnitsOfMeasure;
 public class MainActivity extends Activity implements OnSharedPreferenceChangeListener, ResultReceiver {
 	private static final String TAG = MainActivity.class.getName();
 
+	/**
+	 * Shared Preferences key for service provider setting.
+	 */
+	private static final String SERVICE_PROVIDER = "serviceProvider";
+	
 	/**
 	 * Shared Preferences key for showLocationCoordinates setting.
 	 */
@@ -230,13 +234,15 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			
 			findViewById(R.id.textViewWindSpeedMph).setVisibility(showEnglishUnits ? View.VISIBLE : View.GONE);
 			findViewById(R.id.textViewWindSpeedKph).setVisibility(showMetricUnits ? View.VISIBLE : View.GONE);
-        }
+        } else if (SERVICE_PROVIDER.equals(key)) {
+			//service provider changed - force data refresh
+        	refreshWeatherData();
+		}
     }
     
     /**
      * Refresh the weather data calling the wunderground.com weather service provider.
      */
-	@SuppressLint("DefaultLocale")
 	private void refreshWeatherData() {
 		
 		//create new task based on the provider service settings
