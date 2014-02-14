@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -306,6 +307,10 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			ToggleButton buttonAddToFavorites = (ToggleButton) findViewById(R.id.buttonAddToFavorites);
 			buttonAddToFavorites.setVisibility(View.VISIBLE);
 
+			//show forecast button if received a successful result
+			Button buttonForecast = (Button) findViewById(R.id.buttonForecast);
+			buttonForecast.setVisibility(View.VISIBLE);
+			
 			//set values of the UI components based on the data received
 			TextView location = (TextView) findViewById(R.id.textViewLocation);
 			location.setText(result.getLocation());

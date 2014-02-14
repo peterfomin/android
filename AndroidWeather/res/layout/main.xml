@@ -263,6 +263,7 @@
 	        android:onClick="showForecast"
 	        android:gravity="center_horizontal"
 	        android:drawableLeft="@android:drawable/ic_menu_week"
+	        android:visibility="invisible"
 	        android:text="@string/forecast" />
 	    
     </RelativeLayout>
