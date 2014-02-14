@@ -28,11 +28,11 @@ public enum ServiceProvider {
 	/**
 	 * Creates new instance of the ServiceProvider.
 	 * @param currentConditionsTaskClass
-	 * @param forecastTastClass
+	 * @param forecastTaskClass
 	 */
-	ServiceProvider(String currentConditionsTaskClass, String forecastTastClass) {
+	ServiceProvider(String currentConditionsTaskClass, String forecastTaskClass) {
 		this.currentConditionsTaskClass = currentConditionsTaskClass;
-		this.forecastTaskClass = forecastTastClass;
+		this.forecastTaskClass = forecastTaskClass;
 	}
 
 	/**

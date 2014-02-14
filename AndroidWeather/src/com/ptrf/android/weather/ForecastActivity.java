@@ -2,7 +2,6 @@ package com.ptrf.android.weather;
 
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -64,7 +63,6 @@ public class ForecastActivity extends Activity implements ResultReceiver {
     /**
      * Refresh the weather data calling the wunderground.com weather service provider.
      */
-	@SuppressLint("DefaultLocale")
 	private void refreshWeatherData() {
 		
 		//create new task based on the provider service settings
@@ -109,7 +107,7 @@ public class ForecastActivity extends Activity implements ResultReceiver {
 	    	weatherForecastList.add(0, null);
 	    	
 	    	//convert list into array type for the adapter interface
-			WeatherForecast[] weatherForecast = weatherForecastList.toArray(new WeatherForecast[]{});
+			WeatherForecast[] weatherForecast = weatherForecastList.toArray(new WeatherForecast[weatherForecastList.size()]);
 			
 			//create new list data adapter
 			adapter = new ForecastDataAdapter(this, R.layout.forecast_row, weatherForecast);

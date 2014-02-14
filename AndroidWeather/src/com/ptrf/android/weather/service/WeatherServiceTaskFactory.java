@@ -14,6 +14,7 @@ public abstract class WeatherServiceTaskFactory {
 	/**
 	 * Creates a new instance of the WeatherServiceTask implementation based on the currently selected weather service provider.
 	 * @param context activity
+	 * @param forecast true if forecast task needs to be created, otherwise false for current conditions task
 	 * @return WeatherServiceTask implementation
 	 * @throws Exception if provider can't be created
 	 */
