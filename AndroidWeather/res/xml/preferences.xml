@@ -31,6 +31,7 @@
         android:title="@string/unitsOfMeasureTitle"
         android:dialogTitle="@string/unitsOfMeasureDialogTitle"
         android:entries="@array/unitsOfMeasureEntries"
-        android:entryValues="@array/unitsOfMeasureValues" />
+        android:entryValues="@array/unitsOfMeasureValues" 
+        android:defaultValue="Both"/>
 
 </PreferenceScreen>

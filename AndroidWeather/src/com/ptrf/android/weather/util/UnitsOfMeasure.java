@@ -66,8 +66,16 @@ public enum UnitsOfMeasure {
 	private static UnitsOfMeasure getConfiguredUnits(SharedPreferences sharedPreferences) {
 		//get currently configured value for units of measure
     	String unitsConfigured = sharedPreferences.getString(UNITS_OF_MEASURE_KEY, null);
-    	//get enum value corresponding to the configuration value
-		UnitsOfMeasure units = UnitsOfMeasure.valueOf(unitsConfigured);
+
+    	UnitsOfMeasure units = null;
+		try {
+			//get enum value corresponding to the configuration value
+			units = UnitsOfMeasure.valueOf(unitsConfigured);
+		} catch (Exception e) {
+			//if the default value is not set or 
+			//set incorrectly due to older version not longer supported then set default manually
+			units = UnitsOfMeasure.Both;
+		}
 		return units;
 	}
 }
