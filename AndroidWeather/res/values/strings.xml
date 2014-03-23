@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Weather</string>
+    <string name="settings">Settings</string>
+    <string name="textViewLocationLabel">Location:</string>
+    <string name="textViewTemperatureLabel">Temperature:</string>
+    <string name="textViewFeelsLikeLabel">Feels like:</string>
+    <string name="textViewWeatherLabel">Weather:</string>
+    <string name="textViewWindLabel">Wind:</string>
+    <string name="textViewHumidityLabel">Humidity:</string>
+    <string name="imageViewWeatherContentDescription">Current condition image</string>
+    <string name="useCurrentLocationLabel">Use Current Location</string>
+    <string name="useCurrentLocationSummary">Use your current location that is obtained using your device location functionality</string>
+    <string name="editTextSearchStringHint">Minneapolis MN</string>
+    <string name="textViewLatitudeLabel">Latitude:</string>
+    <string name="textViewLongitudeLabel">Longitude:</string>
+    <string name="favorites">Favorites</string>
+    <string name="addTofavorites">Add to favorites</string>
+    <string name="removeAllFavorites">Remove All Favorites</string>
+    <string name="removeFavorite">Remove Favorite</string>
+    <string name="progressDialogTitle">Retrieving data</string>
+    <string name="forecast">Forecast</string>
+
+    <string name="forecastDay">Day</string>
+    <string name="forecastCondition">Forecast</string>
+    <string name="forecastTempLow">Low</string>
+    <string name="forecastTempHigh">High</string>
+    <string name="forecastWindDir">Wind</string>
+    <string name="forecastWindSpeed">Speed</string>
+    <string name="forecastPrecipitation">PoP</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+	
+	<!-- preferences -->
+    <string name="serviceProviderTitle">Weather Service Provider</string>
+    <string name="serviceProviderDialogTitle">Weather Service Providers</string>
+
+    <string-array name="serviceProviderEntries">
+	    <item>Weather Underground</item>
+	    <item>World Weather Online</item>
+	    <item>Test Service Provider</item>
+	</string-array>
+
+    <string-array name="serviceProviderValues">
+	    <item>WeatherUnderground</item>
+	    <item>WorldWeatherOnline</item>
+	    <item>Mocked</item>
+	</string-array>
+
+    <string name="wuServiceKeyTitle">Weather Underground Service Key</string>
+    <string name="wuServiceKeySummary">Enter service key that must be obtained at http://www.wunderground.com/weather/api/</string>
+
+    <string name="wwoServiceKeyTitle">World Weather Online Service Key</string>
+    <string name="wwoServiceKeySummary">Enter service key that must be obtained at http://developer.worldweatheronline.com/</string>
+
+    <string name="showLocationCoordinatesLabel">Show location coordinates</string>
+    <string name="showLocationCoordinatesSummary">Show location coordinates as part of the weather data</string>
+
+    <string name="unitsOfMeasureTitle">Unit of Measure</string>
+    <string name="unitsOfMeasureDialogTitle">Units of Measure</string>
+
+    <string-array name="unitsOfMeasureEntries">
+	    <item>Both</item>
+	    <item>English</item>
+	    <item>Metric</item>
+	</string-array>
+
+    <string-array name="unitsOfMeasureValues">
+	    <item>Both</item>
+	    <item>English</item>
+	    <item>Metric</item>
+	</string-array>
+
+    <!-- messages -->
+    <string name="msg_currentLocationNotAvailable">Current location data is not available. Please change location setting.</string>
+    <string name="msg_enteredLocationNotAvailable">Please specify the location or use Current location option.</string>
+    <string name="msg_serviceRequestTimeout">Service request timed out. Please try again later or change weather service provider.</string>
+    <string name="msg_pleaseWait">Please wait&#8230;</string>
+
+    <string name="msg_removeAllFavorites">Are you sure you want to remove all favorite locations?</string>
+    <string name="msg_removeFavorite">Are you sure you want to remove this favorite location?</string>
+    
+    <string name="msg_selectServiceProvider">Please select weather service provider in the application settings.</string>
+
+    <string name="msg_wuServiceDataProvidedBy">Weather data provided by Weather Underground service http://www.wunderground.com</string>
+    <string name="msg_wuServiceSpecifyKey">Please specify a valid Weather Underground service key in the settings.</string>
+    <string name="msg_wuServiceLocationNotUnique">Location specified is not unique. Please refine location entered.</string>
+    
+    <string name="msg_wwoServiceDataProvidedBy">Weather data provided by World Weather Online service http://www.worldweatheronline.com</string>
+    <string name="msg_wwoServiceSpecifyKey">Please specify a valid World Weather Online service key in the settings.</string>
+    
+</resources>
