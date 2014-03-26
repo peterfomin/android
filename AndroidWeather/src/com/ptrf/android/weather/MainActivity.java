@@ -99,7 +99,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 		//until preferences activity is invoked for the very first time after the application's install, 
 		//the call to sharedPreferences.getString(key, null) will return null even if the android:defaultValue attribute is set in xml.
 		//reset default values only on the first ever read
-        PreferenceManager.setDefaultValues(getBaseContext(), R.xml.preferences, false);
+		PreferenceManager.setDefaultValues(getBaseContext(), R.xml.preferences, false);
 		
 		//initialize location service
 		locationService = new LocationService(getApplicationContext());
