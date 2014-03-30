@@ -22,6 +22,8 @@ import com.ptrf.android.weather.data.Forecast;
 import com.ptrf.android.weather.data.WeatherData;
 import com.ptrf.android.weather.data.DailyForecast;
 import com.ptrf.android.weather.service.ResultReceiver;
+import com.ptrf.android.weather.service.ServiceProvider;
+import com.ptrf.android.weather.service.ServiceProviderUtility;
 import com.ptrf.android.weather.service.WeatherServiceTask;
 import com.ptrf.android.weather.service.WeatherServiceTaskFactory;
 import com.ptrf.android.weather.util.UnitsOfMeasure;
@@ -65,11 +67,12 @@ public class ForecastActivity extends Activity implements ResultReceiver {
      */
 	private void refreshWeatherData() {
 		
-		//create new task based on the provider service settings
 		WeatherServiceTask task = null;
 		try {
-			//indicate the forecast task using second parameter
-			task = WeatherServiceTaskFactory.createWeatherServiceTask(this, true);
+			//get the service provider associated with the current provider selection
+			ServiceProvider serviceProvider = ServiceProviderUtility.getServiceProvider(this);
+			//create new forecast task
+			task = WeatherServiceTaskFactory.createWeatherServiceTask(this, serviceProvider.getForecastTaskClass());
 		} catch (Exception e) {
 			//if an exception thrown creating new task then call receiveResult to report it
 			receiveResult(null, e);
