@@ -8,20 +8,20 @@ import java.util.List;
  */
 public class Forecast extends WeatherData {
 
-	private List<WeatherForecast> weatherForecast = new ArrayList<WeatherForecast>();
+	private List<DailyForecast> dailyForecasts = new ArrayList<DailyForecast>();
 
-	public void add(WeatherForecast forecast) {
-		getWeatherForecast().add(forecast);
+	public void add(DailyForecast forecast) {
+		getDailyForecasts().add(forecast);
 	}
 
-	public List<WeatherForecast> getWeatherForecast() {
-		return weatherForecast;
+	public List<DailyForecast> getDailyForecasts() {
+		return dailyForecasts;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("Forecast [weatherForecast=%s, super=%s]",
-				weatherForecast, super.toString());
+		return String.format("Forecast [dailyForecast=%s, super=%s]",
+				dailyForecasts, super.toString());
 	}
 	
 }

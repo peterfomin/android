@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.ptrf.android.weather.data.Forecast;
 import com.ptrf.android.weather.data.WeatherData;
-import com.ptrf.android.weather.data.WeatherForecast;
+import com.ptrf.android.weather.data.DailyForecast;
 import com.ptrf.android.weather.service.ResultReceiver;
 import com.ptrf.android.weather.service.WeatherServiceTask;
 import com.ptrf.android.weather.service.WeatherServiceTaskFactory;
@@ -40,7 +40,7 @@ public class ForecastActivity extends Activity implements ResultReceiver {
 	/**
 	 * List data adapter.
 	 */
-	private ArrayAdapter<WeatherForecast> adapter;
+	private ArrayAdapter<DailyForecast> adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -101,13 +101,13 @@ public class ForecastActivity extends Activity implements ResultReceiver {
 		if (data != null) {
 			// expect forecast data
 	    	Forecast forecast = (Forecast) data;
-	    	List<WeatherForecast> weatherForecastList = forecast.getWeatherForecast();
+	    	List<DailyForecast> weatherForecastList = forecast.getDailyForecasts();
 	    	
 	    	//add header row, identified by null value
 	    	weatherForecastList.add(0, null);
 	    	
 	    	//convert list into array type for the adapter interface
-			WeatherForecast[] weatherForecast = weatherForecastList.toArray(new WeatherForecast[weatherForecastList.size()]);
+			DailyForecast[] weatherForecast = weatherForecastList.toArray(new DailyForecast[weatherForecastList.size()]);
 			
 			//create new list data adapter
 			adapter = new ForecastDataAdapter(this, R.layout.forecast_row, weatherForecast);
@@ -125,9 +125,9 @@ public class ForecastActivity extends Activity implements ResultReceiver {
 	/**
 	 * Array adapter for the forecast data to display in the ListView.
 	 */
-    public class ForecastDataAdapter extends ArrayAdapter<WeatherForecast> {
+    public class ForecastDataAdapter extends ArrayAdapter<DailyForecast> {
 
-        public ForecastDataAdapter(Context context, int textViewResourceId, WeatherForecast[] objects) {
+        public ForecastDataAdapter(Context context, int textViewResourceId, DailyForecast[] objects) {
             super(context, textViewResourceId, objects);
         }
 
@@ -136,7 +136,7 @@ public class ForecastActivity extends Activity implements ResultReceiver {
          */
         @Override
 		public int getItemViewType(int position) {
-        	WeatherForecast forecast = getItem(position);
+        	DailyForecast forecast = getItem(position);
 			return (forecast == null ? 0 : 1);
 		}
 
@@ -155,7 +155,7 @@ public class ForecastActivity extends Activity implements ResultReceiver {
         public View getView(int position, View convertView, ViewGroup parent) {
                 View view = convertView;
                 //get item associated with the list position
-                WeatherForecast forecast = getItem(position);
+                DailyForecast forecast = getItem(position);
                 if (view == null) {
                 	//obtain inflater
                     LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);

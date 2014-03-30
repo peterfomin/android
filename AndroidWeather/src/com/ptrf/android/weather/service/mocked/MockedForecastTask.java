@@ -9,7 +9,7 @@ import android.location.Location;
 import com.ptrf.android.weather.data.Forecast;
 import com.ptrf.android.weather.data.Temperature;
 import com.ptrf.android.weather.data.WeatherData;
-import com.ptrf.android.weather.data.WeatherForecast;
+import com.ptrf.android.weather.data.DailyForecast;
 import com.ptrf.android.weather.data.Wind;
 import com.ptrf.android.weather.service.WeatherServiceTask;
 
@@ -87,8 +87,8 @@ public class MockedForecastTask extends WeatherServiceTask {
 	 * @param precipitation
 	 * @return instance of WeatherForecast.
 	 */
-	private WeatherForecast createWeatherForecast(String day, Temperature low, Temperature high, String weather, Wind wind, String precipitation) {
-		WeatherForecast forecast = new WeatherForecast();
+	private DailyForecast createWeatherForecast(String day, Temperature low, Temperature high, String weather, Wind wind, String precipitation) {
+		DailyForecast forecast = new DailyForecast();
 		
 		forecast.setDay(day);
 		forecast.setTemperatureLow(low);

@@ -46,8 +46,8 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="com.ptrf.android.weather.data.WeatherForecast" project="AndroidWeather" 
-    file="/AndroidWeather/src/com/ptrf/android/weather/data/WeatherForecast.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="6" language="java" name="com.ptrf.android.weather.data.DailyForecast" project="AndroidWeather" 
+    file="/AndroidWeather/src/com/ptrf/android/weather/data/DailyForecast.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="81" y="378"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="false" accessors="true" 
       visibility="true">      

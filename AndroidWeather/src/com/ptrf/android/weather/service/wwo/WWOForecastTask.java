@@ -16,7 +16,7 @@ import com.ptrf.android.weather.R;
 import com.ptrf.android.weather.data.Forecast;
 import com.ptrf.android.weather.data.Temperature;
 import com.ptrf.android.weather.data.WeatherData;
-import com.ptrf.android.weather.data.WeatherForecast;
+import com.ptrf.android.weather.data.DailyForecast;
 import com.ptrf.android.weather.data.Wind;
 import com.ptrf.android.weather.util.ImageUtility;
 
@@ -65,7 +65,7 @@ public class WWOForecastTask extends WWOWeatherServiceTask {
 		if (forecastArray != null) {
 			for (int i = 0; i < forecastArray.length(); i++) {
 				JSONObject dailyForecast = forecastArray.getJSONObject(i);
-				WeatherForecast weatherForecast = createWeatherForecast(dailyForecast);
+				DailyForecast weatherForecast = createWeatherForecast(dailyForecast);
 				result.add(weatherForecast);
 			}
 		}
@@ -79,8 +79,8 @@ public class WWOForecastTask extends WWOWeatherServiceTask {
 	 * @return WeatherForecast instance
 	 * @throws JSONException
 	 */
-	private WeatherForecast createWeatherForecast(JSONObject dailyForecast) throws JSONException {
-		WeatherForecast forecast = new WeatherForecast();
+	private DailyForecast createWeatherForecast(JSONObject dailyForecast) throws JSONException {
+		DailyForecast forecast = new DailyForecast();
 		
 		String date = dailyForecast.getString("date");
 		//convert date to the short day name
