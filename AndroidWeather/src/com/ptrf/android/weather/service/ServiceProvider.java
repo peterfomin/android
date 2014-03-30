@@ -11,43 +11,45 @@ import com.ptrf.android.weather.service.wwo.WWOForecastTask;
  * Enumeration holding constants defined for supported service providers and their current conditions and forecast tasks.
  */
 public enum ServiceProvider {
-	WeatherUnderground(WUCurrentConditionsTask.class.getName(), WUForecastTask.class.getName()), 
-	WorldWeatherOnline(WWOCurrentConditionsTask.class.getName(), WWOForecastTask.class.getName()), 
-	Mocked(MockedCurrentConditionsTask.class.getName(), MockedForecastTask.class.getName());
+	WeatherUnderground(WUCurrentConditionsTask.class, WUForecastTask.class), 
+	WorldWeatherOnline(WWOCurrentConditionsTask.class, WWOForecastTask.class), 
+	Mocked(MockedCurrentConditionsTask.class, MockedForecastTask.class);
 	
 	/**
 	 * Service task for current conditions.
 	 */
-	private String currentConditionsTaskClass;
+	private Class<? extends WeatherServiceTask> currentConditionsTaskClass;
 	
 	/**
 	 * Service task for forecast.
 	 */
-	private String forecastTaskClass;
+	private Class<? extends WeatherServiceTask> forecastTaskClass;
 	
 	/**
 	 * Creates new instance of the ServiceProvider.
 	 * @param currentConditionsTaskClass
 	 * @param forecastTaskClass
 	 */
-	ServiceProvider(String currentConditionsTaskClass, String forecastTaskClass) {
+	ServiceProvider(
+			Class<? extends WeatherServiceTask> currentConditionsTaskClass, 
+			Class<? extends WeatherServiceTask> forecastTaskClass) {
 		this.currentConditionsTaskClass = currentConditionsTaskClass;
 		this.forecastTaskClass = forecastTaskClass;
 	}
 
 	/**
 	 * Returns the name of the class to be used as the current conditions task.
-	 * @return current conditions task class name
+	 * @return current conditions task class
 	 */
-	public String getCurrentConditionsTaskClass() {
+	public Class<? extends WeatherServiceTask> getCurrentConditionsTaskClass() {
 		return currentConditionsTaskClass;
 	}
 
 	/**
 	 * Returns the name of the class to be used as the forecast task.
-	 * @return forecast task class name
+	 * @return forecast task class
 	 */
-	public String getForecastTaskClass() {
+	public Class<? extends WeatherServiceTask> getForecastTaskClass() {
 		return forecastTaskClass;
 	}
 
