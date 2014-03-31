@@ -21,6 +21,7 @@
     <string name="removeFavorite">Remove Favorite</string>
     <string name="progressDialogTitle">Retrieving data</string>
     <string name="forecast">Forecast</string>
+    <string name="records">Records</string>
 
     <string name="forecastDay">Day</string>
     <string name="forecastCondition">Forecast</string>
@@ -29,6 +30,13 @@
     <string name="forecastWindDir">Wind</string>
     <string name="forecastWindSpeed">Speed</string>
     <string name="forecastPrecipitation">PoP</string>
+
+    <string name="recordLowLabel">Low</string>
+    <string name="recordHighLabel">High</string>
+    <string name="recordTypeLabel">Record Type</string>
+    <string name="normalTemperature">Normal</string>
+    <string name="recordTemperature">Record</string>
+    <string name="recordYear">Year</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>

@@ -199,6 +199,22 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	}
 	
 	/**
+	 * Shows records. This method is referenced in the button layout definition.
+	 * @param button
+	 */
+	public void showRecords(View button) {
+		TextView textViewLocation = (TextView) findViewById(R.id.textViewLocation);
+		String location = textViewLocation.getText().toString();
+		if (location == null || location.trim().equals("")) {
+			Toast.makeText(this, getString(R.string.msg_currentLocationNotAvailable), Toast.LENGTH_LONG).show();
+		} else {
+			Intent intent = new Intent(this, RecordsActivity.class);
+			intent.putExtra(RecordsActivity.LOCATION_PARAMETER, location);
+			startActivity(intent);
+		}
+	}
+	
+	/**
 	 * Called when a shared preference is changed, added, or removed.
 	 */
     @Override
@@ -249,7 +265,7 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
     }
     
     /**
-     * Refresh the weather data calling the wunderground.com weather service provider.
+     * Refresh the weather data using the selected weather service provider.
      */
 	private void refreshWeatherData() {
 		
@@ -320,6 +336,11 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			Button buttonForecast = (Button) findViewById(R.id.buttonForecast);
 			buttonForecast.setVisibility(View.VISIBLE);
 			
+			//show records button if received a successful result
+			Button recordsForecast = (Button) findViewById(R.id.buttonRecords);
+			//only show if records task is supported by the selected provider
+			recordsForecast.setVisibility(isRecordsActionAvailable() ? View.VISIBLE : View.GONE);
+			
 			//set values of the UI components based on the data received
 			TextView location = (TextView) findViewById(R.id.textViewLocation);
 			location.setText(result.getLocation());
@@ -379,6 +400,23 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 			TextView textViewDataProvider = (TextView)findViewById(R.id.textViewDataProvider);
 			textViewDataProvider.setText(result.getProvidedBy());
 		}
+	}
+	
+	/**
+	 * Returns true if weather records action is available for the selected provider.
+	 * @return true if weather records action is available
+	 */
+	private boolean isRecordsActionAvailable() {
+		//get the service provider associated with the current provider selection
+		ServiceProvider serviceProvider;
+		try {
+			serviceProvider = ServiceProviderUtility.getServiceProvider(this);
+			//return true if RecordsTaskClass is specified for the selected provider, false otherwise
+			return serviceProvider.getRecordsTaskClass() != null;
+		} catch (Exception e) {
+			//return false if any error occurs
+		}
+		return false;
 	}
 	
     /**

@@ -86,7 +86,6 @@ public abstract class FavoritesUtility {
 			//save changes
 			StorageUtility.save(file, json.toString());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			Log.e(TAG, "Failed to add new favorite location="+ favorite, e);
 		}
 	}

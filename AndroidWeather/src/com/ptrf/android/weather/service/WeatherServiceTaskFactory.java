@@ -2,8 +2,6 @@ package com.ptrf.android.weather.service;
 
 import android.content.Context;
 
-import com.ptrf.android.weather.R;
-
 /**
  * Weather Service Task Factory class to create new instances of WeatherServiceTask implementations based on the weather service provider preferences.
  */
@@ -23,7 +21,7 @@ public abstract class WeatherServiceTaskFactory {
 			//create new instance of the task using the constructor that takes instance of the Context as parameter.
 			task = (WeatherServiceTask) clazz.getConstructor(Context.class).newInstance(context);
 		} catch (Exception e) {
-			throw new Exception(context.getString(R.string.msg_selectServiceProvider), e);
+			throw new Exception("Failed to create an instance of the WeatherServiceTask using class="+ clazz, e);
 		}
 
 		return task;

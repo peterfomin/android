@@ -63,7 +63,7 @@ public class ForecastActivity extends Activity implements ResultReceiver {
 	}
 
     /**
-     * Refresh the weather data calling the wunderground.com weather service provider.
+     * Refresh the weather data using the selected weather service provider.
      */
 	private void refreshWeatherData() {
 		
