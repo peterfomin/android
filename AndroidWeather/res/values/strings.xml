@@ -34,8 +34,8 @@
     <string name="recordLowLabel">Low</string>
     <string name="recordHighLabel">High</string>
     <string name="recordTypeLabel">Record Type</string>
-    <string name="normalTemperature">Normal</string>
-    <string name="recordTemperature">Record</string>
+    <string name="normalTemperature">Normal Temperature</string>
+    <string name="recordTemperature">Record Temperature</string>
     <string name="recordYear">Year</string>
 
     <string name="ok">OK</string>
