@@ -3,9 +3,9 @@ package com.ptrf.android.weather.data;
 import android.graphics.drawable.Drawable;
 
 /**
- * Weather forecast data transfer object.
+ * Daily forecast data transfer object.
  */
-public class WeatherForecast {
+public class DailyForecast {
 
 	private String day;
 	private Temperature temperatureLow;
@@ -74,7 +74,7 @@ public class WeatherForecast {
 	@Override
 	public String toString() {
 		return String
-				.format("WeatherForecast [day=%s temperatureLow=%s, temperatureHigh=%s, weather=%s, weatherImage=%s, wind=%s, precipitation=%s, super=%s]",
+				.format("DailyForecast [day=%s temperatureLow=%s, temperatureHigh=%s, weather=%s, weatherImage=%s, wind=%s, precipitation=%s, super=%s]",
 						day, temperatureLow, temperatureHigh, weather, weatherImage, wind, precipitation, super.toString());
 	}
 	
