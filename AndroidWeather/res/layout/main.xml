@@ -266,6 +266,18 @@
 	        android:visibility="invisible"
 	        android:text="@string/forecast" />
 	    
+	    <Button
+	        android:id="@+id/buttonRecords"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignRight="@+id/textViewLocationLabel"
+	        android:layout_below="@+id/textViewLongitudeLabel"
+	        android:onClick="showRecords"
+	        android:gravity="center_horizontal"
+	        android:drawableLeft="@android:drawable/ic_menu_my_calendar"
+	        android:visibility="invisible"
+	        android:text="@string/records" />
+	    
     </RelativeLayout>
 </ScrollView>
     

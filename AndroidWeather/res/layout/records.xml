@@ -1,0 +1,241 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+    <!-- location layout -->
+    <LinearLayout
+        android:id="@+id/layoutControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+	    <TextView
+	        android:id="@+id/location"
+	        style="@style/WeatherTextNormal"
+	        android:gravity="center"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" />
+	
+    </LinearLayout>
+
+<ScrollView
+        android:id="@+id/layoutDataScroll"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <!-- data layout -->
+    <LinearLayout
+        android:id="@+id/layoutData"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:orientation="vertical">
+
+	    <TextView
+	        android:id="@+id/normalLabel"
+	        style="@style/WeatherTextNormal"
+	        android:gravity="center"
+	        android:background="@color/normal"
+	        android:text="@string/normalTemperature"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" />
+
+		<LinearLayout
+	        android:id="@+id/layoutDataNormal"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:gravity="center">
+
+			<LinearLayout
+		        android:id="@+id/layoutDataNormalLow"
+		        android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:layout_height="wrap_content"
+		        android:orientation="vertical"
+		        >
+		    	<!-- android:background="@color/low" -->
+		        <TextView
+			        android:id="@+id/lowNormalLabel"
+			        style="@style/WeatherTextRecordLow"
+			        android:gravity="center"
+			        android:text="@string/recordLowLabel"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content" />
+			    
+			    <TextView
+			        android:id="@+id/lowNormalF"
+			        style="@style/WeatherTextRecordLow"
+			        android:gravity="center"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content" />
+			
+			    <TextView
+			        android:id="@+id/lowNormalC"
+			        style="@style/WeatherTextRecordLow"
+			        android:gravity="center"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content" />
+		
+		    </LinearLayout>
+
+			<LinearLayout
+		        android:id="@+id/layoutDataNormalHigh"
+		        android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:layout_height="wrap_content"
+		        android:orientation="vertical"
+		        >
+		        <!-- android:background="@color/high" -->
+		    	
+		        <TextView
+			        android:id="@+id/highNormalLabel"
+			        style="@style/WeatherTextRecordHigh"
+			        android:gravity="center"
+			        android:text="@string/recordHighLabel"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content" />
+			    
+			    <TextView
+			        android:id="@+id/highNormalF"
+			        style="@style/WeatherTextRecordHigh"
+			        android:gravity="center"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content" />
+			
+			    <TextView
+			        android:id="@+id/highNormalC"
+			        style="@style/WeatherTextRecordHigh"
+			        android:gravity="center"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content" />
+		
+		    </LinearLayout>
+
+		</LinearLayout>
+	    
+	    <TextView
+	        android:id="@+id/recordLabel"
+	        style="@style/WeatherTextNormal"
+	        android:gravity="center"
+	        android:background="@color/record"
+	        android:text="@string/recordTemperature"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" />
+		
+		<LinearLayout
+	        android:id="@+id/layoutDataRecord"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:gravity="center">
+
+			<LinearLayout
+		        android:id="@+id/layoutDataRecordLow"
+		        android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:layout_height="wrap_content"
+		        android:orientation="vertical">
+		        <!-- android:background="@color/low" -->
+		    	
+		        <TextView
+			        android:id="@+id/lowRecordLabel"
+			        style="@style/WeatherTextRecordLow"
+			        android:gravity="center"
+			        android:text="@string/recordLowLabel"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content" />
+			    
+			    <TextView
+			        android:id="@+id/lowRecordF"
+			        style="@style/WeatherTextRecordLow"
+			        android:gravity="center"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content" />
+			
+			    <TextView
+			        android:id="@+id/lowRecordC"
+			        style="@style/WeatherTextRecordLow"
+			        android:gravity="center"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content" />
+		
+			    <TextView
+			        android:id="@+id/lowRecordYear"
+			        style="@style/WeatherTextRecordLow"
+			        android:gravity="center"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content" />
+		
+		    </LinearLayout>
+
+			<LinearLayout
+		        android:id="@+id/layoutDataRecordHigh"
+		        android:layout_width="0dp"
+		        android:layout_weight="1"
+		        android:layout_height="wrap_content"
+		        android:orientation="vertical">
+		        <!-- android:background="@color/high" -->
+		    	
+		        <TextView
+			        android:id="@+id/highRecordLabel"
+			        style="@style/WeatherTextRecordHigh"
+			        android:gravity="center"
+			        android:text="@string/recordHighLabel"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content" />
+			    
+			    <TextView
+			        android:id="@+id/highRecordF"
+			        style="@style/WeatherTextRecordHigh"
+			        android:gravity="center"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content" />
+			
+			    <TextView
+			        android:id="@+id/highRecordC"
+			        style="@style/WeatherTextRecordHigh"
+			        android:gravity="center"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content" />
+			    
+			    <TextView
+			        android:id="@+id/highRecordYear"
+			        style="@style/WeatherTextRecordHigh"
+			        android:gravity="center"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content" />
+			    		
+		    </LinearLayout>
+
+		</LinearLayout>
+				
+	</LinearLayout>
+</ScrollView>
+    
+    <!-- footer layout -->
+    <RelativeLayout
+        android:id="@+id/layoutFooter"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal">
+
+		<TextView
+	        android:id="@+id/textViewDataProvider"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentBottom="true"
+	        android:gravity="center_horizontal"/>
+        
+   	</RelativeLayout>
+
+</LinearLayout>
