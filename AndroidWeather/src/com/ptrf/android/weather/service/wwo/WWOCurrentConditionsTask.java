@@ -20,7 +20,7 @@ import com.ptrf.android.weather.util.ImageUtility;
  */
 public class WWOCurrentConditionsTask extends WWOWeatherServiceTask {
 
-	private static final String URL = "http://api.worldweatheronline.com/free/v1/weather.ashx?key=%s&q=%s&includelocation=yes&format=json";
+	private static final String URL = "http://api.worldweatheronline.com/premium/v1/weather.ashx?key=%s&q=%s&includelocation=yes&format=json";
 
 	/**
 	 * Creates new instance of the task.

@@ -28,7 +28,7 @@ public class WWOForecastTask extends WWOWeatherServiceTask {
 	/**
 	 * Service URL.
 	 */
-	private static final String URL = "http://api.worldweatheronline.com/free/v1/weather.ashx?key=%s&num_of_days=%s&q=%s&includelocation=yes&format=json";
+	private static final String URL = "http://api.worldweatheronline.com/premium/v1/weather.ashx?key=%s&num_of_days=%s&q=%s&includelocation=yes&format=json";
 
 	/**
 	 * Creates new instance of the task.
@@ -91,25 +91,27 @@ public class WWOForecastTask extends WWOWeatherServiceTask {
 		forecast.setDay(day == null ? date : day);
 		
 		Temperature temperatureLow = new Temperature();
-		temperatureLow.setValueC(dailyForecast.getString("tempMinC"));
-		temperatureLow.setValueF(dailyForecast.getString("tempMinF"));
+		temperatureLow.setValueC(dailyForecast.getString("mintempC"));
+		temperatureLow.setValueF(dailyForecast.getString("mintempF"));
 		forecast.setTemperatureLow(temperatureLow);
 		
 		Temperature temperatureHigh = new Temperature();
-		temperatureHigh.setValueC(dailyForecast.getString("tempMaxC"));
-		temperatureHigh.setValueF(dailyForecast.getString("tempMaxF"));
+		temperatureHigh.setValueC(dailyForecast.getString("maxtempC"));
+		temperatureHigh.setValueF(dailyForecast.getString("maxtempF"));
 		forecast.setTemperatureHigh(temperatureHigh);
 		
-		forecast.setWeather(getFirstArrayValue(dailyForecast.getJSONArray("weatherDesc"), "value"));
-		String urlAddress = getFirstArrayValue(dailyForecast.getJSONArray("weatherIconUrl"), "value");
+		JSONObject hourlyForecast = dailyForecast.getJSONArray("hourly").getJSONObject(0);
+		
+		forecast.setWeather(getFirstArrayValue(hourlyForecast.getJSONArray("weatherDesc"), "value"));
+		String urlAddress = getFirstArrayValue(hourlyForecast.getJSONArray("weatherIconUrl"), "value");
 		if (urlAddress != null && urlAddress.trim().length() > 0) {
 			forecast.setWeatherImage(ImageUtility.createImageFromURL(urlAddress));
 		}
 		
 		Wind wind = new Wind();
-		wind.setDirection(dailyForecast.getString("winddir16Point"));
-		wind.setSpeedKph(dailyForecast.getString("windspeedKmph"));
-		wind.setSpeedMph(dailyForecast.getString("windspeedMiles"));
+		wind.setDirection(hourlyForecast.getString("winddir16Point"));
+		wind.setSpeedKph(hourlyForecast.getString("windspeedKmph"));
+		wind.setSpeedMph(hourlyForecast.getString("windspeedMiles"));
 		forecast.setWind(wind);
 		
 		return forecast;
